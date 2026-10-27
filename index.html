@@ -21,28 +21,36 @@
         .zoom-container { overflow: hidden; position: relative; }
         .zoom-container img { transition: transform 0.3s ease; }
         .zoom-container:hover img { transform: scale(1.4); cursor: zoom-in; }
-        /* Hide scrollbar for clean horizontal mobile carousel */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee { display: inline-block; animation: marquee 25s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="antialiased selection:bg-amber-200 selection:text-amber-900 pb-20 sm:pb-0">
 
-    <!-- Top Announcement Bar -->
-    <div id="announcement-bar" class="bg-[#9A3412] text-amber-50 text-[11px] sm:text-xs py-2 px-4 text-center font-medium tracking-wider uppercase relative z-50 hidden">
-        <span id="announcement-text">🪔 100% Chemical-Free &bull; Zero LLP & Mineral Oils &bull; 45+ Mins Clean Burn</span>
+    <!-- Animated Announcement Ticker Bar -->
+    <div id="announcement-bar" class="bg-gradient-to-r from-[#7C2D12] via-[#9A3412] to-[#7C2D12] text-amber-50 text-xs py-3 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-md hidden">
+        <div class="animate-marquee font-bold tracking-wider uppercase text-amber-200">
+            <span id="announcement-text">🪔 FESTIVAL SPECIAL: Free Shipping on Orders Above ₹500 &bull; Use Code RAM10 for 10% OFF &bull; Zero LLP & Mineral Oils</span>
+        </div>
     </div>
 
     <!-- Header / Navbar -->
-    <header class="sticky top-0 sm:absolute sm:top-10 left-0 right-0 z-40 bg-[#2D1810] sm:bg-transparent shadow-md sm:shadow-none py-3 sm:py-0">
+    <header class="sticky top-0 sm:absolute sm:top-12 left-0 right-0 z-40 bg-[#2D1810] sm:bg-transparent shadow-md sm:shadow-none py-3 sm:py-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center">
             <div class="flex items-center space-x-2 sm:space-x-3">
                 <span class="text-xl sm:text-2xl font-bold tracking-tight text-white font-serif drop-shadow">RamJyoti</span>
-                <span class="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest bg-white/20 text-white backdrop-blur-md px-2 py-0.5 rounded-full">Puja Ghee</span>
+                <span class="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest bg-white/20 text-white backdrop-blur-md px-2.5 py-0.5 rounded-full">Puja Ghee</span>
             </div>
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-white/90 drop-shadow">
                 <a href="#product-section" class="hover:text-amber-200 transition">Shop Product</a>
                 <a href="#usps" class="hover:text-amber-200 transition">Purity Standards</a>
+                <a href="#ritual" class="hover:text-amber-200 transition">Ritual</a>
                 <button onclick="openTrackerModal()" class="hover:text-amber-200 transition">Track Order</button>
                 <a href="#story" class="hover:text-amber-200 transition">Our Story</a>
                 <a href="#contact" class="hover:text-amber-200 transition">Contact</a>
@@ -60,7 +68,7 @@
     <!-- Immersive Full-Screen Hero Banner -->
     <section id="hero-section" class="relative min-h-[80vh] sm:min-h-[90vh] flex items-center bg-[#2D1810] text-white overflow-hidden pt-12 sm:pt-0">
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg-img" src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover opacity-40">
+            <img id="hero-bg-img" src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover opacity-45">
             <div class="absolute inset-0 bg-gradient-to-r from-[#2D1810]/95 via-[#2D1810]/70 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full py-20 sm:py-32">
@@ -102,7 +110,6 @@
                 <div>
                     <div class="flex justify-between items-start mb-2">
                         <span class="text-xs font-bold text-[#9A3412] uppercase tracking-widest bg-amber-100/70 px-3 py-1 rounded-full">Versaana Manufacturing</span>
-                        <!-- Product-wise Rating Badge -->
                         <div class="flex items-center space-x-1 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full text-xs font-bold text-amber-900">
                             <span>⭐</span><span>4.9 / 5.0</span><span class="text-stone-500 font-normal text-[11px]">(1,420 Reviews)</span>
                         </div>
@@ -125,6 +132,12 @@
                     <div class="flex flex-col sm:flex-row gap-3 mb-8">
                         <button onclick="addToCart()" id="add-to-cart-btn" class="flex-1 bg-[#2D1810] hover:bg-black text-white font-bold py-3.5 sm:py-4 rounded-full transition text-sm shadow-md">Add to Cart</button>
                         <button onclick="buyNow()" id="buy-now-btn" class="flex-1 bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-3.5 sm:py-4 rounded-full transition text-sm shadow-lg">Buy Now</button>
+                    </div>
+
+                    <!-- Active Promo Showcase Box on Product Page -->
+                    <div class="bg-[#FFFBF5] border border-amber-200/80 rounded-2xl p-5 mb-8 shadow-xs">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] mb-3">🏷️ Active Store Offers & Coupons</h4>
+                        <div id="product-promo-box" class="space-y-2.5"></div>
                     </div>
 
                     <!-- Accordion Specifications -->
@@ -160,7 +173,7 @@
                                 </div>
                                 <div class="bg-[#FFFBF5] p-3 rounded-xl border border-amber-200">
                                     <p class="font-bold text-[#2D1810]">"Wonderful daanedar texture"</p>
-                                    <p class="text-stone-600 mt-1">Clean burn with no chemical smell. Best for daily mandir aarti. — Sunita A., Rajnandgaon</p>
+                                    <p class="text-stone-600 mt-1">Clean burn with no chemical smell. Best for daily mandir aarti. — Sunita A., India</p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +183,7 @@
                                 <span id="icon-acc-4">▼</span>
                             </button>
                             <div id="acc-4" class="hidden text-xs text-stone-600 mt-3 leading-relaxed space-y-2">
-                                <p><strong>Manufacturer:</strong> Versaana Manufacturing, Powerhouse Road, Rajnandgaon, CG - 491441.</p>
+                                <p><strong>Manufacturer:</strong> Versaana Manufacturing, Powerhouse Road, Rajnandgaon, Chhattisgarh - 491441.</p>
                                 <p>Complies with Legal Metrology Rules. Free shipping on orders above ₹500. Dispatched securely within 24-48 hours.</p>
                             </div>
                         </div>
@@ -209,6 +222,33 @@
         </div>
     </section>
 
+    <!-- Restored Rituals Section -->
+    <section id="ritual" class="py-20 bg-white border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-bold text-[#9A3412] uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full">Daily Spiritual Practice</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#2D1810] tracking-tight mt-3 mb-4 font-serif">The 3-Step Pure Aarti Ritual</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#FFFBF5] p-8 rounded-3xl border border-amber-200/60 shadow-xs text-center">
+                    <span class="text-3xl mb-4 inline-block">🪔</span>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">1. Prepare Your Brass Diya</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Clean your brass or silver diya and place a fresh cotton wick securely in the center.</p>
+                </div>
+                <div class="bg-[#FFFBF5] p-8 rounded-3xl border border-amber-200/60 shadow-xs text-center">
+                    <span class="text-3xl mb-4 inline-block">✨</span>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">2. Pour RamJyoti Puja Ghee</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Fill gently with pure RamJyoti Puja Ghee, allowing the natural daanedar texture to settle.</p>
+                </div>
+                <div class="bg-[#FFFBF5] p-8 rounded-3xl border border-amber-200/60 shadow-xs text-center">
+                    <span class="text-3xl mb-4 inline-block">🔥</span>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">3. Experience a Soot-Free Glow</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Light the wick to enjoy a steady, bright golden flame for 45+ minutes with zero black smoke.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Full-Width Immersive Story Banner with YouTube Embed -->
     <section id="story" class="relative py-24 sm:py-32 bg-[#2D1810] text-white overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -217,13 +257,13 @@
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div>
-                <span class="inline-block text-[11px] sm:text-xs font-bold tracking-widest uppercase text-amber-300 bg-amber-950/60 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 border border-amber-500/30">
+                <span id="story-subtitle" class="inline-block text-[11px] sm:text-xs font-bold tracking-widest uppercase text-amber-300 bg-amber-950/60 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 border border-amber-500/30">
                     Our Heritage & Quality Promise
                 </span>
-                <h2 class="text-3xl sm:text-5xl font-bold font-serif mb-6 leading-tight">
-                    Crafted with Devotion in Rajnandgaon
+                <h2 id="story-title" class="text-3xl sm:text-5xl font-bold font-serif mb-6 leading-tight">
+                    Crafted with Devotion in India
                 </h2>
-                <p class="text-amber-100/90 text-sm sm:text-base mb-8 leading-relaxed">
+                <p id="story-desc" class="text-amber-100/90 text-sm sm:text-base mb-8 leading-relaxed">
                     We are a dedicated manufacturing enterprise committed to providing chemical-free, soot-free burning media for sacred home mandirs and temple trusts across India.
                 </p>
                 <a href="#product-section" class="inline-block bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-3.5 rounded-full transition text-sm shadow-xl">Explore Collection</a>
@@ -305,26 +345,27 @@
                         </div>
                     </div>
 
-                    <!-- Mobile Swipeable / Slot-wise Promo Carousel -->
+                    <!-- Responsive Promo Code Container with Remove Option -->
                     <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-200 space-y-3">
                         <div class="flex justify-between items-center">
-                            <label class="block text-xs font-bold uppercase text-amber-900">🏷️ Swipe Offers & Promos</label>
-                            <span class="text-[10px] text-amber-700 font-medium">Swipe ➔</span>
+                            <label class="block text-xs font-bold uppercase text-amber-900">🏷️ Available Store Offers</label>
+                            <span class="text-[10px] text-amber-700 font-medium sm:hidden">Swipe ➔</span>
                         </div>
-                        <!-- Horizontal Swipeable Track -->
-                        <div id="promo-carousel" class="flex space-x-3 overflow-x-auto no-scrollbar py-1 snap-x">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <div id="promo-carousel" class="flex sm:grid sm:grid-cols-2 gap-2.5 overflow-x-auto sm:overflow-visible no-scrollbar py-1 snap-x"></div>
                         <div class="flex space-x-2 pt-1">
                             <input type="text" id="promo-input" placeholder="Enter code" class="flex-1 px-3.5 py-2.5 rounded-xl border border-amber-300 bg-white text-xs uppercase focus:outline-none focus:border-[#9A3412]">
                             <button onclick="applyPromoCode()" class="bg-[#9A3412] hover:bg-amber-900 text-white font-bold px-4 py-2.5 rounded-xl text-xs">Apply</button>
                         </div>
+                        <div id="applied-promo-tag" class="hidden flex items-center justify-between bg-emerald-50 border border-emerald-300 px-3 py-2 rounded-xl text-xs text-emerald-900 font-medium">
+                            <span id="applied-promo-text"></span>
+                            <button onclick="removePromoCode()" class="text-red-600 font-bold hover:underline">Remove [✕]</button>
+                        </div>
                         <p id="promo-feedback" class="text-xs font-medium text-emerald-700 hidden"></p>
                     </div>
 
-                    <!-- Delivery & B2B GSTIN Form with Abandoned Cart Triggers -->
+                    <!-- Separated Shipping & Billing Details -->
                     <div class="space-y-4 pt-2">
-                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412]">Shipping Details</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1">1. Customer Contact</h4>
                         <div>
                             <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Full Name *</label>
                             <input type="text" id="checkout-name" required onblur="captureAbandonedCart()" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Anand Shukla">
@@ -339,10 +380,34 @@
                                 <input type="email" id="checkout-email" required onblur="captureAbandonedCart()" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="care@ramjyoti.com">
                             </div>
                         </div>
+
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1 pt-2">2. Shipping Address</h4>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Delivery Address *</label>
-                            <textarea id="checkout-address" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="House No, Street, City, Pincode"></textarea>
+                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Address Line 1 (House No, Street) *</label>
+                            <input type="text" id="checkout-addr1" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Flat 402, Sunshine Apartments">
                         </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">City *</label>
+                                <input type="text" id="checkout-city" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Rajnandgaon">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">District *</label>
+                                <input type="text" id="checkout-district" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Rajnandgaon">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">State *</label>
+                                <input type="text" id="checkout-state" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Chhattisgarh">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Pincode *</label>
+                                <input type="text" id="checkout-pincode" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="491441">
+                            </div>
+                        </div>
+
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1 pt-2">3. Billing & Tax Invoicing</h4>
                         <div>
                             <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">GSTIN (Optional for B2B / Temple Invoicing)</label>
                             <input type="text" id="checkout-gstin" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs uppercase bg-[#FFFBF5]" placeholder="e.g. 22AAAAA0000A1Z5">
@@ -384,7 +449,17 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Cookie Acceptance Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-[#2D1810]/95 text-amber-100 p-4 z-50 shadow-2xl backdrop-blur-md border-t border-amber-900 flex flex-col sm:flex-row items-center justify-between gap-3 hidden">
+        <p class="text-xs text-amber-100/90 text-center sm:text-left">
+            🍪 We use cookies and similar technologies to enhance your browsing experience, analyze site traffic, and ensure secure checkout. By continuing, you agree to our <button onclick="openModal('privacy')" class="underline hover:text-white font-medium">Privacy Policy</button>.
+        </p>
+        <div class="flex space-x-3 shrink-0">
+            <button onclick="acceptCookies()" class="bg-[#9A3412] hover:bg-amber-900 text-white text-xs font-bold px-5 py-2 rounded-full transition shadow-md">Accept & Continue</button>
+        </div>
+    </div>
+
+    <!-- Footer with Full Social Media Handles -->
     <footer class="bg-[#2D1810] text-amber-100 py-16 border-t border-amber-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div>
@@ -398,6 +473,7 @@
                 <ul class="space-y-2 text-xs text-amber-200/80">
                     <li><a href="#product-section" class="hover:text-white transition">Shop Product</a></li>
                     <li><a href="#usps" class="hover:text-white transition">Purity Standards</a></li>
+                    <li><a href="#ritual" class="hover:text-white transition">Ritual Guide</a></li>
                     <li><button onclick="openTrackerModal()" class="hover:text-white transition text-left">Track Order</button></li>
                     <li><a href="#story" class="hover:text-white transition">Brand Story & YouTube</a></li>
                     <li><a href="#contact" class="hover:text-white transition">Contact Us</a></li>
@@ -414,7 +490,19 @@
             <div>
                 <h4 class="font-bold text-white text-sm mb-4">Connect With Us</h4>
                 <p class="text-xs text-amber-200/80 mb-4">Email: <span id="footer-email">care@ramjyoti.com</span><br>Phone: <span id="footer-phone">+91-9903666634</span></p>
-                <div class="flex space-x-3 items-center">
+                <div id="social-icons-container" class="flex space-x-3 items-center">
+                    <a id="social-fb" href="https://facebook.com" target="_blank" class="w-9 h-9 bg-amber-900/60 hover:bg-amber-800 rounded-full flex items-center justify-center text-white transition" title="Facebook">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a id="social-ig" href="https://instagram.com" target="_blank" class="w-9 h-9 bg-amber-900/60 hover:bg-amber-800 rounded-full flex items-center justify-center text-white transition" title="Instagram">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a id="social-yt" href="https://www.youtube.com/@RamJyotiPujaGhee" target="_blank" class="w-9 h-9 bg-amber-900/60 hover:bg-amber-800 rounded-full flex items-center justify-center text-white transition" title="YouTube">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a id="social-x" href="https://twitter.com" target="_blank" class="w-9 h-9 bg-amber-900/60 hover:bg-amber-800 rounded-full flex items-center justify-center text-white transition" title="X (Twitter)">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
                     <a id="whatsapp-link" href="https://wa.me/919903666634" target="_blank" class="w-9 h-9 bg-emerald-700 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white transition" title="WhatsApp">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     </a>
@@ -438,19 +526,31 @@
     <!-- Script Block -->
     <script>
         const SHEET_ID = '1EBFI0dkj-zvkg8m52IYq8nb-CzRdyQEhEamFw7Y6nP0';
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxk_daoPoNIsiwQrjtNUWgNrJFfDdi74TmSegSIf8WdsVM724xQlKwRZuXOK02PKl2n/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwvwAhELQlkOqTRzna3HrGF_IILfkHO8vRb6AM3kvXdXyfM-QvKoVEjFeEdGa3zAbXq/exec';
 
         let variantsData = [];
         let selectedVariant = null;
         let promoCodesData = [];
-        let appliedDiscount = { code: null, type: null, value: 0, minVal: 0 };
+        let appliedDiscount = { code: null, type: null, val: 0, minVal: 0 };
         let cartQty = 1;
         
         let storeGstRate = 5;
         let freeShippingThreshold = 500;
         let flatShippingFee = 50;
 
+        function checkCookies() {
+            if (!localStorage.getItem('ramjyoti_cookies_accepted')) {
+                document.getElementById('cookie-banner')?.classList.remove('hidden');
+            }
+        }
+        function acceptCookies() {
+            localStorage.setItem('ramjyoti_cookies_accepted', 'true');
+            document.getElementById('cookie-banner')?.classList.add('hidden');
+        }
+
         async function loadStoreData() {
+            checkCookies();
+
             // 1. Load Products
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Products`);
@@ -458,8 +558,10 @@
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 variantsData = [];
                 json.table.rows.forEach((row) => {
+                    const id = row.c[0]?.v;
+                    if(!id || String(id).toLowerCase() === 'id') return; // skip header
                     variantsData.push({
-                        id: row.c[0]?.v || '',
+                        id: String(id),
                         size: row.c[1]?.v || '',
                         price: Number(row.c[2]?.v || 0),
                         tag: row.c[3]?.v || 'Pack',
@@ -474,26 +576,31 @@
                 }
             } catch (e) { console.log('Products load error'); }
 
-            // 2. Load PromoCodes into Swipeable Carousel
+            // 2. Load PromoCodes (Fail-safe header check)
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=PromoCodes`);
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 promoCodesData = [];
                 const carouselEl = document.getElementById('promo-carousel');
-                carouselEl.innerHTML = '';
+                const productPromoBox = document.getElementById('product-promo-box');
+                if(carouselEl) carouselEl.innerHTML = '';
+                if(productPromoBox) productPromoBox.innerHTML = '';
+
                 json.table.rows.forEach((row) => {
-                    const code = row.c[0]?.v || '';
-                    const type = row.c[1]?.v || '';
+                    const code = row.c[0]?.v;
+                    if(!code || String(code).toLowerCase() === 'code') return; // skip header row
+
+                    const type = String(row.c[1]?.v || 'percentage').toLowerCase();
                     const val = Number(row.c[2]?.v || 0);
                     const minVal = Number(row.c[3]?.v || 0);
                     const desc = row.c[4]?.v || '';
                     const isActive = String(row.c[5]?.v).toUpperCase() === 'TRUE';
 
                     if(isActive) {
-                        promoCodesData.push({ code, type, val, minVal });
-                        carouselEl.innerHTML += `
-                            <div onclick="copyAndApplyPromo('${code}')" class="min-w-[150px] sm:min-w-[170px] bg-white p-3 rounded-2xl border border-amber-300 shadow-sm cursor-pointer hover:bg-amber-50/50 transition snap-start flex flex-col justify-between">
+                        promoCodesData.push({ code: String(code), type, val, minVal });
+                        const promoCardHtml = `
+                            <div onclick="copyAndApplyPromo('${code}')" class="min-w-[150px] sm:min-w-[170px] bg-white p-3 rounded-2xl border border-amber-300 shadow-xs cursor-pointer hover:bg-amber-50/50 transition snap-start flex flex-col justify-between">
                                 <div>
                                     <span class="font-bold text-[#9A3412] text-xs bg-amber-100 px-2.5 py-1 rounded-full">${code}</span>
                                     <p class="text-[11px] text-stone-700 font-medium mt-2 leading-snug">${desc}</p>
@@ -501,6 +608,19 @@
                                 <span class="text-[10px] font-bold text-amber-900 mt-2 underline">Tap to Apply ➔</span>
                             </div>
                         `;
+                        if(carouselEl) carouselEl.innerHTML += promoCardHtml;
+
+                        if(productPromoBox) {
+                            productPromoBox.innerHTML += `
+                                <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-amber-200 shadow-xs cursor-pointer hover:bg-amber-50" onclick="copyAndApplyPromo('${code}')">
+                                    <div>
+                                        <span class="font-bold text-[#9A3412] text-xs bg-amber-100 px-2 py-0.5 rounded mr-2">${code}</span>
+                                        <span class="text-xs text-stone-700 font-medium">${desc}</span>
+                                    </div>
+                                    <span class="text-[11px] font-bold text-amber-900">Apply ➔</span>
+                                </div>
+                            `;
+                        }
                     }
                 });
             } catch (e) { console.log('PromoCodes load error'); }
@@ -511,7 +631,7 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 json.table.rows.forEach((row) => {
-                    const key = row.c[0]?.v || '';
+                    const key = String(row.c[0]?.v || '').trim().toLowerCase();
                     const title = row.c[1]?.v || '';
                     const subtitle = row.c[2]?.v || '';
                     const imgUrl = row.c[3]?.v || '';
@@ -520,8 +640,8 @@
                     if (key === 'gst_config') {
                         if(!isNaN(Number(title))) storeGstRate = Number(title);
                     } else if (key === 'announcement') {
-                        if(subtitle.toUpperCase() === 'TRUE' && title) {
-                            document.getElementById('announcement-text').innerText = title;
+                        if(String(subtitle).toUpperCase() === 'TRUE' && title) {
+                            document.getElementById('announcement-text').innerHTML = `🔥 ${title} 🔥 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 🪔 100% Chemical-Free &bull; Zero LLP &bull; 45+ Mins Clean Burn &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 🔥 ${title} 🔥`;
                             document.getElementById('announcement-bar').classList.remove('hidden');
                         }
                     } else if (key === 'seo_meta') {
@@ -529,14 +649,31 @@
                         if(subtitle) { document.getElementById('meta-desc').content = subtitle; document.getElementById('og-desc').content = subtitle; }
                         if(imgUrl) document.getElementById('og-img').content = imgUrl;
                     } else if (key === 'hero_banner') {
-                        if(title) document.getElementById('hero-title').innerHTML = title.replace('Daily Aarti', '<span class="text-amber-400">Daily Aarti</span>');
+                        if(title) document.getElementById('hero-title').innerHTML = title;
                         if(subtitle) document.getElementById('hero-subtitle').innerText = subtitle;
                         if(desc) document.getElementById('hero-desc').innerHTML = desc;
                         if(imgUrl) document.getElementById('hero-bg-img').src = imgUrl;
+                    } else if (key === 'story_banner') {
+                        if(title) document.getElementById('story-title').innerText = title;
+                        if(subtitle) document.getElementById('story-subtitle').innerText = subtitle;
+                        if(desc) document.getElementById('story-desc').innerHTML = desc;
+                        if(imgUrl) document.getElementById('story-bg-img').src = imgUrl;
                     } else if (key === 'config') {
-                        if(title && title.includes('youtube.com')) document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
+                        if(title && String(title).includes('youtube.com')) document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
                         if(subtitle) document.getElementById('whatsapp-link').href = `https://wa.me/${subtitle}`;
                         if(desc) document.getElementById('footer-email').innerText = desc;
+                        if(imgUrl) {
+                            const socials = imgUrl.split('|').map(s => s.trim());
+                            const fb = document.getElementById('social-fb');
+                            const ig = document.getElementById('social-ig');
+                            const yt = document.getElementById('social-yt');
+                            const x = document.getElementById('social-x');
+
+                            if(fb && socials[0] && socials[0].startsWith('http')) { fb.href = socials[0]; fb.style.display = 'flex'; } else if(fb) { fb.style.display = 'none'; }
+                            if(ig && socials[1] && socials[1].startsWith('http')) { ig.href = socials[1]; ig.style.display = 'flex'; } else if(ig) { ig.style.display = 'none'; }
+                            if(yt && socials[2] && socials[2].startsWith('http')) { yt.href = socials[2]; yt.style.display = 'flex'; } else if(yt) { yt.style.display = 'none'; }
+                            if(x && socials[3] && socials[3].startsWith('http')) { x.href = socials[3]; x.style.display = 'flex'; } else if(x) { x.style.display = 'none'; }
+                        }
                     }
                 });
             } catch (e) { console.log('SiteContent load error'); }
@@ -547,18 +684,21 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 const tGrid = document.getElementById('testimonial-grid');
-                tGrid.innerHTML = '';
-                json.table.rows.forEach((row) => {
-                    const quote = row.c[0]?.v || '';
-                    const author = row.c[1]?.v || '';
-                    const location = row.c[2]?.v || '';
-                    tGrid.innerHTML += `
-                        <div class="bg-[#FFFBF5] p-6 sm:p-8 rounded-3xl border border-amber-100 shadow-sm">
-                            <p class="text-stone-700 text-xs sm:text-sm italic mb-4">"${quote}"</p>
-                            <h5 class="font-bold text-[#2D1810] text-xs sm:text-sm">&mdash; ${author}, ${location}</h5>
-                        </div>
-                    `;
-                });
+                if(tGrid) {
+                    tGrid.innerHTML = '';
+                    json.table.rows.forEach((row) => {
+                        const quote = row.c[0]?.v;
+                        if(!quote || String(quote).toLowerCase() === 'quote') return;
+                        const author = row.c[1]?.v || '';
+                        const location = row.c[2]?.v || '';
+                        tGrid.innerHTML += `
+                            <div class="bg-[#FFFBF5] p-6 sm:p-8 rounded-3xl border border-amber-100 shadow-sm">
+                                <p class="text-stone-700 text-xs sm:text-sm italic mb-4">"${quote}"</p>
+                                <h5 class="font-bold text-[#2D1810] text-xs sm:text-sm">&mdash; ${author}, ${location}</h5>
+                            </div>
+                        `;
+                    });
+                }
             } catch (e) { console.log('Testimonials load error'); }
         }
 
@@ -566,6 +706,7 @@
 
         function renderVariantSelector() {
             const container = document.getElementById('variant-selector-container');
+            if(!container) return;
             container.innerHTML = '';
             variantsData.forEach(v => {
                 const isSelected = selectedVariant && selectedVariant.id === v.id;
@@ -593,25 +734,29 @@
             if(selectedVariant.inStock) {
                 stockEl.innerText = '● In Stock & Ready to Dispatch';
                 stockEl.className = 'text-xs font-semibold text-emerald-700 mt-3';
-                buyBtn.disabled = false; cartBtn.disabled = false;
+                if(buyBtn) buyBtn.disabled = false;
+                if(cartBtn) cartBtn.disabled = false;
             } else {
                 stockEl.innerText = '✕ Currently Sold Out';
                 stockEl.className = 'text-xs font-semibold text-red-600 mt-3';
-                buyBtn.disabled = true; cartBtn.disabled = true;
+                if(buyBtn) buyBtn.disabled = true;
+                if(cartBtn) cartBtn.disabled = true;
             }
 
             const mainImg = document.getElementById('main-product-img');
             const thumbContainer = document.getElementById('thumbnail-container');
-            thumbContainer.innerHTML = '';
+            if(thumbContainer) thumbContainer.innerHTML = '';
 
             if(selectedVariant.images.length > 0) {
-                mainImg.src = selectedVariant.images[0];
+                if(mainImg) mainImg.src = selectedVariant.images[0];
                 selectedVariant.images.forEach((imgUrl) => {
-                    thumbContainer.innerHTML += `
-                        <div onclick="document.getElementById('main-product-img').src='${imgUrl}'" class="h-16 sm:h-20 bg-[#F7F2EB] rounded-xl border border-amber-200/80 overflow-hidden cursor-pointer hover:opacity-80 transition flex items-center justify-center p-1.5">
-                            <img src="${imgUrl}" class="max-h-full max-w-full object-contain">
-                        </div>
-                    `;
+                    if(thumbContainer) {
+                        thumbContainer.innerHTML += `
+                            <div onclick="document.getElementById('main-product-img').src='${imgUrl}'" class="h-16 sm:h-20 bg-[#F7F2EB] rounded-xl border border-amber-200/80 overflow-hidden cursor-pointer hover:opacity-80 transition flex items-center justify-center p-1.5">
+                                <img src="${imgUrl}" class="max-h-full max-w-full object-contain">
+                            </div>
+                        `;
+                    }
                 });
             }
             renderVariantSelector();
@@ -621,55 +766,62 @@
         function toggleAccordion(id) {
             const el = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
-            if(el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-                icon.innerText = '▲';
-            } else {
-                el.classList.add('hidden');
-                icon.innerText = '▼';
+            if(el && icon) {
+                if(el.classList.contains('hidden')) {
+                    el.classList.remove('hidden');
+                    icon.innerText = '▲';
+                } else {
+                    el.classList.add('hidden');
+                    icon.innerText = '▼';
+                }
             }
         }
 
         function toggleCartDrawer() {
             const drawer = document.getElementById('cart-drawer');
-            drawer.classList.toggle('hidden');
+            if(drawer) drawer.classList.toggle('hidden');
             updateCartDisplay();
         }
 
         function updateQty(change) {
             cartQty += change;
             if(cartQty < 1) cartQty = 1;
-            document.getElementById('cart-qty').innerText = cartQty;
+            const qtyEl = document.getElementById('cart-qty');
+            if(qtyEl) qtyEl.innerText = cartQty;
             updateCartDisplay();
         }
 
         function removeFromCart() {
             cartQty = 0;
-            document.getElementById('cart-qty').innerText = 0;
+            const qtyEl = document.getElementById('cart-qty');
+            if(qtyEl) qtyEl.innerText = 0;
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
             if(!selectedVariant) return;
-            document.getElementById('cart-badge').innerText = cartQty;
+            const badge = document.getElementById('cart-badge');
+            if(badge) badge.innerText = cartQty;
 
             const displayEl = document.getElementById('cart-item-display');
-            if(cartQty === 0) {
-                displayEl.innerHTML = `
-                    <div class="w-full text-center py-4 text-xs text-stone-500">
-                        Your cart is empty. <button onclick="cartQty=1; updateCartDisplay();" class="text-[#9A3412] font-bold underline ml-1">Restore Item</button>
-                    </div>
-                `;
-            } else {
-                displayEl.innerHTML = `
-                    <img src="${selectedVariant.images[0]}" class="w-14 h-14 sm:w-16 sm:h-16 object-contain bg-white rounded-xl p-1 border border-amber-200">
-                    <div class="flex-1">
-                        <h5 class="font-bold text-sm text-[#2D1810] font-serif">RamJyoti Puja Ghee</h5>
-                        <p class="text-xs text-stone-600">${selectedVariant.size}</p>
-                        <p class="text-xs font-bold text-[#9A3412] mt-1">₹${selectedVariant.price} x ${cartQty}</p>
-                    </div>
-                    <button onclick="removeFromCart()" class="text-red-500 hover:text-red-700 text-xs font-bold p-2" title="Remove item">🗑️</button>
-                `;
+            if(displayEl) {
+                if(cartQty === 0) {
+                    displayEl.innerHTML = `
+                        <div class="w-full text-center py-4 text-xs text-stone-500">
+                            Your cart is empty. <button onclick="cartQty=1; updateCartDisplay();" class="text-[#9A3412] font-bold underline ml-1">Restore Item</button>
+                        </div>
+                    `;
+                } else {
+                    displayEl.innerHTML = `
+                        <img src="${selectedVariant.images[0]}" class="w-14 h-14 sm:w-16 sm:h-16 object-contain bg-white rounded-xl p-1 border border-amber-200">
+                        <div class="flex-1">
+                            <h5 class="font-bold text-sm text-[#2D1810] font-serif">RamJyoti Puja Ghee</h5>
+                            <p class="text-xs text-stone-600">${selectedVariant.size}</p>
+                            <p class="text-xs font-bold text-[#9A3412] mt-1">₹${selectedVariant.price} x ${cartQty}</p>
+                        </div>
+                        <button onclick="removeFromCart()" class="text-red-500 hover:text-red-700 text-xs font-bold p-2" title="Remove item">🗑️</button>
+                    `;
+                }
             }
 
             let subtotal = selectedVariant.price * cartQty;
@@ -679,10 +831,14 @@
                 if(subtotal >= appliedDiscount.minVal) {
                     discountAmt = appliedDiscount.type === 'percentage' ? Math.round((subtotal * appliedDiscount.val) / 100) : appliedDiscount.val;
                 } else {
-                    appliedDiscount = { code: null, type: null, value: 0, minVal: 0 };
-                    document.getElementById('promo-feedback').innerText = 'Promo removed (Min order value not met)';
-                    document.getElementById('promo-feedback').className = 'text-xs font-medium text-red-600';
-                    document.getElementById('promo-feedback').classList.remove('hidden');
+                    appliedDiscount = { code: null, type: null, val: 0, minVal: 0 };
+                    document.getElementById('applied-promo-tag')?.classList.add('hidden');
+                    const fb = document.getElementById('promo-feedback');
+                    if(fb) {
+                        fb.innerText = 'Promo removed (Min order value not met)';
+                        fb.className = 'text-xs font-medium text-red-600';
+                        fb.classList.remove('hidden');
+                    }
                 }
             }
 
@@ -692,56 +848,77 @@
             let total = subtotal - discountAmt + shippingFee;
             if(total < 0) total = 0;
 
-            document.getElementById('summary-subtotal').innerText = `₹${subtotal}`;
-            document.getElementById('summary-shipping').innerHTML = shippingText;
+            const subEl = document.getElementById('summary-subtotal');
+            const shipEl = document.getElementById('summary-shipping');
+            const totEl = document.getElementById('summary-total');
+            if(subEl) subEl.innerText = `₹${subtotal}`;
+            if(shipEl) shipEl.innerHTML = shippingText;
 
+            const discRow = document.getElementById('summary-discount-row');
+            const discEl = document.getElementById('summary-discount');
             if(discountAmt > 0) {
-                document.getElementById('summary-discount').innerText = `-₹${discountAmt}`;
-                document.getElementById('summary-discount-row').classList.remove('hidden');
+                if(discEl) discEl.innerText = `-₹${discountAmt}`;
+                if(discRow) discRow.classList.remove('hidden');
             } else {
-                document.getElementById('summary-discount-row').classList.add('hidden');
+                if(discRow) discRow.classList.add('hidden');
             }
-            document.getElementById('summary-total').innerText = `₹${total}`;
+            if(totEl) totEl.innerText = `₹${total}`;
         }
 
         function addToCart() { toggleCartDrawer(); }
         function buyNow() { toggleCartDrawer(); }
 
         function copyAndApplyPromo(code) {
-            document.getElementById('promo-input').value = code;
+            const input = document.getElementById('promo-input');
+            if(input) input.value = code;
             applyPromoCode();
         }
 
         function applyPromoCode() {
-            const inputCode = document.getElementById('promo-input').value.trim().toUpperCase();
+            const inputEl = document.getElementById('promo-input');
+            if(!inputEl) return;
+            const inputCode = inputEl.value.trim().toUpperCase();
             const found = promoCodesData.find(p => p.code === inputCode);
             const feedbackEl = document.getElementById('promo-feedback');
+            const appliedTag = document.getElementById('applied-promo-tag');
+            const appliedText = document.getElementById('applied-promo-text');
 
             if(found) {
                 let subtotal = selectedVariant.price * cartQty;
                 if(subtotal >= found.minVal) {
                     appliedDiscount = { code: found.code, type: found.type, val: found.val, minVal: found.minVal };
-                    feedbackEl.innerText = `Success! Code ${found.code} applied.`;
-                    feedbackEl.className = 'text-xs font-medium text-emerald-700';
-                    feedbackEl.classList.remove('hidden');
+                    if(appliedText) appliedText.innerText = `Applied: ${found.code} (${found.type === 'percentage' ? found.val + '%' : '₹' + found.val} OFF)`;
+                    if(appliedTag) appliedTag.classList.remove('hidden');
+                    if(feedbackEl) feedbackEl.classList.add('hidden');
                     updateCartDisplay();
                 } else {
-                    feedbackEl.innerText = `Add ₹${found.minVal - subtotal} more to unlock ${found.code}`;
+                    if(feedbackEl) {
+                        feedbackEl.innerText = `Add ₹${found.minVal - subtotal} more to unlock ${found.code}`;
+                        feedbackEl.className = 'text-xs font-medium text-red-600';
+                        feedbackEl.classList.remove('hidden');
+                    }
+                }
+            } else {
+                if(feedbackEl) {
+                    feedbackEl.innerText = 'Invalid or expired promo code.';
                     feedbackEl.className = 'text-xs font-medium text-red-600';
                     feedbackEl.classList.remove('hidden');
                 }
-            } else {
-                feedbackEl.innerText = 'Invalid or expired promo code.';
-                feedbackEl.className = 'text-xs font-medium text-red-600';
-                feedbackEl.classList.remove('hidden');
             }
         }
 
-        // Abandoned Cart Capture Function
+        function removePromoCode() {
+            appliedDiscount = { code: null, type: null, val: 0, minVal: 0 };
+            document.getElementById('promo-input').value = '';
+            document.getElementById('applied-promo-tag')?.classList.add('hidden');
+            document.getElementById('promo-feedback')?.classList.add('hidden');
+            updateCartDisplay();
+        }
+
         async function captureAbandonedCart() {
-            const name = document.getElementById('checkout-name').value.trim();
-            const phone = document.getElementById('checkout-phone').value.trim();
-            const email = document.getElementById('checkout-email').value.trim();
+            const name = document.getElementById('checkout-name')?.value.trim();
+            const phone = document.getElementById('checkout-phone')?.value.trim();
+            const email = document.getElementById('checkout-email')?.value.trim();
 
             if(!phone && !email) return;
 
@@ -766,17 +943,18 @@
             } catch(e) { console.log('Abandoned cart log error'); }
         }
 
-        // Simplified Order Tracker Modal
-        function openTrackerModal() { document.getElementById('tracker-modal').classList.remove('hidden'); }
-        function closeTrackerModal() { document.getElementById('tracker-modal').classList.add('hidden'); }
+        function openTrackerModal() { document.getElementById('tracker-modal')?.classList.remove('hidden'); }
+        function closeTrackerModal() { document.getElementById('tracker-modal')?.classList.add('hidden'); }
 
         async function trackOrder() {
-            const orderId = document.getElementById('track-order-id').value.trim().toUpperCase();
+            const orderId = document.getElementById('track-order-id')?.value.trim().toUpperCase();
             const resultEl = document.getElementById('track-result');
             if(!orderId) { alert('Please enter an Order ID'); return; }
 
-            resultEl.innerHTML = 'Searching orders...';
-            resultEl.classList.remove('hidden');
+            if(resultEl) {
+                resultEl.innerHTML = 'Searching orders...';
+                resultEl.classList.remove('hidden');
+            }
 
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Orders`);
@@ -786,7 +964,7 @@
 
                 json.table.rows.forEach(row => {
                     const id = row.c[1]?.v || '';
-                    if(id.toUpperCase() === orderId) {
+                    if(String(id).toUpperCase() === orderId) {
                         foundOrder = {
                             date: row.c[0]?.v || '',
                             name: row.c[2]?.v || '',
@@ -797,33 +975,40 @@
                     }
                 });
 
-                if(foundOrder) {
+                if(foundOrder && resultEl) {
                     resultEl.innerHTML = `
                         <p class="font-bold text-emerald-800">✅ Order Found: ${orderId}</p>
                         <p><strong>Customer:</strong> ${foundOrder.name}</p>
                         <p><strong>Item:</strong> ${foundOrder.variant} (Qty: ${foundOrder.qty})</p>
                         <p><strong>Status:</strong> <span class="text-amber-900 font-semibold">${foundOrder.status}</span></p>
                     `;
-                } else {
+                } else if(resultEl) {
                     resultEl.innerHTML = `<p class="text-red-600 font-medium">Order ID "${orderId}" not found. Please verify your order confirmation SMS/Email.</p>`;
                 }
             } catch(e) {
-                resultEl.innerHTML = `<p class="text-red-600">Unable to fetch order status. Please try again later.</p>`;
+                if(resultEl) resultEl.innerHTML = `<p class="text-red-600">Unable to fetch order status. Please try again later.</p>`;
             }
         }
 
         async function startRazorpayCheckout() {
             if(cartQty <= 0) { alert('Your cart is empty.'); return; }
-            const name = document.getElementById('checkout-name').value.trim();
-            const phone = document.getElementById('checkout-phone').value.trim();
-            const email = document.getElementById('checkout-email').value.trim();
-            const address = document.getElementById('checkout-address').value.trim();
-            const gstin = document.getElementById('checkout-gstin').value.trim();
+            const name = document.getElementById('checkout-name')?.value.trim();
+            const phone = document.getElementById('checkout-phone')?.value.trim();
+            const email = document.getElementById('checkout-email')?.value.trim();
+            
+            const addr1 = document.getElementById('checkout-addr1')?.value.trim();
+            const city = document.getElementById('checkout-city')?.value.trim();
+            const district = document.getElementById('checkout-district')?.value.trim();
+            const state = document.getElementById('checkout-state')?.value.trim();
+            const pincode = document.getElementById('checkout-pincode')?.value.trim();
+            const gstin = document.getElementById('checkout-gstin')?.value.trim();
 
-            if(!name || !phone || !email || !address) {
-                alert('Please fill in all required shipping details.');
+            if(!name || !phone || !email || !addr1 || !city || !district || !state || !pincode) {
+                alert('Please fill in all required contact and address details.');
                 return;
             }
+
+            const fullAddress = `${addr1}, City: ${city}, District: ${district}, State: ${state} - Pincode: ${pincode}`;
 
             let subtotal = selectedVariant.price * cartQty;
             let discountAmt = 0;
@@ -851,7 +1036,7 @@
                         name: name,
                         phone: phone,
                         email: email,
-                        address: address,
+                        address: fullAddress,
                         variant: selectedVariant.size,
                         quantity: cartQty,
                         total: totalAmount,
@@ -881,13 +1066,12 @@
         async function submitInquiry(event) {
             event.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
-            submitBtn.innerText = 'Sending...';
-            submitBtn.disabled = true;
+            if(submitBtn) { submitBtn.innerText = 'Sending...'; submitBtn.disabled = true; }
 
-            const name = document.getElementById('inquiry-name').value.trim();
-            const phone = document.getElementById('inquiry-phone').value.trim();
-            const email = document.getElementById('inquiry-email').value.trim();
-            const message = document.getElementById('inquiry-message').value.trim();
+            const name = document.getElementById('inquiry-name')?.value.trim();
+            const phone = document.getElementById('inquiry-phone')?.value.trim();
+            const email = document.getElementById('inquiry-email')?.value.trim();
+            const message = document.getElementById('inquiry-message')?.value.trim();
 
             const payload = { name, phone, email, message };
 
@@ -901,32 +1085,31 @@
 
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 if (isMobile) {
-                    const waHref = document.getElementById('whatsapp-link').href;
+                    const waHref = document.getElementById('whatsapp-link')?.href || 'https://wa.me/919903666634';
                     const waText = encodeURIComponent(`Hello RamJyoti Team,\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`);
                     window.open(`${waHref}?text=${waText}`, '_blank');
                 } else {
                     alert(`Thank you, ${name}! Your inquiry has been sent successfully.`);
                 }
-                document.getElementById('contact-form').reset();
+                document.getElementById('contact-form')?.reset();
             } catch (error) {
                 alert('Thank you! Your inquiry has been submitted.');
             } finally {
-                submitBtn.innerText = 'Send Message';
-                submitBtn.disabled = false;
+                if(submitBtn) { submitBtn.innerText = 'Send Message'; submitBtn.disabled = false; }
             }
         }
 
         const legalTexts = {
             terms: { title: "Terms & Conditions", content: "Welcome to RamJyoti Puja Ghee. By purchasing our products, you agree to the terms below. RamJyoti Puja Ghee is strictly formulated as a burning medium (Deep Dravya) for external use and prayer rituals only. It is NOT fit for cooking or edible consumption. All orders are subject to availability and confirmation of payment via Razorpay." },
             refund: { title: "Refund & Cancellation Policy", content: "Due to the ritualistic and consumable nature of our products, returns are only accepted if the product arrives damaged or leaking upon delivery. Customers must notify our support team at care@ramjyoti.com within 48 hours of delivery with photographic evidence. Approved refunds are processed back to the original payment method within 5-7 business days." },
-            privacy: { title: "Privacy Policy", content: "Versaana Manufacturing respects your privacy. We collect personal information such as name, shipping address, phone number, and email solely for order fulfillment and customer support via our secure checkout. We never share or sell your data to third parties." }
+            privacy: { title: "Privacy Policy", content: "Versaana Manufacturing respects your privacy. We collect personal information such as name, shipping address, phone number, and email solely for order fulfillment, cookie preferences, and customer support via our secure checkout. We never share or sell your data to third parties." }
         };
         function openModal(type) {
             document.getElementById('modal-title').innerText = legalTexts[type].title;
             document.getElementById('modal-content').innerText = legalTexts[type].content;
-            document.getElementById('legal-modal').classList.remove('hidden');
+            document.getElementById('legal-modal')?.classList.remove('hidden');
         }
-        function closeModal() { document.getElementById('legal-modal').classList.add('hidden'); }
+        function closeModal() { document.getElementById('legal-modal')?.classList.add('hidden'); }
     </script>
 </body>
 </html>
