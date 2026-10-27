@@ -68,7 +68,7 @@
     <!-- Immersive Full-Screen Hero Banner -->
     <section id="hero-section" class="relative min-h-[80vh] sm:min-h-[90vh] flex items-center bg-[#2D1810] text-white overflow-hidden pt-12 sm:pt-0">
         <div class="absolute inset-0 z-0">
-           <img id="hero-bg-img" src="https://i.imgur.com/dz7yTW9.jpeg" alt="Banner Background" class="w-full h-full object-cover opacity-00">
+            <img id="hero-bg-img" src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover opacity-45">
             <div class="absolute inset-0 bg-gradient-to-r from-[#2D1810]/95 via-[#2D1810]/70 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full py-20 sm:py-32">
@@ -565,10 +565,24 @@
             document.getElementById('cookie-banner')?.classList.add('hidden');
         }
 
+        // Helper to map columns dynamically by header names
+        function getColMap(cols) {
+            const map = {};
+            cols.forEach((col, index) => {
+                const label = String(col.label || '').trim().toLowerCase();
+                if(label.includes('key')) map.key = index;
+                else if(label.includes('title') && !label.includes('sub')) map.title = index;
+                else if(label.includes('subtitle')) map.subtitle = index;
+                else if(label.includes('image') || label.includes('url')) map.image = index;
+                else if(label.includes('desc')) map.desc = index;
+            });
+            return map;
+        }
+
         async function loadStoreData() {
             checkCookies();
 
-            // 1. Load Products
+            // 1. Load Products Tab dynamically
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Products`);
                 const text = await res.text();
@@ -593,7 +607,7 @@
                 }
             } catch (e) { console.log('Products load error'); }
 
-            // 2. Load PromoCodes
+            // 2. Load PromoCodes Tab dynamically
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=PromoCodes`);
                 const text = await res.text();
@@ -642,17 +656,23 @@
                 });
             } catch (e) { console.log('PromoCodes load error'); }
 
-            // 3. Load SiteContent (Robust Social & Config Parser)
+            // 3. Load SiteContent Tab dynamically (Zero index-shift risk)
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=SiteContent`);
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
+                
+                const colMap = getColMap(json.table.cols);
+                const getVal = (row, idx) => row.c[idx]?.v || '';
+
                 json.table.rows.forEach((row) => {
-                    const key = String(row.c[0]?.v || '').trim().toLowerCase();
-                    const title = row.c[1]?.v || '';
-                    const subtitle = row.c[2]?.v || '';
-                    const imgUrl = row.c[3]?.v || '';
-                    const desc = row.c[4]?.v || '';
+                    const key = String(getVal(row, colMap.key ?? 0) || row.c[0]?.v || '').trim().toLowerCase();
+                    if(!key || key.includes('key')) return;
+
+                    const title = String(getVal(row, colMap.title ?? 1) || row.c[1]?.v || '');
+                    const subtitle = String(getVal(row, colMap.subtitle ?? 2) || row.c[2]?.v || '');
+                    const imgUrl = String(getVal(row, colMap.image ?? 3) || row.c[3]?.v || '');
+                    const desc = String(getVal(row, colMap.desc ?? 4) || row.c[4]?.v || '');
 
                     if (key === 'gst_config') {
                         if(!isNaN(Number(title))) storeGstRate = Number(title);
@@ -702,7 +722,7 @@
                 });
             } catch (e) { console.log('SiteContent load error'); }
 
-            // 4. Load Testimonials
+            // 4. Load Testimonials Tab dynamically
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Testimonials`);
                 const text = await res.text();
