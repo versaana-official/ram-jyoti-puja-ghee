@@ -565,24 +565,10 @@
             document.getElementById('cookie-banner')?.classList.add('hidden');
         }
 
-        // Helper to map columns dynamically by header names
-        function getColMap(cols) {
-            const map = {};
-            cols.forEach((col, index) => {
-                const label = String(col.label || '').trim().toLowerCase();
-                if(label.includes('key')) map.key = index;
-                else if(label.includes('title') && !label.includes('sub')) map.title = index;
-                else if(label.includes('subtitle')) map.subtitle = index;
-                else if(label.includes('image') || label.includes('url')) map.image = index;
-                else if(label.includes('desc')) map.desc = index;
-            });
-            return map;
-        }
-
         async function loadStoreData() {
             checkCookies();
 
-            // 1. Load Products Tab dynamically
+            // 1. Load Products Tab
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Products`);
                 const text = await res.text();
@@ -605,9 +591,9 @@
                     selectVariant(variantsData[0].id);
                     renderVariantSelector();
                 }
-            } catch (e) { console.log('Products load error'); }
+            } catch (e) { console.log('Products load error', e); }
 
-            // 2. Load PromoCodes Tab dynamically
+            // 2. Load PromoCodes Tab
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=PromoCodes`);
                 const text = await res.text();
@@ -654,25 +640,22 @@
                         }
                     }
                 });
-            } catch (e) { console.log('PromoCodes load error'); }
+            } catch (e) { console.log('PromoCodes load error', e); }
 
-            // 3. Load SiteContent Tab dynamically (Zero index-shift risk)
+            // 3. Load SiteContent Tab (Direct Foolproof Row Parsing)
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=SiteContent`);
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 
-                const colMap = getColMap(json.table.cols);
-                const getVal = (row, idx) => row.c[idx]?.v || '';
-
                 json.table.rows.forEach((row) => {
-                    const key = String(getVal(row, colMap.key ?? 0) || row.c[0]?.v || '').trim().toLowerCase();
+                    const key = String(row.c[0]?.v || '').trim().toLowerCase();
                     if(!key || key.includes('key')) return;
 
-                    const title = String(getVal(row, colMap.title ?? 1) || row.c[1]?.v || '');
-                    const subtitle = String(getVal(row, colMap.subtitle ?? 2) || row.c[2]?.v || '');
-                    const imgUrl = String(getVal(row, colMap.image ?? 3) || row.c[3]?.v || '');
-                    const desc = String(getVal(row, colMap.desc ?? 4) || row.c[4]?.v || '');
+                    const title = String(row.c[1]?.v || '');
+                    const subtitle = String(row.c[2]?.v || '');
+                    const imgUrl = String(row.c[3]?.v || '');
+                    const desc = String(row.c[4]?.v || '');
 
                     if (key === 'gst_config') {
                         if(!isNaN(Number(title))) storeGstRate = Number(title);
@@ -720,9 +703,9 @@
                         }
                     }
                 });
-            } catch (e) { console.log('SiteContent load error'); }
+            } catch (e) { console.log('SiteContent load error', e); }
 
-            // 4. Load Testimonials Tab dynamically
+            // 4. Load Testimonials Tab
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Testimonials`);
                 const text = await res.text();
@@ -743,7 +726,7 @@
                         `;
                     });
                 }
-            } catch (e) { console.log('Testimonials load error'); }
+            } catch (e) { console.log('Testimonials load error', e); }
         }
 
         loadStoreData();
