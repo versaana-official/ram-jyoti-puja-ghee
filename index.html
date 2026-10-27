@@ -557,4 +557,96 @@
     }
 
     loadSiteData();
+<script>
+    const SHEET_ID = '1EBFI0dkj-zvkg8m52IYq8nb-CzRdyQEhEamFw7Y6nP0';
+
+    async function loadSiteData() {
+        // 1. Load Products
+        try {
+            const productsUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Products`;
+            const prodRes = await fetch(productsUrl);
+            const prodText = await prodRes.text();
+            const prodJson = JSON.parse(prodText.substring(47, prodText.length - 2));
+            const prodRows = prodJson.table.rows;
+
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            prodRows.forEach((row) => {
+                const name = row.c[1] ? row.c[1].v : 'RamJyoti Puja Ghee';
+                const price = row.c[2] ? row.c[2].v : '0';
+                const size = row.c[3] ? row.c[3].v : '';
+                const tag = row.c[4] ? row.c[4].v : 'Puja Pack';
+                const image = row.c[5] ? row.c[5].v : 'https://i.ibb.co/3kW2X9y/ramjyoti-jar.jpg';
+                const desc = row.c[6] ? row.c[6].v : '';
+
+                grid.innerHTML += `
+                    <div class="bg-white rounded-[2rem] border border-stone-200/80 overflow-hidden flex flex-col justify-between hover:shadow-xl transition duration-300">
+                        <div class="p-8 bg-[#FAF7F2] flex justify-center items-center h-60">
+                            <img src="${image}" alt="${name} ${size}" class="max-h-full object-contain drop-shadow-md">
+                        </div>
+                        <div class="p-8 pb-4">
+                            <span class="text-[10px] uppercase font-bold tracking-widest bg-amber-100 text-amber-900 px-3 py-1 rounded-full">${tag}</span>
+                            <h3 class="text-xl font-extrabold text-stone-900 mt-4">${size}</h3>
+                            <p class="text-2xl font-extrabold text-amber-900 mt-1">₹${price}</p>
+                            <p class="text-xs text-stone-500 mt-2 leading-relaxed">${desc}</p>
+                        </div>
+                        <div class="p-8 pt-0">
+                            <button onclick="alert('Proceeding to Razorpay checkout for ${size} (₹${price})')" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-3.5 rounded-2xl transition text-sm shadow-sm">Buy Now</button>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (error) {
+            console.error('Error loading products from sheet:', error);
+            document.getElementById('product-grid').innerHTML = `
+                <div class="col-span-full text-center py-8 text-red-600 text-sm">
+                    Unable to load products. Please check if your "Products" tab exists and is public.
+                </div>
+            `;
+        }
+
+        // 2. Load Site Content (Banner & USPs)
+        try {
+            const contentUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=SiteContent`;
+            const contentRes = await fetch(contentUrl);
+            const contentText = await contentRes.text();
+            const contentJson = JSON.parse(contentText.substring(47, contentText.length - 2));
+            const contentRows = contentJson.table.rows;
+
+            contentRows.forEach((row) => {
+                const key = row.c[0] ? row.c[0].v : '';
+                const title = row.c[1] ? row.c[1].v : '';
+                const subtitle = row.c[2] ? row.c[2].v : '';
+                const imgUrl = row.c[3] ? row.c[3].v : '';
+                const desc = row.c[4] ? row.c[4].v : '';
+
+                if (key === 'hero_banner') {
+                    if(title) document.getElementById('hero-title').innerHTML = title.replace('Daily Aarti', '<span class="text-amber-900">Daily Aarti</span>');
+                    if(subtitle) document.getElementById('hero-subtitle').innerText = subtitle;
+                    if(desc) document.getElementById('hero-desc').innerHTML = desc;
+                    if(imgUrl) document.getElementById('hero-img').src = imgUrl;
+                } else if (key === 'usp_1') {
+                    if(title) document.getElementById('usp1-title').innerText = title;
+                    if(subtitle) document.getElementById('usp1-sub').innerText = subtitle;
+                    if(desc) document.getElementById('usp1-desc').innerText = desc;
+                    if(imgUrl) document.getElementById('usp1-img').src = imgUrl;
+                } else if (key === 'usp_2') {
+                    if(title) document.getElementById('usp2-title').innerText = title;
+                    if(subtitle) document.getElementById('usp2-sub').innerText = subtitle;
+                    if(desc) document.getElementById('usp2-desc').innerText = desc;
+                    if(imgUrl) document.getElementById('usp2-img').src = imgUrl;
+                } else if (key === 'usp_3') {
+                    if(title) document.getElementById('usp3-title').innerText = title;
+                    if(subtitle) document.getElementById('usp3-sub').innerText = subtitle;
+                    if(desc) document.getElementById('usp3-desc').innerText = desc;
+                    if(imgUrl) document.getElementById('usp3-img').src = imgUrl;
+                }
+            });
+        } catch (error) {
+            console.error('Error loading site content from sheet:', error);
+        }
+    }
+
+    loadSiteData();
 </script>
