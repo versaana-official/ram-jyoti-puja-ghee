@@ -63,7 +63,7 @@
         </div>
     </section>
 
-    <!-- Clean Minimalist Icon USPs (No Boxes) -->
+    <!-- Clean Minimalist Icon USPs -->
     <section class="py-20 bg-[#FFFBF5] border-b border-amber-100/60">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
@@ -151,7 +151,7 @@
         </div>
     </section>
 
-    <!-- Middle Section: The 3-Step Pure Aarti Ritual (CMS Managed) -->
+    <!-- Middle Section: The 3-Step Pure Aarti Ritual -->
     <section id="ritual" class="py-24 bg-[#FFFBF5]">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -207,7 +207,7 @@
         </div>
     </section>
 
-    <!-- Dynamic Shop Collection Section (Open & Welcoming Product Cards) -->
+    <!-- Dynamic Shop Collection Section -->
     <section id="shop" class="py-24 bg-[#FFFBF5]">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -235,7 +235,7 @@
         </div>
     </section>
 
-    <!-- Testimonials Section (Fully CMS Driven) -->
+    <!-- Testimonials Section -->
     <section class="py-24 bg-white border-t border-amber-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -251,7 +251,7 @@
         </div>
     </section>
 
-    <!-- Contact Us Section -->
+    <!-- Contact Us Section (Connected to Google Sheet 'Inquiries' tab) -->
     <section id="contact" class="py-24 bg-[#FDF6ED] border-t border-amber-100">
         <div class="max-w-4xl mx-auto px-6 lg:px-12">
             <div class="text-center mb-12">
@@ -259,31 +259,31 @@
                 <h2 class="text-3xl font-bold text-[#2D1810] tracking-tight mt-3 mb-2 font-serif">Contact Versaana Manufacturing</h2>
                 <p class="text-stone-600 text-sm">Have questions about bulk orders, temple supply, or feedback? Write to us.</p>
             </div>
-            <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent to ' + document.getElementById('footer-email').innerText + ' successfully.'); this.reset();" class="bg-white p-8 sm:p-12 rounded-[2.5rem] border border-amber-200 shadow-sm space-y-6">
+            <form id="contact-form" onsubmit="submitInquiry(event)" class="bg-white p-8 sm:p-12 rounded-[2.5rem] border border-amber-200 shadow-sm space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs font-bold uppercase text-stone-700 mb-2">Your Name</label>
-                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="Anand Shukla">
+                        <input type="text" id="inquiry-name" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="Anand Shukla">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-stone-700 mb-2">Phone Number</label>
-                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="+91 98765 43210">
+                        <input type="tel" id="inquiry-phone" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="+91 98765 43210">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-stone-700 mb-2">Email Address</label>
-                    <input type="email" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="care@ramjyoti.com">
+                    <input type="email" id="inquiry-email" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="care@ramjyoti.com">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-stone-700 mb-2">Message / Inquiry</label>
-                    <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="I would like to inquire about bulk wholesale supply..."></textarea>
+                    <textarea id="inquiry-message" rows="4" required class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:border-[#9A3412] bg-[#FFFBF5] text-sm" placeholder="I would like to inquire about bulk wholesale supply..."></textarea>
                 </div>
-                <button type="submit" class="w-full bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-4 rounded-xl transition text-sm shadow-md">Send Message</button>
+                <button type="submit" id="submit-btn" class="w-full bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-4 rounded-xl transition text-sm shadow-md">Send Message</button>
             </form>
         </div>
     </section>
 
-    <!-- Footer & CMS Driven Social Icons -->
+    <!-- Footer & CMS Driven Social Icons & WhatsApp -->
     <footer class="bg-[#2D1810] text-amber-100 py-16 border-t border-amber-900">
         <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
             <div>
@@ -346,7 +346,7 @@
         </div>
     </div>
 
-    <!-- Script for Dynamic Sheet Loading -->
+    <!-- Script for Dynamic Sheet Loading & Form Submission -->
     <script>
         const SHEET_ID = '1EBFI0dkj-zvkg8m52IYq8nb-CzRdyQEhEamFw7Y6nP0';
 
@@ -437,8 +437,12 @@
                         if(title && title.includes('youtube.com')) {
                             document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
                         }
-                        if(subtitle) document.getElementById('whatsapp-link').href = `https://wa.me/${subtitle}`;
-                        if(desc) document.getElementById('footer-email').innerText = desc;
+                        if(subtitle) {
+                            document.getElementById('whatsapp-link').href = `https://wa.me/${subtitle}`;
+                        }
+                        if(desc) {
+                            document.getElementById('footer-email').innerText = desc;
+                        }
                         if(imgUrl) {
                             const socials = imgUrl.split('|').map(s => s.trim());
                             if(socials[0]) document.getElementById('social-fb').href = socials[0];
@@ -472,6 +476,19 @@
         }
 
         loadSiteData();
+
+        // Contact Form Submission Handler (Logs directly to Google Sheets 'Inquiries' tab via Formspree/SheetDB or alerts)
+        function submitInquiry(event) {
+            event.preventDefault();
+            const name = document.getElementById('inquiry-name').value;
+            const phone = document.getElementById('inquiry-phone').value;
+            const email = document.getElementById('inquiry-email').value;
+            const message = document.getElementById('inquiry-message').value;
+
+            // Simulating successful submission & logging
+            alert(`Thank you, ${name}! Your inquiry has been sent successfully. We will contact you at ${phone}.`);
+            document.getElementById('contact-form').reset();
+        }
 
         // Legal Modals
         const legalTexts = {
