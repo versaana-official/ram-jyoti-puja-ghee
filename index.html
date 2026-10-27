@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee</title>
+    <title id="meta-title">RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee</title>
+    <meta id="meta-desc" name="description" content="Pure Golden Flame for Your Daily Aarti. Zero LLP, Zero Mineral Oils, Soot-Free 45+ Min Burn Time.">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" id="og-title" content="RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee">
+    <meta property="og:description" id="og-desc" content="Pure Golden Flame for Your Daily Aarti. Zero LLP, Zero Mineral Oils, Soot-Free 45+ Min Burn Time.">
+    <meta property="og:image" id="og-img" content="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=630">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,9 +22,9 @@
 </head>
 <body class="antialiased selection:bg-amber-200 selection:text-amber-900">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-[#9A3412] text-amber-50 text-xs py-2.5 px-4 text-center font-medium tracking-widest uppercase relative z-50">
-        🪔 100% Chemical-Free &bull; Zero LLP & Mineral Oils &bull; 45+ Mins Clean Burn
+    <!-- Top Announcement Bar (Dynamic from SiteContent) -->
+    <div id="announcement-bar" class="bg-[#9A3412] text-amber-50 text-xs py-2.5 px-4 text-center font-medium tracking-widest uppercase relative z-50 hidden">
+        <span id="announcement-text">🪔 100% Chemical-Free &bull; Zero LLP & Mineral Oils &bull; 45+ Mins Clean Burn</span>
     </div>
 
     <!-- Header / Navbar -->
@@ -28,13 +35,16 @@
                 <span class="text-[10px] uppercase font-bold tracking-widest bg-white/20 text-white backdrop-blur-md px-2.5 py-0.5 rounded-full">Puja Ghee</span>
             </div>
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-white/90 drop-shadow">
+                <a href="#product-section" class="hover:text-amber-200 transition">Shop Product</a>
                 <a href="#usps" class="hover:text-amber-200 transition">Purity Standards</a>
                 <a href="#ritual" class="hover:text-amber-200 transition">Ritual</a>
-                <a href="#shop" class="hover:text-amber-200 transition">Collection</a>
                 <a href="#story" class="hover:text-amber-200 transition">Our Story</a>
                 <a href="#contact" class="hover:text-amber-200 transition">Contact</a>
             </nav>
-            <a href="#shop" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-6 py-2.5 rounded-full text-sm transition shadow-lg">Shop Collection</a>
+            <button onclick="toggleCartDrawer()" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-6 py-2.5 rounded-full text-sm transition shadow-lg flex items-center space-x-2">
+                <span>🛒 Cart</span>
+                <span id="cart-badge" class="bg-[#9A3412] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </button>
         </div>
     </header>
 
@@ -56,98 +66,149 @@
                     Formulated cleanly with <strong>zero Light Liquid Paraffin (LLP)</strong>, zero mineral oils, and zero waxes. Enjoy a peaceful 45+ minute bright flame that leaves your temple walls spotless.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#shop" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-4 rounded-full transition text-center text-sm shadow-xl">Shop Now</a>
+                    <a href="#product-section" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-4 rounded-full transition text-center text-sm shadow-xl">Select Size & Buy</a>
                     <a href="#usps" class="bg-transparent hover:bg-white/10 text-white border border-white/40 font-semibold px-8 py-4 rounded-full transition text-center text-sm backdrop-blur-sm">Our Purity Promise</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Master Single Product View with Multi-Angle Gallery & Accordions -->
+    <section id="product-section" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                
+                <!-- Left: Multi-Angle Statutory Label Image Gallery -->
+                <div class="space-y-4 sticky top-28">
+                    <div class="bg-[#F7F2EB] rounded-3xl overflow-hidden h-[450px] sm:h-[550px] flex items-center justify-center border border-amber-100 shadow-inner relative">
+                        <img id="main-product-img" src="" alt="RamJyoti Puja Ghee" class="max-h-full max-w-full object-contain p-4 transition duration-300">
+                        <span class="absolute top-4 left-4 bg-[#9A3412] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest" id="product-tag-badge">Starter Pack</span>
+                    </div>
+                    <!-- Thumbnails (4-5 Angles for Statutory Label Inspection) -->
+                    <div id="thumbnail-container" class="grid grid-cols-4 gap-4">
+                        <!-- Populated dynamically via script -->
+                    </div>
+                    <p class="text-[11px] text-stone-500 text-center italic mt-2">💡 Tip: Tap thumbnails to inspect front label, statutory back-label declarations, and texture.</p>
+                </div>
+
+                <!-- Right: Variant Selection, Pricing & Accordion Specs -->
+                <div>
+                    <span class="text-xs font-bold text-[#9A3412] uppercase tracking-widest bg-amber-100/70 px-3.5 py-1.5 rounded-full">Versaana Manufacturing</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-[#2D1810] tracking-tight mt-3 mb-2 font-serif">RamJyoti Pure Chemical-Free Puja Ghee</h2>
+                    <div class="flex items-baseline space-x-4 mb-6">
+                        <span id="product-price" class="text-3xl font-bold text-[#9A3412]">₹45</span>
+                        <span class="text-xs text-stone-500 bg-stone-100 px-3 py-1 rounded-full">Inclusive of 18% GST</span>
+                    </div>
+                    <p id="product-desc" class="text-stone-600 text-sm leading-relaxed mb-8">Daily Aarti Pack formulated cleanly for sacred home mandirs with zero LLP or industrial white oils.</p>
+
+                    <!-- Variant Size Selector -->
+                    <div class="mb-8">
+                        <label class="block text-xs font-bold uppercase text-stone-700 mb-3">Select Pack Size:</label>
+                        <div id="variant-selector-container" class="flex flex-wrap gap-3">
+                            <!-- Populated dynamically from Sheets -->
+                        </div>
+                        <p id="stock-status" class="text-xs font-semibold text-emerald-700 mt-3">● In Stock & Ready to Dispatch</p>
+                    </div>
+
+                    <!-- Add to Cart & Buy Now Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                        <button onclick="addToCart()" id="add-to-cart-btn" class="flex-1 bg-[#2D1810] hover:bg-black text-white font-bold py-4 rounded-full transition text-sm shadow-md">Add to Cart</button>
+                        <button onclick="buyNow()" id="buy-now-btn" class="flex-1 bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-4 rounded-full transition text-sm shadow-lg">Buy Now</button>
+                    </div>
+
+                    <!-- Dynamic Promo Code Showcase Box -->
+                    <div class="bg-[#FFFBF5] border border-amber-200/80 rounded-2xl p-6 mb-8">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] mb-3">🏷️ Active Store Offers & Coupons</h4>
+                        <div id="promo-showcase-list" class="space-y-3">
+                            <!-- Populated from PromoCodes tab -->
+                        </div>
+                    </div>
+
+                    <!-- Little Karma Co. Style Accordion Details -->
+                    <div class="border-t border-amber-200/60 divide-y divide-amber-200/60">
+                        <!-- Accordion 1 -->
+                        py-4
+                        <div class="py-4">
+                            <button onclick="toggleAccordion('acc-1')" class="w-full flex justify-between items-center text-left font-bold text-[#2D1810] text-sm">
+                                <span class="flex items-center space-x-2"><span>💬</span><span>Description & Purity Standards</span></span>
+                                <span id="icon-acc-1">▼</span>
+                            </button>
+                            <div id="acc-1" class="hidden text-xs text-stone-600 mt-3 leading-relaxed space-y-2">
+                                <p>RamJyoti Puja Ghee is specially formulated for sacred home mandirs and temple rituals. Unlike commercial oils adulterated with toxic mineral oils, our product maintains a pristine golden hue and natural aroma.</p>
+                            </div>
+                        </div>
+                        <!-- Accordion 2 -->
+                        <div class="py-4">
+                            <button onclick="toggleAccordion('acc-2')" class="w-full flex justify-between items-center text-left font-bold text-[#2D1810] text-sm">
+                                <span class="flex items-center space-x-2"><span>🌿</span><span>Ingredients & Safety</span></span>
+                                <span id="icon-acc-2">▼</span>
+                            </button>
+                            <div id="acc-2" class="hidden text-xs text-stone-600 mt-3 leading-relaxed space-y-2">
+                                <p><strong>Ingredients:</strong> Premium vegetable fat blend, natural butter essence, approved colors. Absolute <strong>zero Light Liquid Paraffin (LLP)</strong>, zero paraffin wax, and zero petroleum distillates.</p>
+                                <p class="text-amber-900 font-medium">⚠️ Caution: Strictly for external burning use (Deep Dravya) in prayer rituals only. Not for human consumption or cooking.</p>
+                            </div>
+                        </div>
+                        <!-- Accordion 3 -->
+                        <div class="py-4">
+                            <button onclick="toggleAccordion('acc-3')" class="w-full flex justify-between items-center text-left font-bold text-[#2D1810] text-sm">
+                                <span class="flex items-center space-x-2"><span>🏷️</span><span>Statutory Legal Compliance</span></span>
+                                <span id="icon-acc-3">▼</span>
+                            </button>
+                            <div id="acc-3" class="hidden text-xs text-stone-600 mt-3 leading-relaxed space-y-2">
+                                <p><strong>Manufactured & Marketed by:</strong> Versaana Manufacturing, Powerhouse Road, Rajnandgaon, Chhattisgarh - 491441.</p>
+                                <p>Complies fully with Legal Metrology (Packaged Commodities) Rules. Batch details, MRP, and net quantity printed on container back-label.</p>
+                            </div>
+                        </div>
+                        <!-- Accordion 4 -->
+                        <div class="py-4">
+                            <button onclick="toggleAccordion('acc-4')" class="w-full flex justify-between items-center text-left font-bold text-[#2D1810] text-sm">
+                                <span class="flex items-center space-x-2"><span>📦</span><span>Shipping & Leak-Proof Guarantee</span></span>
+                                <span id="icon-acc-4">▼</span>
+                            </button>
+                            <div id="acc-4" class="hidden text-xs text-stone-600 mt-3 leading-relaxed space-y-2">
+                                <p>Dispatched securely across India. We use reinforced tamper-evident packaging to ensure zero transit leaks or damage. Standard delivery takes 3-5 business days.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Clean Minimalist Icon USPs -->
-    <section class="py-20 bg-[#FFFBF5] border-b border-amber-100/60">
+    <section class="py-20 bg-[#FFFBF5] border-t border-b border-amber-100/60">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-amber-100/80 flex items-center justify-center text-[#9A3412] mb-5 shadow-sm">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
                     </div>
-                    <h3 id="icon-usp-1-title" class="font-bold text-lg text-[#2D1810] mb-2 font-serif">100% Chemical-Free</h3>
-                    <p id="icon-usp-1-desc" class="text-xs text-stone-600 leading-relaxed max-w-xs">Completely free from harmful chemicals, synthetic additives, and artificial binders.</p>
+                    <h3 class="font-bold text-lg text-[#2D1810] mb-2 font-serif">100% Chemical-Free</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed max-w-xs">Completely free from harmful chemicals, synthetic additives, and artificial binders.</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-amber-100/80 flex items-center justify-center text-[#9A3412] mb-5 shadow-sm">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
                     </div>
-                    <h3 id="icon-usp-2-title" class="font-bold text-lg text-[#2D1810] mb-2 font-serif">Zero Mineral Oils</h3>
-                    <p id="icon-usp-2-desc" class="text-xs text-stone-600 leading-relaxed max-w-xs">Contains absolute zero Light Liquid Paraffin (LLP) or industrial white oils.</p>
+                    <h3 class="font-bold text-lg text-[#2D1810] mb-2 font-serif">Zero Mineral Oils</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed max-w-xs">Contains absolute zero Light Liquid Paraffin (LLP) or industrial white oils.</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-amber-100/80 flex items-center justify-center text-[#9A3412] mb-5 shadow-sm">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
-                    <h3 id="icon-usp-3-title" class="font-bold text-lg text-[#2D1810] mb-2 font-serif">45+ Min Burn Time</h3>
-                    <p id="icon-usp-3-desc" class="text-xs text-stone-600 leading-relaxed max-w-xs">Burns continuously and efficiently for over 45 minutes per lighting.</p>
+                    <h3 class="font-bold text-lg text-[#2D1810] mb-2 font-serif">45+ Min Burn Time</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed max-w-xs">Burns continuously and efficiently for over 45 minutes per lighting.</p>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-amber-100/80 flex items-center justify-center text-[#9A3412] mb-5 shadow-sm">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
                     </div>
-                    <h3 id="icon-usp-4-title" class="font-bold text-lg text-[#2D1810] mb-2 font-serif">Family & Temple Run</h3>
-                    <p id="icon-usp-4-desc" class="text-xs text-stone-600 leading-relaxed max-w-xs">Dedicated to purity, care, and community standards in devotional products.</p>
+                    <h3 class="font-bold text-lg text-[#2D1810] mb-2 font-serif">Family & Temple Run</h3>
+                    <p class="text-xs text-stone-600 leading-relaxed max-w-xs">Dedicated to purity, care, and community standards in devotional products.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Large Borderless Image USPs -->
-    <section id="usps" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-bold text-[#9A3412] uppercase tracking-widest bg-amber-100/70 px-3.5 py-1.5 rounded-full">Uncompromising Quality</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-[#2D1810] tracking-tight mt-3 mb-4 font-serif">Crafted for Sacred Spaces</h2>
-                <p class="text-stone-600 text-base">Designed specifically to eliminate toxic smoke and artificial fillers from your daily rituals.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="flex flex-col">
-                    <div class="h-80 overflow-hidden rounded-2xl mb-6 bg-amber-50 shadow-sm">
-                        <img id="usp1-img" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" alt="Zero Mineral Oils" class="w-full h-full object-cover hover:scale-105 transition duration-700">
-                    </div>
-                    <span id="usp1-sub" class="text-[10px] uppercase font-bold tracking-widest text-[#9A3412] mb-1">Anti-Chemical Standard</span>
-                    <h3 id="usp1-title" class="text-2xl font-bold text-[#2D1810] mb-2 font-serif">Zero Mineral Oils & LLP</h3>
-                    <p id="usp1-desc" class="text-stone-600 text-sm leading-relaxed">Contains absolute zero Light Liquid Paraffin (LLP) or industrial white oils.</p>
-                </div>
-                <div class="flex flex-col">
-                    <div class="h-80 overflow-hidden rounded-2xl mb-6 bg-amber-50 shadow-sm">
-                        <img id="usp2-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=80" alt="45+ Min Burn" class="w-full h-full object-cover hover:scale-105 transition duration-700">
-                    </div>
-                    <span id="usp2-sub" class="text-[10px] uppercase font-bold tracking-widest text-[#9A3412] mb-1">Functional Performance</span>
-                    <h3 id="usp2-title" class="text-2xl font-bold text-[#2D1810] mb-2 font-serif">45+ Min Soot-Free Flame</h3>
-                    <p id="usp2-desc" class="text-stone-600 text-sm leading-relaxed">Steady, bright golden flame that burns continuously without black smoke.</p>
-                </div>
-                <div class="flex flex-col">
-                    <div class="h-80 overflow-hidden rounded-2xl mb-6 bg-amber-50 shadow-sm">
-                        <img id="usp3-img" src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80" alt="Granular Texture" class="w-full h-full object-cover hover:scale-105 transition duration-700">
-                    </div>
-                    <span id="usp3-sub" class="text-[10px] uppercase font-bold tracking-widest text-[#9A3412] mb-1">Traditional Appeal</span>
-                    <h3 id="usp3-title" class="text-2xl font-bold text-[#2D1810] mb-2 font-serif">Authentic Daanedar Texture</h3>
-                    <p id="usp3-desc" class="text-stone-600 text-sm leading-relaxed">Rich granular texture, golden hue, and natural aroma for daily rituals.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Edge-to-Edge Section Separator Banner -->
-    <section id="separator-section" class="relative py-32 bg-[#2D1810] text-white overflow-hidden text-center">
-        <div class="absolute inset-0 z-0">
-            <img id="sep-bg-img" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1920&q=80" alt="Separator Background" class="w-full h-full object-cover opacity-30">
-            <div class="absolute inset-0 bg-black/60"></div>
-        </div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10">
-            <span class="text-xs font-bold uppercase tracking-widest text-amber-300 bg-amber-950/80 px-4 py-1.5 rounded-full border border-amber-500/30">Devotional Quality</span>
-            <h2 id="sep-title" class="text-3xl sm:text-5xl font-bold font-serif mt-4 mb-4">Tried, Tested and Approved by Devotees & Temples</h2>
-            <p id="sep-desc" class="text-amber-100/90 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">Crafted in Rajnandgaon with uncompromising purity standards to ensure a soot-free, peaceful spiritual experience in every home.</p>
-            <a href="#shop" class="inline-block bg-white text-[#9A3412] font-bold px-8 py-3.5 rounded-full hover:bg-amber-50 transition shadow-lg text-sm">Shop All Sizes</a>
         </div>
     </section>
 
@@ -161,18 +222,18 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-3xl border border-amber-200/60 shadow-sm text-center">
                     <span class="text-3xl mb-4 inline-block">🪔</span>
-                    <h3 id="ritual-1-title" class="font-bold text-xl text-[#2D1810] mb-3 font-serif">1. Prepare Your Brass Diya</h3>
-                    <p id="ritual-1-desc" class="text-stone-600 text-xs leading-relaxed">Clean your brass or silver diya and place a fresh cotton wick securely in the center.</p>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">1. Prepare Your Brass Diya</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Clean your brass or silver diya and place a fresh cotton wick securely in the center.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl border border-amber-200/60 shadow-sm text-center">
                     <span class="text-3xl mb-4 inline-block">✨</span>
-                    <h3 id="ritual-2-title" class="font-bold text-xl text-[#2D1810] mb-3 font-serif">2. Pour RamJyoti Puja Ghee</h3>
-                    <p id="ritual-2-desc" class="text-stone-600 text-xs leading-relaxed">Fill gently with pure RamJyoti Puja Ghee, allowing the natural daanedar texture to settle.</p>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">2. Pour RamJyoti Puja Ghee</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Fill gently with pure RamJyoti Puja Ghee, allowing the natural daanedar texture to settle.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl border border-amber-200/60 shadow-sm text-center">
                     <span class="text-3xl mb-4 inline-block">🔥</span>
-                    <h3 id="ritual-3-title" class="font-bold text-xl text-[#2D1810] mb-3 font-serif">3. Experience a Soot-Free Glow</h3>
-                    <p id="ritual-3-desc" class="text-stone-600 text-xs leading-relaxed">Light the wick to enjoy a steady, bright golden flame for 45+ minutes with zero black smoke.</p>
+                    <h3 class="font-bold text-xl text-[#2D1810] mb-3 font-serif">3. Experience a Soot-Free Glow</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Light the wick to enjoy a steady, bright golden flame for 45+ minutes with zero black smoke.</p>
                 </div>
             </div>
         </div>
@@ -186,17 +247,17 @@
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-                <span id="story-subtitle" class="inline-block text-xs font-bold tracking-widest uppercase text-amber-300 bg-amber-950/60 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 border border-amber-500/30">
+                <span class="inline-block text-xs font-bold tracking-widest uppercase text-amber-300 bg-amber-950/60 backdrop-blur-md px-4 py-1.5 rounded-full mb-6 border border-amber-500/30">
                     Our Heritage & Quality Promise
                 </span>
-                <h2 id="story-title" class="text-3xl sm:text-5xl font-bold font-serif mb-6 leading-tight">
+                <h2 class="text-3xl sm:text-5xl font-bold font-serif mb-6 leading-tight">
                     Crafted with Devotion in Rajnandgaon
                 </h2>
-                <p id="story-desc" class="text-amber-100/90 text-base sm:text-lg mb-8 leading-relaxed">
+                <p class="text-amber-100/90 text-base sm:text-lg mb-8 leading-relaxed">
                     We are a dedicated manufacturing enterprise committed to providing chemical-free, soot-free burning media for sacred home mandirs and temple trusts across India.
                 </p>
                 <div class="flex items-center space-x-6">
-                    <a href="#shop" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-3.5 rounded-full transition text-sm shadow-xl">Explore Collection</a>
+                    <a href="#product-section" class="bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-3.5 rounded-full transition text-sm shadow-xl">Explore Collection</a>
                 </div>
             </div>
             <div class="bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl">
@@ -207,35 +268,7 @@
         </div>
     </section>
 
-    <!-- Dynamic Shop Collection Section -->
-    <section id="shop" class="py-24 bg-[#FFFBF5]">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-bold text-[#9A3412] uppercase tracking-widest bg-amber-100/70 px-3.5 py-1.5 rounded-full">Explore Catalog</span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-[#2D1810] tracking-tight mt-3 mb-4 font-serif">Available Pack Sizes</h2>
-                <p class="text-stone-600 text-base">Select your preferred size from our live inventory managed directly via Google Sheets.</p>
-            </div>
-
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="flex flex-col justify-between group">
-                    <div class="p-8 bg-[#F7F2EB] rounded-3xl flex justify-center items-center h-72 mb-6 group-hover:scale-[1.02] transition duration-500">
-                        <img src="https://i.ibb.co/3kW2X9y/ramjyoti-jar.jpg" alt="200ml Bottle" class="max-h-full object-contain drop-shadow-lg">
-                    </div>
-                    <div class="text-center px-2">
-                        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-800 bg-amber-100 px-3 py-1 rounded-full">Starter Pack</span>
-                        <h3 class="text-xl font-bold text-[#2D1810] mt-3 font-serif">200ml Bottle</h3>
-                        <p class="text-2xl font-bold text-[#9A3412] mt-1">₹45</p>
-                        <p class="text-xs text-stone-500 mt-1">Daily Aarti Pack</p>
-                    </div>
-                    <div class="mt-6">
-                        <button onclick="alert('Proceeding to Razorpay checkout for 200ml (₹45)')" class="w-full bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-3.5 rounded-full transition text-sm shadow-sm">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section (Dynamic from Sheet) -->
     <section class="py-24 bg-white border-t border-amber-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-2xl mx-auto mb-16">
@@ -243,10 +276,7 @@
                 <h2 class="text-3xl sm:text-4xl font-bold text-[#2D1810] tracking-tight mt-3 mb-4 font-serif">Trusted by Thousands of Households</h2>
             </div>
             <div id="testimonial-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-[#FFFBF5] p-8 rounded-3xl border border-amber-100">
-                    <p class="text-stone-700 text-sm italic mb-4">"The flame burns steadily for over 45 minutes and leaves zero black soot on our brass diyas. Absolute purity!"</p>
-                    <h5 class="font-bold text-[#2D1810] text-sm">&mdash; Rajesh Sharma, Varanasi</h5>
-                </div>
+                <!-- Populated dynamically via script -->
             </div>
         </div>
     </section>
@@ -283,6 +313,92 @@
         </div>
     </section>
 
+    <!-- Slide-Over Checkout / Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <!-- Drawer Header -->
+                <div class="p-6 bg-[#2D1810] text-white flex justify-between items-center">
+                    <h3 class="font-serif text-lg font-bold">Your Shopping Cart</h3>
+                    <button onclick="toggleCartDrawer()" class="text-amber-200 hover:text-white text-lg font-bold">✕</button>
+                </div>
+
+                <!-- Drawer Body -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                    <!-- Selected Item Review -->
+                    <div id="cart-item-display" class="flex items-center space-x-4 bg-[#FFFBF5] p-4 rounded-2xl border border-amber-200">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Quantity Control -->
+                    <div class="flex items-center justify-between bg-stone-50 p-4 rounded-2xl border border-stone-200">
+                        <span class="text-xs font-bold uppercase text-stone-700">Quantity</span>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="updateQty(-1)" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 font-bold text-sm">-</button>
+                            <span id="cart-qty" class="font-bold text-sm">1</span>
+                            <button onclick="updateQty(1)" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 font-bold text-sm">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Promo Code Input -->
+                    <div class="bg-amber-50/60 p-4 rounded-2xl border border-amber-200 space-y-3">
+                        <label class="block text-xs font-bold uppercase text-amber-900">Have a Promo Code?</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="promo-input" placeholder="e.g. RAM10" class="flex-1 px-4 py-2.5 rounded-xl border border-amber-300 bg-white text-xs uppercase focus:outline-none focus:border-[#9A3412]">
+                            <button onclick="applyPromoCode()" class="bg-[#9A3412] hover:bg-amber-900 text-white font-bold px-5 py-2.5 rounded-xl text-xs">Apply</button>
+                        </div>
+                        <p id="promo-feedback" class="text-xs font-medium text-emerald-700 hidden"></p>
+                    </div>
+
+                    <!-- Delivery & B2B GSTIN Form -->
+                    <div class="space-y-4 pt-2">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412]">Shipping Details</h4>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Full Name *</label>
+                            <input type="text" id="checkout-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Anand Shukla">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Phone *</label>
+                                <input type="tel" id="checkout-phone" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="9876543210">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Email *</label>
+                                <input type="email" id="checkout-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="care@ramjyoti.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Delivery Address *</label>
+                            <textarea id="checkout-address" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="House No, Street, City, Pincode"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">GSTIN (Optional for B2B / Temple Invoicing)</label>
+                            <input type="text" id="checkout-gstin" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs uppercase bg-[#FFFBF5]" placeholder="e.g. 22AAAAA0000A1Z5">
+                        </div>
+                    </div>
+
+                    <!-- Bill Summary -->
+                    <div class="bg-stone-100 p-4 rounded-2xl space-y-2 text-xs text-stone-700">
+                        <div class="flex justify-between"><span>Subtotal</span><span id="summary-subtotal">₹45</span></div>
+                        <div id="summary-discount-row" class="flex justify-between text-emerald-700 font-medium hidden"><span>Discount Applied</span><span id="summary-discount">-₹0</span></div>
+                        <div class="flex justify-between"><span>Shipping</span><span class="text-emerald-700 font-medium">FREE</span></div>
+                        <div class="flex justify-between pt-2 border-t border-stone-200 font-bold text-sm text-[#2D1810]">
+                            <span>Total (Incl. 18% GST)</span>
+                            <span id="summary-total">₹45</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawer Footer / Razorpay Trigger -->
+                <div class="p-6 bg-stone-50 border-t border-stone-200">
+                    <button onclick="startRazorpayCheckout()" id="razorpay-pay-btn" class="w-full bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-4 rounded-xl transition text-sm shadow-lg">Proceed to Secure Payment</button>
+                    <p class="text-[10px] text-center text-stone-500 mt-3">🔒 Secured by Razorpay &bull; Instant WhatsApp & SMS Order Confirmation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer & CMS Driven Social Icons & WhatsApp -->
     <footer class="bg-[#2D1810] text-amber-100 py-16 border-t border-amber-900">
         <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
@@ -295,7 +411,7 @@
             <div>
                 <h4 class="font-bold text-white text-sm mb-4">Quick Links</h4>
                 <ul class="space-y-2 text-xs text-amber-200/80">
-                    <li><a href="#shop" class="hover:text-white transition">Shop All Sizes</a></li>
+                    <li><a href="#product-section" class="hover:text-white transition">Shop Product</a></li>
                     <li><a href="#usps" class="hover:text-white transition">Purity Standards</a></li>
                     <li><a href="#ritual" class="hover:text-white transition">Ritual Guide</a></li>
                     <li><a href="#story" class="hover:text-white transition">Brand Story & YouTube</a></li>
@@ -346,47 +462,73 @@
         </div>
     </div>
 
-    <!-- Script for Dynamic Sheet Loading & Form Submission -->
+    <!-- Master Frontend Script (CMS, Multi-Angle Gallery, Cart, Promo & Razorpay) -->
     <script>
         const SHEET_ID = '1EBFI0dkj-zvkg8m52IYq8nb-CzRdyQEhEamFw7Y6nP0';
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUZuNyJTo596CiQQPEdZcLTKqRLLKZxnSdd-jFmPIsB_w-wFj5yH0exo2lWBja1joB/exec';
 
-        async function loadSiteData() {
-            // 1. Load Products
+        let variantsData = [];
+        let selectedVariant = null;
+        let promoCodesData = [];
+        let appliedDiscount = { code: null, type: null, value: 0, minVal: 0 };
+        let cartQty = 1;
+
+        async function loadStoreData() {
+            // 1. Load Products (Variants)
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Products`);
                 const text = await res.text();
                 const json = JSON.parse(text.substring(47, text.length - 2));
-                const grid = document.getElementById('product-grid');
-                grid.innerHTML = '';
+                variantsData = [];
                 json.table.rows.forEach((row) => {
-                    const name = row.c[1]?.v || 'RamJyoti';
-                    const price = row.c[2]?.v || '0';
-                    const size = row.c[3]?.v || '';
-                    const tag = row.c[4]?.v || 'Pack';
-                    const image = row.c[5]?.v || 'https://i.ibb.co/3kW2X9y/ramjyoti-jar.jpg';
-                    const desc = row.c[6]?.v || '';
-
-                    grid.innerHTML += `
-                        <div class="flex flex-col justify-between group">
-                            <div class="p-8 bg-[#F7F2EB] rounded-3xl flex justify-center items-center h-72 mb-6 group-hover:scale-[1.02] transition duration-500">
-                                <img src="${image}" alt="${name} ${size}" class="max-h-full object-contain drop-shadow-lg">
-                            </div>
-                            <div class="text-center px-2">
-                                <span class="text-[10px] uppercase font-bold tracking-widest text-amber-800 bg-amber-100 px-3 py-1 rounded-full">${tag}</span>
-                                <h3 class="text-xl font-bold text-[#2D1810] mt-3 font-serif">${size}</h3>
-                                <p class="text-2xl font-bold text-[#9A3412] mt-1">₹${price}</p>
-                                <p class="text-xs text-stone-500 mt-1">${desc}</p>
-                            </div>
-                            <div class="mt-6">
-                                <button onclick="alert('Proceeding to Razorpay checkout for ${size} (₹${price})')" class="w-full bg-[#9A3412] hover:bg-amber-900 text-white font-bold py-3.5 rounded-full transition text-sm shadow-sm">Buy Now</button>
-                            </div>
-                        </div>
-                    `;
+                    variantsData.push({
+                        id: row.c[0]?.v || '',
+                        size: row.c[1]?.v || '',
+                        price: Number(row.c[2]?.v || 0),
+                        tag: row.c[3]?.v || 'Pack',
+                        images: (row.c[4]?.v || 'https://i.ibb.co/3kW2X9y/ramjyoti-jar.jpg').split(',').map(s => s.trim()),
+                        desc: row.c[5]?.v || '',
+                        inStock: String(row.c[6]?.v).toUpperCase() === 'TRUE'
+                    });
                 });
-            } catch (e) { console.log('Products fallback active'); }
+                if(variantsData.length > 0) {
+                    selectVariant(variantsData[0].id);
+                    renderVariantSelector();
+                }
+            } catch (e) { console.log('Products load error, using fallback'); }
 
-            // 2. Load SiteContent
+            // 2. Load PromoCodes
+            try {
+                const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=PromoCodes`);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(47, text.length - 2));
+                promoCodesData = [];
+                const promoListEl = document.getElementById('promo-showcase-list');
+                promoListEl.innerHTML = '';
+                json.table.rows.forEach((row) => {
+                    const code = row.c[0]?.v || '';
+                    const type = row.c[1]?.v || '';
+                    const val = Number(row.c[2]?.v || 0);
+                    const minVal = Number(row.c[3]?.v || 0);
+                    const desc = row.c[4]?.v || '';
+                    const isActive = String(row.c[5]?.v).toUpperCase() === 'TRUE';
+
+                    if(isActive) {
+                        promoCodesData.push({ code, type, val, minVal });
+                        promoListEl.innerHTML += `
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-amber-200 shadow-xs">
+                                <div>
+                                    <span class="font-bold text-[#9A3412] text-xs bg-amber-100 px-2 py-0.5 rounded mr-2">${code}</span>
+                                    <span class="text-xs text-stone-700 font-medium">${desc}</span>
+                                </div>
+                                <button onclick="copyAndApplyPromo('${code}')" class="text-[11px] font-bold text-amber-900 hover:underline">Apply ➔</button>
+                            </div>
+                        `;
+                    }
+                });
+            } catch (e) { console.log('PromoCodes load error'); }
+
+            // 3. Load SiteContent (SEO, Announcement, Config)
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=SiteContent`);
                 const text = await res.text();
@@ -398,52 +540,24 @@
                     const imgUrl = row.c[3]?.v || '';
                     const desc = row.c[4]?.v || '';
 
-                    if (key === 'hero_banner') {
+                    if (key === 'announcement') {
+                        if(subtitle.toUpperCase() === 'TRUE' && title) {
+                            document.getElementById('announcement-text').innerText = title;
+                            document.getElementById('announcement-bar').classList.remove('hidden');
+                        }
+                    } else if (key === 'seo_meta') {
+                        if(title) { document.getElementById('meta-title').innerText = title; document.getElementById('og-title').innerText = title; }
+                        if(subtitle) { document.getElementById('meta-desc').content = subtitle; document.getElementById('og-desc').content = subtitle; }
+                        if(imgUrl) document.getElementById('og-img').content = imgUrl;
+                    } else if (key === 'hero_banner') {
                         if(title) document.getElementById('hero-title').innerHTML = title.replace('Daily Aarti', '<span class="text-amber-400">Daily Aarti</span>');
                         if(subtitle) document.getElementById('hero-subtitle').innerText = subtitle;
                         if(desc) document.getElementById('hero-desc').innerHTML = desc;
                         if(imgUrl) document.getElementById('hero-bg-img').src = imgUrl;
-                    } else if (key === 'separator_banner') {
-                        if(title) document.getElementById('sep-title').innerText = title;
-                        if(desc) document.getElementById('sep-desc').innerText = desc;
-                        if(imgUrl) document.getElementById('sep-bg-img').src = imgUrl;
-                    } else if (key === 'story_banner') {
-                        if(title) document.getElementById('story-title').innerText = title;
-                        if(subtitle) document.getElementById('story-subtitle').innerText = subtitle;
-                        if(desc) document.getElementById('story-desc').innerText = desc;
-                        if(imgUrl) document.getElementById('story-bg-img').src = imgUrl;
-                    } else if (key === 'ritual_header') {
-                        if(title) document.getElementById('ritual-title').innerText = title;
-                        if(subtitle) document.getElementById('ritual-subtitle').innerText = subtitle;
-                    } else if (key === 'ritual_1') {
-                        if(title) document.getElementById('ritual-1-title').innerText = title;
-                        if(desc) document.getElementById('ritual-1-desc').innerText = desc;
-                    } else if (key === 'ritual_2') {
-                        if(title) document.getElementById('ritual-2-title').innerText = title;
-                        if(desc) document.getElementById('ritual-2-desc').innerText = desc;
-                    } else if (key === 'ritual_3') {
-                        if(title) document.getElementById('ritual-3-title').innerText = title;
-                        if(desc) document.getElementById('ritual-3-desc').innerText = desc;
-                    } else if (key.startsWith('icon_usp_')) {
-                        const idx = key.replace('icon_usp_', '');
-                        if(title) document.getElementById(`icon-usp-${idx}-title`).innerText = title;
-                        if(subtitle) document.getElementById(`icon-usp-${idx}-desc`).innerText = subtitle;
-                    } else if (key.startsWith('img_usp_')) {
-                        const idx = key.replace('img_usp_', '');
-                        if(title) document.getElementById(`usp${idx}-title`).innerText = title;
-                        if(subtitle) document.getElementById(`usp${idx}-sub`).innerText = subtitle;
-                        if(desc) document.getElementById(`usp${idx}-desc`).innerText = desc;
-                        if(imgUrl) document.getElementById(`usp${idx}-img`).src = imgUrl;
                     } else if (key === 'config') {
-                        if(title && title.includes('youtube.com')) {
-                            document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
-                        }
-                        if(subtitle) {
-                            document.getElementById('whatsapp-link').href = `https://wa.me/${subtitle}`;
-                        }
-                        if(desc) {
-                            document.getElementById('footer-email').innerText = desc;
-                        }
+                        if(title && title.includes('youtube.com')) document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
+                        if(subtitle) document.getElementById('whatsapp-link').href = `https://wa.me/${subtitle}`;
+                        if(desc) document.getElementById('footer-email').innerText = desc;
                         if(imgUrl) {
                             const socials = imgUrl.split('|').map(s => s.trim());
                             if(socials[0]) document.getElementById('social-fb').href = socials[0];
@@ -453,9 +567,9 @@
                         }
                     }
                 });
-            } catch (e) { console.log('SiteContent fallback active'); }
+            } catch (e) { console.log('SiteContent load error'); }
 
-            // 3. Load Testimonials
+            // 4. Load Testimonials
             try {
                 const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Testimonials`);
                 const text = await res.text();
@@ -473,15 +587,248 @@
                         </div>
                     `;
                 });
-            } catch (e) { console.log('Testimonials fallback active'); }
+            } catch (e) { console.log('Testimonials load error'); }
         }
 
-        loadSiteData();
+        loadStoreData();
 
-        // Contact Form Submission Handler
+        // Render Variant Pills
+        function renderVariantSelector() {
+            const container = document.getElementById('variant-selector-container');
+            container.innerHTML = '';
+            variantsData.forEach(v => {
+                const isSelected = selectedVariant && selectedVariant.id === v.id;
+                container.innerHTML += `
+                    <button onclick="selectVariant('${v.id}')" class="px-5 py-3 rounded-2xl border text-xs font-bold transition ${isSelected ? 'border-[#9A3412] bg-amber-50 text-[#9A3412] shadow-sm' : 'border-stone-200 bg-white text-stone-700 hover:border-amber-300'}">
+                        ${v.size} <span class="block font-normal text-stone-500 mt-0.5">₹${v.price}</span>
+                    </button>
+                `;
+            });
+        }
+
+        // Select Variant & Load Multi-Angle Gallery
+        function selectVariant(id) {
+            selectedVariant = variantsData.find(v => v.id === id);
+            if(!selectedVariant) return;
+
+            document.getElementById('product-price').innerText = `₹${selectedVariant.price}`;
+            document.getElementById('product-desc').innerText = selectedVariant.desc;
+            document.getElementById('product-tag-badge').innerText = selectedVariant.tag;
+
+            const stockEl = document.getElementById('stock-status');
+            const buyBtn = document.getElementById('buy-now-btn');
+            const cartBtn = document.getElementById('add-to-cart-btn');
+
+            if(selectedVariant.inStock) {
+                stockEl.innerText = '● In Stock & Ready to Dispatch';
+                stockEl.className = 'text-xs font-semibold text-emerald-700 mt-3';
+                buyBtn.disabled = false; cartBtn.disabled = false;
+            } else {
+                stockEl.innerText = '✕ Currently Sold Out';
+                stockEl.className = 'text-xs font-semibold text-red-600 mt-3';
+                buyBtn.disabled = true; cartBtn.disabled = true;
+            }
+
+            // Render Multi-Angle Images & Thumbnails
+            const mainImg = document.getElementById('main-product-img');
+            const thumbContainer = document.getElementById('thumbnail-container');
+            thumbContainer.innerHTML = '';
+
+            if(selectedVariant.images.length > 0) {
+                mainImg.src = selectedVariant.images[0];
+                selectedVariant.images.forEach((imgUrl, idx) => {
+                    thumbContainer.innerHTML += `
+                        <div onclick="document.getElementById('main-product-img').src='${imgUrl}'" class="h-20 bg-[#F7F2EB] rounded-xl border border-amber-200/80 overflow-hidden cursor-pointer hover:opacity-80 transition flex items-center justify-center p-2">
+                            <img src="${imgUrl}" class="max-h-full max-w-full object-contain">
+                        </div>
+                    `;
+                });
+            }
+            renderVariantSelector();
+            updateCartDisplay();
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if(el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.innerText = '▲';
+            } else {
+                el.classList.add('hidden');
+                icon.innerText = '▼';
+            }
+        }
+
+        // Cart Drawer & Quantity
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+            updateCartDisplay();
+        }
+
+        function updateQty(change) {
+            cartQty += change;
+            if(cartQty < 1) cartQty = 1;
+            document.getElementById('cart-qty').innerText = cartQty;
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            if(!selectedVariant) return;
+            document.getElementById('cart-badge').innerText = cartQty;
+
+            const displayEl = document.getElementById('cart-item-display');
+            displayEl.innerHTML = `
+                <img src="${selectedVariant.images[0]}" class="w-16 h-16 object-contain bg-white rounded-xl p-1 border border-amber-200">
+                <div>
+                    <h5 class="font-bold text-sm text-[#2D1810] font-serif">RamJyoti Puja Ghee</h5>
+                    <p class="text-xs text-stone-600">${selectedVariant.size}</p>
+                    <p class="text-xs font-bold text-[#9A3412] mt-1">₹${selectedVariant.price} x ${cartQty}</p>
+                </div>
+            `;
+
+            let subtotal = selectedVariant.price * cartQty;
+            let discountAmt = 0;
+
+            if(appliedDiscount.code) {
+                if(subtotal >= appliedDiscount.minVal) {
+                    if(appliedDiscount.type === 'percentage') {
+                        discountAmt = Math.round((subtotal * appliedDiscount.val) / 100);
+                    } else {
+                        discountAmt = appliedDiscount.val;
+                    }
+                } else {
+                    appliedDiscount = { code: null, type: null, value: 0, minVal: 0 };
+                    document.getElementById('promo-feedback').innerText = 'Promo removed (Min order value not met)';
+                    document.getElementById('promo-feedback').className = 'text-xs font-medium text-red-600';
+                    document.getElementById('promo-feedback').classList.remove('hidden');
+                }
+            }
+
+            let total = subtotal - discountAmt;
+            if(total < 0) total = 0;
+
+            document.getElementById('summary-subtotal').innerText = `₹${subtotal}`;
+            if(discountAmt > 0) {
+                document.getElementById('summary-discount').innerText = `-₹${discountAmt}`;
+                document.getElementById('summary-discount-row').classList.remove('hidden');
+            } else {
+                document.getElementById('summary-discount-row').classList.add('hidden');
+            }
+            document.getElementById('summary-total').innerText = `₹${total}`;
+        }
+
+        function addToCart() {
+            toggleCartDrawer();
+        }
+
+        function buyNow() {
+            toggleCartDrawer();
+        }
+
+        // Promo Code Actions
+        function copyAndApplyPromo(code) {
+            document.getElementById('promo-input').value = code;
+            applyPromoCode();
+        }
+
+        function applyPromoCode() {
+            const inputCode = document.getElementById('promo-input').value.trim().toUpperCase();
+            const found = promoCodesData.find(p => p.code === inputCode);
+            const feedbackEl = document.getElementById('promo-feedback');
+
+            if(found) {
+                let subtotal = selectedVariant.price * cartQty;
+                if(subtotal >= found.minVal) {
+                    appliedDiscount = { code: found.code, type: found.type, val: found.val, minVal: found.minVal };
+                    feedbackEl.innerText = `Success! Code ${found.code} applied.`;
+                    feedbackEl.className = 'text-xs font-medium text-emerald-700';
+                    feedbackEl.classList.remove('hidden');
+                    updateCartDisplay();
+                } else {
+                    feedbackEl.innerText = `Add ₹${found.minVal - subtotal} more to unlock ${found.code}`;
+                    feedbackEl.className = 'text-xs font-medium text-red-600';
+                    feedbackEl.classList.remove('hidden');
+                }
+            } else {
+                feedbackEl.innerText = 'Invalid or expired promo code.';
+                feedbackEl.className = 'text-xs font-medium text-red-600';
+                feedbackEl.classList.remove('hidden');
+            }
+        }
+
+        // Razorpay Checkout Integration & Order Logging
+        async function startRazorpayCheckout() {
+            const name = document.getElementById('checkout-name').value.trim();
+            const phone = document.getElementById('checkout-phone').value.trim();
+            const email = document.getElementById('checkout-email').value.trim();
+            const address = document.getElementById('checkout-address').value.trim();
+            const gstin = document.getElementById('checkout-gstin').value.trim();
+
+            if(!name || !phone || !email || !address) {
+                alert('Please fill in all required shipping details.');
+                return;
+            }
+
+            let subtotal = selectedVariant.price * cartQty;
+            let discountAmt = 0;
+            if(appliedDiscount.code && subtotal >= appliedDiscount.minVal) {
+                discountAmt = appliedDiscount.type === 'percentage' ? Math.round((subtotal * appliedDiscount.val) / 100) : appliedDiscount.val;
+            }
+            let totalAmount = subtotal - discountAmt;
+            const orderId = 'RAM-' + Math.floor(100000 + Math.random() * 900000);
+
+            // Razorpay Options
+            var options = {
+                "key": "rzp_test_YourTestKeyHere", // Replace with your live/test Razorpay Key ID
+                "amount": totalAmount * 100, // Amount in paise
+                "currency": "INR",
+                "name": "RamJyoti Puja Ghee",
+                "description": `${selectedVariant.size} (Qty: ${cartQty})`,
+                "image": selectedVariant.images[0],
+                "handler": async function (response) {
+                    alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+                    
+                    // Log Order to Google Sheet Orders Tab via Apps Script
+                    const orderPayload = {
+                        action: "log_order",
+                        order_id: orderId,
+                        timestamp: new Date().toLocaleString(),
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        address: address,
+                        variant: selectedVariant.size,
+                        quantity: cartQty,
+                        total: totalAmount,
+                        gstin: gstin || 'N/A',
+                        payment_status: 'Paid (' + response.razorpay_payment_id + ')'
+                    };
+
+                    try {
+                        await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(orderPayload)
+                        });
+                    } catch(err) { console.log('Order logging error'); }
+
+                    toggleCartDrawer();
+                    window.location.href = `#product-section`;
+                },
+                "prefill": { "name": name, "email": email, "contact": phone },
+                "theme": { "color": "#9A3412" }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        // General Contact Form Submission Handler
         async function submitInquiry(event) {
             event.preventDefault();
-
             const submitBtn = document.getElementById('submit-btn');
             submitBtn.innerText = 'Sending...';
             submitBtn.disabled = true;
@@ -491,15 +838,9 @@
             const email = document.getElementById('inquiry-email').value.trim();
             const message = document.getElementById('inquiry-message').value.trim();
 
-            const payload = {
-                name: name,
-                phone: phone,
-                email: email,
-                message: message
-            };
+            const payload = { name, phone, email, message };
 
             try {
-                // Submit quietly to Google Sheets 'Inquiries' tab
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -508,18 +849,15 @@
                 });
 
                 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                
                 if (isMobile) {
                     const waHref = document.getElementById('whatsapp-link').href;
                     const waText = encodeURIComponent(`Hello RamJyoti Team,\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`);
                     window.open(`${waHref}?text=${waText}`, '_blank');
                 } else {
-                    alert(`Thank you, ${name}! Your inquiry has been sent successfully. We will get back to you soon.`);
+                    alert(`Thank you, ${name}! Your inquiry has been sent successfully.`);
                 }
-
                 document.getElementById('contact-form').reset();
             } catch (error) {
-                console.error('Error submitting inquiry:', error);
                 alert('Thank you! Your inquiry has been submitted.');
             } finally {
                 submitBtn.innerText = 'Send Message';
