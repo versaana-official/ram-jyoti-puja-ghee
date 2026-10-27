@@ -1,122 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RamJyoti Puja Ghee | 100% Pure & Natural Puja Ghee</title>
-    <!-- Tailwind CSS CDN for modern styling -->
+    <title>RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; }
     </style>
 </head>
-<body class="bg-amber-50 text-gray-800">
+<body class="bg-amber-50/40 text-gray-800 antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-amber-900 text-amber-100 text-xs py-2 px-4 text-center font-medium">
+        🪔 Zero LLP & Mineral Oils | 45+ Mins Long Burn Time | 100% Chemical-Free
+    </div>
 
     <!-- Header / Navbar -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl font-bold text-amber-600">🪔 RamJyoti</span>
-                <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded">Puja Ghee</span>
+                <span class="text-2xl font-black bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">🪔 RamJyoti</span>
+                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">Puja Ghee</span>
             </div>
-            <a href="#shop" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-5 py-2 rounded-full transition text-sm">Order Now</a>
+            <div class="flex items-center space-x-6">
+                <a href="#usps" class="hidden md:inline-block text-gray-700 hover:text-amber-700 font-medium text-sm">Why Us</a>
+                <a href="#shop" class="hidden md:inline-block text-gray-700 hover:text-amber-700 font-medium text-sm">Pack Sizes</a>
+                <a href="#shop" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2 rounded-full shadow-md shadow-amber-600/20 transition text-sm">Order Now</a>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-b from-amber-100 to-amber-50 py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <span class="bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-widest py-1.5 px-3 rounded-full">Sacred & Pure</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold text-amber-900 mt-4 mb-6">Pure Light for Your Daily Aarti</h1>
-            <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-8">
-                100% Pure & Natural Puja Ghee crafted for a long-burning flame, soothing sacred fragrance, and a soot-free divine experience.
-            </p>
-            <div class="flex justify-center gap-4">
-                <a href="#shop" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition">View Pack Sizes & Prices</a>
+    <section class="relative bg-gradient-to-b from-amber-100/70 via-amber-50/50 to-white py-16 md:py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <span class="inline-block bg-amber-200/80 text-amber-950 text-xs font-extrabold uppercase tracking-wider py-1.5 px-3.5 rounded-full mb-4">
+                    ✨ Authentic Daanedar Texture
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-amber-950 leading-tight mb-6">
+                    Pure, Safe & Soot-Free Light for Your <span class="text-amber-600">Daily Aarti</span>
+                </h1>
+                <p class="text-base sm:text-lg text-gray-700 mb-8 leading-relaxed">
+                    Say NO to cheap market ghee filled with toxic LLP and mineral oils. RamJyoti Puja Ghee gives you a <strong>45+ minute steady burn time</strong>, rich golden color, and zero black smoke for your home mandir.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                    <a href="#shop" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-amber-600/30 transition text-center">Buy Now (From ₹45)</a>
+                    <a href="#usps" class="bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 font-semibold px-8 py-3.5 rounded-full transition text-center">See Pure Ingredients</a>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="bg-white p-4 rounded-3xl shadow-xl border border-amber-200/80 max-w-sm w-full">
+                    <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80" alt="RamJyoti Puja Ghee" class="rounded-2xl w-full h-72 object-cover">
+                    <div class="p-4 text-center">
+                        <span class="text-xs text-amber-700 font-bold uppercase tracking-wider">Most Popular</span>
+                        <h3 class="font-bold text-gray-900 text-lg mt-1">RamJyoti Puja Ghee (1 Litre)</h3>
+                        <p class="text-amber-600 font-black text-2xl mt-1">₹250</p>
+                        <p class="text-xs text-emerald-700 font-bold mt-1">✓ Zero Mineral Oils | 45+ Min Burn</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- USPs Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-amber-900 mb-12">Why Choose RamJyoti Puja Ghee?</h2>
+    <!-- USPs Section 1: Health, Safety & Purity -->
+    <section id="usps" class="py-16 bg-white border-y border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Purity First</span>
+                <h2 class="text-3xl font-black text-amber-950 mt-3 mb-2">Health, Safety & Purity</h2>
+                <p class="text-gray-600">Unlike cheap market ghee, we never compromise on what burns in your sacred home space.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="p-6 bg-amber-50/50 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🧪</div>
+                    <h3 class="font-bold text-amber-950 mb-2">100% Chemical-Free</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">Completely free from harmful chemicals, artificial additives, or synthetic binders.</p>
+                </div>
+                <div class="p-6 bg-amber-50/50 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🚫</div>
+                    <h3 class="font-bold text-amber-950 mb-2">Zero Mineral Oils & LLP</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">Contains <strong>zero Light Liquid Paraffin (LLP)</strong>, white oils, or industrial mineral oils common in cheap brands.</p>
+                </div>
+                <div class="p-6 bg-amber-50/50 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🛑</div>
+                    <h3 class="font-bold text-amber-950 mb-2">Zero Waxes & Fats</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">Strictly free from paraffin wax, vegetable wax, animal fats, or lards.</p>
+                </div>
+                <div class="p-6 bg-amber-50/50 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🌱</div>
+                    <h3 class="font-bold text-amber-950 mb-2">Clean Veg Base</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">Made cleanly using safe, high-grade hydrogenated vegetable oil base.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USPs Section 2: Performance & Clean Burning -->
+    <section class="py-16 bg-amber-50/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">High Performance</span>
+                <h2 class="text-3xl font-black text-amber-950 mt-3 mb-2">Performance & Clean Burning</h2>
+                <p class="text-gray-600">Engineered for a long, bright flame that keeps your mandir spotless.</p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-100 text-center">
-                    <div class="text-3xl mb-3">✨</div>
-                    <h3 class="font-bold text-lg text-amber-900 mb-2">Zero Wax & Chemicals</h3>
-                    <p class="text-gray-600 text-sm">Completely pure formulation ensuring a clean, safe, and healthy environment for your daily rituals.</p>
+                <div class="p-8 bg-white rounded-2xl border border-amber-200/80 shadow-sm text-center">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 font-bold">⏱️</div>
+                    <h3 class="font-bold text-lg text-amber-950 mb-2">45+ Minutes Burn Time</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Burns continuously and efficiently for over 45 minutes per lighting, ideal for uninterrupted morning and evening prayers.</p>
                 </div>
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-100 text-center">
-                    <div class="text-3xl mb-3">🔥</div>
-                    <h3 class="font-bold text-lg text-amber-900 mb-2">Long-Burning & Soot-Free</h3>
-                    <p class="text-gray-600 text-sm">Designed to burn steadily for hours without releasing black smoke, keeping your mandir clean.</p>
+                <div class="p-8 bg-white rounded-2xl border border-amber-200/80 shadow-sm text-center">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 font-bold">🪔</div>
+                    <h3 class="font-bold text-lg text-amber-950 mb-2">Zero Black Smoke & Soot</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Zero toxic black smoke. Keeps home temple walls, ceilings, and brass diyas completely clean without carbon buildup.</p>
                 </div>
-                <div class="p-6 bg-amber-50 rounded-xl border border-amber-100 text-center">
-                    <div class="text-3xl mb-3">🌸</div>
-                    <h3 class="font-bold text-lg text-amber-900 mb-2">Sacred Fragrance</h3>
-                    <p class="text-gray-600 text-sm">Infused with a subtle, calming aroma that elevates your spiritual ambiance instantly.</p>
+                <div class="p-8 bg-white rounded-2xl border border-amber-200/80 shadow-sm text-center">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 font-bold">🔥</div>
+                    <h3 class="font-bold text-lg text-amber-950 mb-2">Steady, Bright Flame</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Produces a bright, consistent golden flame that doesn't sputter, flicker excessively, or die out prematurely.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Shop / Pricing Section -->
-    <section id="shop" class="py-16 bg-amber-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-amber-900 mb-4">Choose Your Pack Size</h2>
-            <p class="text-center text-gray-600 mb-12">Available across 7 convenient sizes starting from ₹45 up to ₹250.</p>
+    <!-- USPs Section 3: Sensory & Aesthetic Quality -->
+    <section class="py-16 bg-white border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">Traditional Feel</span>
+                <h2 class="text-3xl font-black text-amber-950 mt-3 mb-2">Sensory & Traditional Quality</h2>
+                <p class="text-gray-600">Crafted to match the exact look, texture, and aroma of authentic homemade ghee.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-amber-50/30 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🌾</div>
+                    <h3 class="font-bold text-amber-950 mb-2">Authentic Granular Texture</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Features the rich, natural <em>daanedar</em> (granular) texture characteristic of traditional high-grade ghee.</p>
+                </div>
+                <div class="p-6 bg-amber-50/30 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">🌸</div>
+                    <h3 class="font-bold text-amber-950 mb-2">Natural Aroma</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Emits a pure, soothing traditional fragrance that freshens up your prayer space without synthetic odors.</p>
+                </div>
+                <div class="p-6 bg-amber-50/30 rounded-2xl border border-amber-100 text-center">
+                    <div class="text-3xl mb-3">✨</div>
+                    <h3 class="font-bold text-amber-950 mb-2">True-to-Life Color</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Boasts a rich, natural golden-yellow hue that beautifully mimics traditional pure dairy ghee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section: All 7 Sizes -->
+    <section id="shop" class="py-20 bg-amber-50/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-black text-amber-950 mb-3">Available Across All 7 Sizes</h2>
+                <p class="text-gray-600">Select the right size for your home mandir, daily rituals, or bulk temple requirements.</p>
+            </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Product Card 1 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between">
+                <!-- Size 1: 200ml -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
                     <div>
-                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">Starter Pack</span>
-                        <h3 class="text-xl font-bold text-gray-900 mt-3">200ml Bottle</h3>
-                        <p class="text-2xl font-extrabold text-amber-600 mt-2">₹45</p>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Starter Pack</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">200ml Bottle</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹45</p>
+                        <p class="text-xs text-gray-500 mt-1">Daily Aarti Pack</p>
                     </div>
-                    <button onclick="alert('Razorpay payment gateway integration goes here!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-xl transition">Buy Now</button>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
                 </div>
 
-                <!-- Product Card 2 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between">
+                <!-- Size 2: 400ml -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
                     <div>
-                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">Popular</span>
-                        <h3 class="text-xl font-bold text-gray-900 mt-3">500ml Bottle</h3>
-                        <p class="text-2xl font-extrabold text-amber-600 mt-2">₹130</p>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Regular Use</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">400ml Bottle</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹90</p>
+                        <p class="text-xs text-gray-500 mt-1">Convenient Size</p>
                     </div>
-                    <button onclick="alert('Razorpay payment gateway integration goes here!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-xl transition">Buy Now</button>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
                 </div>
 
-                <!-- Product Card 3 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between">
+                <!-- Size 3: 500ml -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-300 flex flex-col justify-between relative">
+                    <span class="absolute -top-3 right-4 bg-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Popular</span>
                     <div>
-                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">Best Value</span>
-                        <h3 class="text-xl font-bold text-gray-900 mt-3">1 Litre Pack</h3>
-                        <p class="text-2xl font-extrabold text-amber-600 mt-2">₹250</p>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Best Seller</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">500ml Bottle</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹130</p>
+                        <p class="text-xs text-gray-500 mt-1">Monthly Mandir Pack</p>
                     </div>
-                    <button onclick="alert('Razorpay payment gateway integration goes here!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-xl transition">Buy Now</button>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
                 </div>
 
-                <!-- Product Card 4 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200 flex flex-col justify-between">
+                <!-- Size 4: 750ml -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
                     <div>
-                        <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-1 rounded">Bulk Pack</span>
-                        <h3 class="text-xl font-bold text-gray-900 mt-3">Custom Pack (7 Sizes)</h3>
-                        <p class="text-2xl font-extrabold text-amber-600 mt-2">₹45 - ₹250</p>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Family Value</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">750ml Bottle</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹190</p>
+                        <p class="text-xs text-gray-500 mt-1">Extended Use</p>
                     </div>
-                    <button onclick="alert('Razorpay payment gateway integration goes here!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 rounded-xl transition">Explore Sizes</button>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
+                </div>
+
+                <!-- Size 5: 1 Litre -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Value Jar</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">1 Litre Jar</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹250</p>
+                        <p class="text-xs text-gray-500 mt-1">High Savings</p>
+                    </div>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
+                </div>
+
+                <!-- Size 6: 2 Litre -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Economy Jar</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">2 Litre Pack</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹480</p>
+                        <p class="text-xs text-gray-500 mt-1">Festive & Puja Rituals</p>
+                    </div>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
+                </div>
+
+                <!-- Size 7: 5 Litre -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-200/80 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">Bulk Can</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-4">5 Litre Can</h3>
+                        <p class="text-3xl font-black text-amber-600 mt-2">₹1,150</p>
+                        <p class="text-xs text-gray-500 mt-1">Temple & Festival Pack</p>
+                    </div>
+                    <button onclick="alert('Razorpay integration step next!')" class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition">Buy Now</button>
+                </div>
+
+                <!-- Wholesale Box -->
+                <div class="bg-amber-950 text-white p-6 rounded-2xl shadow-md flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs bg-amber-800 text-amber-200 font-bold px-2.5 py-1 rounded-full">Distributor Rates</span>
+                        <h3 class="text-xl font-bold mt-4">Wholesale & Temple Orders</h3>
+                        <p class="text-amber-200 text-xs mt-2 leading-relaxed">Need bulk supply for temples or distribution? Get direct factory rates.</p>
+                    </div>
+                    <a href="tel:+919876543210" class="mt-6 w-full bg-white text-amber-950 hover:bg-amber-100 font-bold py-3 rounded-xl transition text-center text-sm">Call for Bulk Supply</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-amber-900 text-amber-100 py-8 text-center text-sm">
-        <p>&copy; 2026 RamJyoti Puja Ghee. All rights reserved. Safe for Daily Aarti.</p>
+    <footer class="bg-amber-950 text-amber-100 py-10 border-t border-amber-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-xs text-amber-300/60">
+            <p class="mb-2 font-semibold text-amber-100 text-sm">🪔 RamJyoti Puja Ghee</p>
+            <p>&copy; 2026 RamJyoti Puja Ghee. All rights reserved. Made with pure devotion in India.</p>
+        </div>
     </footer>
 
 </body>
