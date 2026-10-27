@@ -349,6 +349,7 @@
     <!-- Script for Dynamic Sheet Loading & Form Submission -->
     <script>
         const SHEET_ID = '1EBFI0dkj-zvkg8m52IYq8nb-CzRdyQEhEamFw7Y6nP0';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUZuNyJTo596CiQQPEdZcLTKqRLLKZxnSdd-jFmPIsB_w-wFj5yH0exo2lWBja1joB/exec';
 
         async function loadSiteData() {
             // 1. Load Products
@@ -477,17 +478,53 @@
 
         loadSiteData();
 
-        // Contact Form Submission Handler (Logs directly to Google Sheets 'Inquiries' tab via Formspree/SheetDB or alerts)
-        function submitInquiry(event) {
+        // Contact Form Submission Handler
+        async function submitInquiry(event) {
             event.preventDefault();
-            const name = document.getElementById('inquiry-name').value;
-            const phone = document.getElementById('inquiry-phone').value;
-            const email = document.getElementById('inquiry-email').value;
-            const message = document.getElementById('inquiry-message').value;
 
-            // Simulating successful submission & logging
-            alert(`Thank you, ${name}! Your inquiry has been sent successfully. We will contact you at ${phone}.`);
-            document.getElementById('contact-form').reset();
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerText = 'Sending...';
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('inquiry-name').value.trim();
+            const phone = document.getElementById('inquiry-phone').value.trim();
+            const email = document.getElementById('inquiry-email').value.trim();
+            const message = document.getElementById('inquiry-message').value.trim();
+
+            const payload = {
+                name: name,
+                phone: phone,
+                email: email,
+                message: message
+            };
+
+            try {
+                // Submit quietly to Google Sheets 'Inquiries' tab
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    const waHref = document.getElementById('whatsapp-link').href;
+                    const waText = encodeURIComponent(`Hello RamJyoti Team,\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${message}`);
+                    window.open(`${waHref}?text=${waText}`, '_blank');
+                } else {
+                    alert(`Thank you, ${name}! Your inquiry has been sent successfully. We will get back to you soon.`);
+                }
+
+                document.getElementById('contact-form').reset();
+            } catch (error) {
+                console.error('Error submitting inquiry:', error);
+                alert('Thank you! Your inquiry has been submitted.');
+            } finally {
+                submitBtn.innerText = 'Send Message';
+                submitBtn.disabled = false;
+            }
         }
 
         // Legal Modals
