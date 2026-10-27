@@ -68,7 +68,7 @@
     <!-- Immersive Full-Screen Hero Banner -->
     <section id="hero-section" class="relative min-h-[80vh] sm:min-h-[90vh] flex items-center bg-[#2D1810] text-white overflow-hidden pt-12 sm:pt-0">
         <div class="absolute inset-0 z-0">
-          <img id="hero-bg-img" src="https://i.imgur.com/dz7yTW9.jpeg"auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover">
+            <img id="hero-bg-img" src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover opacity-45">
             <div class="absolute inset-0 bg-gradient-to-r from-[#2D1810]/95 via-[#2D1810]/70 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full py-20 sm:py-32">
@@ -77,7 +77,7 @@
                     Sacred Light • Zero Soot • Pure Devotion
                 </span>
                 <h1 id="hero-title" class="text-3xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-4 sm:mb-6 font-serif drop-shadow-sm">
-                    Pure Golden Flame for Your <span class="text-amber-400">Daily Puja</span>
+                    Pure Golden Flame for Your <span class="text-amber-400">Daily Aarti</span>
                 </h1>
                 <p id="hero-desc" class="text-sm sm:text-lg text-amber-100/90 font-normal mb-8 sm:mb-10 leading-relaxed max-w-xl">
                     Formulated cleanly with <strong>zero Light Liquid Paraffin (LLP)</strong>, zero mineral oils, and zero waxes. Enjoy a peaceful 45+ minute bright flame that leaves your temple walls spotless.
@@ -287,7 +287,7 @@
             </div>
             <div class="bg-white/10 backdrop-blur-md p-3 sm:p-4 rounded-3xl border border-white/20 shadow-2xl">
                 <div class="aspect-video w-full rounded-2xl overflow-hidden bg-stone-900">
-                    <iframe id="yt-iframe" class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="RamJyoti Brand Video" allowfullscreen></iframe>
+                    <iframe id="yt-iframe" class="w-full h-full" src="" title="RamJyoti Brand Video" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -679,7 +679,19 @@
                         if(desc) document.getElementById('story-desc').innerHTML = desc;
                         if(imgUrl) document.getElementById('story-bg-img').src = imgUrl;
                     } else if (key === 'config') {
-                        if(title && String(title).includes('youtube.com')) document.getElementById('yt-iframe').src = title.replace('watch?v=', 'embed/');
+                        if(title) {
+                            let ytEmbedUrl = title.trim();
+                            // Auto-clean any YouTube link pasted in sheet to embed format
+                            if(ytEmbedUrl.includes('watch?v=')) {
+                                ytEmbedUrl = ytEmbedUrl.replace('watch?v=', 'embed/');
+                            } else if(ytEmbedUrl.includes('youtu.be/')) {
+                                const videoId = ytEmbedUrl.split('youtu.be/')[1]?.split('?')[0];
+                                if(videoId) ytEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            }
+                            // Strip accidental brackets if user pasted with them
+                            ytEmbedUrl = ytEmbedUrl.replace(/[\[\]]/g, '');
+                            document.getElementById('yt-iframe').src = ytEmbedUrl;
+                        }
                         if(subtitle) {
                             const waLink = document.getElementById('whatsapp-link');
                             if(waLink) {
