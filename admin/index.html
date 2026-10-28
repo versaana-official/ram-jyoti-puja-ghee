@@ -23,7 +23,7 @@
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
                 collections: [
-                    // 1. PRODUCTS
+                    // 1. PRODUCTS (Updated to support multiple images)
                     {
                         name: "products",
                         label: "1. Products",
@@ -36,7 +36,13 @@
                             {label: "Pack Size", name: "size", widget: "string"},
                             {label: "Price (₹)", name: "price", widget: "number"},
                             {label: "Tag Badge", name: "tag", widget: "string", default: "Pure Desi Ghee"},
-                            {label: "Product Image", name: "image", widget: "image"},
+                            {
+                                label: "Product Images (Add 5+ Images)", 
+                                name: "images", 
+                                widget: "list",
+                                summary: "{{fields.image}}",
+                                field: {label: "Image", name: "image", widget: "image"}
+                            },
                             {label: "Description", name: "desc", widget: "text"},
                             {label: "In Stock", name: "inStock", widget: "boolean", default: true}
                         ]
