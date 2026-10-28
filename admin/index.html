@@ -4,9 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RamJyoti Content Manager</title>
+    <!-- Netlify Identity Widget for Authentication -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+    <!-- Enable Manual Initialization to embed config directly -->
+    <script>
+        window.CMS_MANUAL_INIT = true;
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+        CMS.init({
+            config: {
+                backend: {
+                    name: "github",
+                    repo: "versaana-official/ram-jyoti-puja-ghee",
+                    branch: "main"
+                },
+                media_folder: "images/uploads",
+                public_folder: "/images/uploads",
+                collections: [
+                    {
+                        name: "products",
+                        label: "Product Variants",
+                        folder: "content/products",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Variant ID", name: "id", widget: "string"},
+                            {label: "Pack Size", name: "size", widget: "string"},
+                            {label: "Price (₹)", name: "price", widget: "number"},
+                            {label: "Tag Badge", name: "tag", widget: "string", default: "Starter Pack"},
+                            {label: "Product Images", name: "images", widget: "string"},
+                            {label: "Description", name: "desc", widget: "text"},
+                            {label: "In Stock", name: "inStock", widget: "boolean", default: true}
+                        ]
+                    }
+                ]
+            }
+        });
+    </script>
 </body>
 </html>
