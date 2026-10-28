@@ -63,7 +63,7 @@
                         ]
                     },
 
-                    // 3. SITE CONTENT (Banners, Multi-USPs, Rituals, SEO, Config)
+                    // 3. SITE CONTENT (Banners, Multi-USPs, Separator Image/Text, Rituals, SEO, Config)
                     {
                         name: "site_content",
                         label: "3. Site Content",
@@ -89,7 +89,17 @@
                                 ]
                             },
 
-                            {label: "Separator Banner Text / Image", name: "separator_banner", widget: "string", required: false},
+                            // SEPARATOR BANNER (Now supports both Image and Text/Heading)
+                            {
+                                label: "Separator Banner",
+                                name: "separator_banner",
+                                widget: "object",
+                                fields: [
+                                    {label: "Separator Image", name: "image", widget: "image", required: false},
+                                    {label: "Separator Text / Heading", name: "text", widget: "string", required: false},
+                                    {label: "Subtext / Tagline", name: "subtext", widget: "string", required: false}
+                                ]
+                            },
                             
                             // Rituals
                             {label: "Ritual Header", name: "ritual_header", widget: "string", required: false},
