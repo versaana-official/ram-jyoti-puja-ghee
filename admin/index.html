@@ -23,20 +23,136 @@
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
                 collections: [
+                    // 1. PRODUCTS
                     {
                         name: "products",
-                        label: "Product Variants",
+                        label: "1. Products",
                         folder: "content/products",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
-                            {label: "Variant ID", name: "id", widget: "string"},
+                            {label: "Product ID / Slug", name: "id", widget: "string"},
+                            {label: "Product Name", name: "title", widget: "string"},
                             {label: "Pack Size", name: "size", widget: "string"},
                             {label: "Price (₹)", name: "price", widget: "number"},
-                            {label: "Tag Badge", name: "tag", widget: "string", default: "Starter Pack"},
-                            {label: "Product Images", name: "images", widget: "string"},
+                            {label: "Tag Badge", name: "tag", widget: "string", default: "Pure Desi Ghee"},
+                            {label: "Product Image", name: "image", widget: "image"},
                             {label: "Description", name: "desc", widget: "text"},
                             {label: "In Stock", name: "inStock", widget: "boolean", default: true}
+                        ]
+                    },
+
+                    // 2. PROMOCODES WITH LOGIC
+                    {
+                        name: "promocodes",
+                        label: "2. Promocodes",
+                        folder: "content/promocodes",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Coupon Code", name: "code", widget: "string"},
+                            {label: "Discount Type", name: "discount_type", widget: "select", options: ["percentage", "flat"]},
+                            {label: "Discount Value", name: "value", widget: "number"},
+                            {label: "Minimum Order Value (₹)", name: "min_order", widget: "number", default: 0},
+                            {label: "Active Status", name: "active", widget: "boolean", default: true}
+                        ]
+                    },
+
+                    // 3. SITE CONTENT (Banners, USPs, Rituals, SEO, Config)
+                    {
+                        name: "site_content",
+                        label: "3. Site Content",
+                        folder: "content/site_content",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Section Identifier", name: "id", widget: "string", hint: "e.g., hero-banner, gst-config, seo-meta"},
+                            {label: "Announcement Bar Text", name: "announcement", widget: "string", required: false},
+                            {label: "Hero Title", name: "hero_title", widget: "string", required: false},
+                            {label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false},
+                            {label: "Hero Banner Image", name: "hero_image", widget: "image", required: false},
+                            {label: "Image USP / Icon", name: "usp_icon", widget: "image", required: false},
+                            {label: "Separator Banner Text / Image", name: "separator_banner", widget: "string", required: false},
+                            
+                            // Rituals
+                            {label: "Ritual Header", name: "ritual_header", widget: "string", required: false},
+                            {label: "Ritual Step 1", name: "ritual_1", widget: "text", required: false},
+                            {label: "Ritual Step 2", name: "ritual_2", widget: "text", required: false},
+                            {label: "Ritual Step 3", name: "ritual_3", widget: "text", required: false},
+                            
+                            // Story & Media
+                            {label: "Story Banner Image", name: "story_banner", widget: "image", required: false},
+                            {label: "YouTube Video URL / ID", name: "yt_video", widget: "string", required: false},
+                            {label: "Connect Tabs Data", name: "connect_tabs", widget: "text", required: false},
+                            {label: "Social Media Icons (JSON/List)", name: "sm_icons", widget: "text", required: false},
+
+                            // GST & SEO
+                            {label: "GST Percentage (%)", name: "gst_percent", widget: "number", default: 5},
+                            {label: "SEO Meta Title", name: "meta_title", widget: "string", required: false},
+                            {label: "SEO Meta Description", name: "meta_desc", widget: "text", required: false}
+                        ]
+                    },
+
+                    // 4. ORDERS WITH TRACK ORDER LOGIC
+                    {
+                        name: "orders",
+                        label: "4. Orders",
+                        folder: "content/orders",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Order ID", name: "order_id", widget: "string"},
+                            {label: "Customer Name", name: "customer_name", widget: "string"},
+                            {label: "Phone Number", name: "phone", widget: "string"},
+                            {label: "Order Summary", name: "summary", widget: "text"},
+                            {label: "Total Amount (₹)", name: "total", widget: "number"},
+                            {label: "Order Status", name: "status", widget: "select", options: ["Order Placed", "Dispatched", "Out for Delivery", "Delivered", "Cancelled"]},
+                            {label: "Tracking Details / Waybill", name: "tracking_info", widget: "string"}
+                        ]
+                    },
+
+                    // 5. TESTIMONIALS WITH RATINGS
+                    {
+                        name: "testimonials",
+                        label: "5. Testimonials",
+                        folder: "content/testimonials",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Customer Name", name: "name", widget: "string"},
+                            {label: "Rating (1 to 5)", name: "rating", widget: "number", default: 5},
+                            {label: "Review Comment", name: "comment", widget: "text"},
+                            {label: "City / Location", name: "location", widget: "string"}
+                        ]
+                    },
+
+                    // 6. ABANDONED CARTS
+                    {
+                        name: "abandoned_carts",
+                        label: "6. Abandoned Carts",
+                        folder: "content/abandoned_carts",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Cart ID / Session", name: "cart_id", widget: "string"},
+                            {label: "Customer Phone / Email", name: "contact", widget: "string"},
+                            {label: "Items in Cart", name: "items", widget: "text"},
+                            {label: "Cart Timestamp", name: "timestamp", widget: "string"}
+                        ]
+                    },
+
+                    // 7. INQUIRIES
+                    {
+                        name: "inquiries",
+                        label: "7. Inquiries",
+                        folder: "content/inquiries",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Sender Name", name: "name", widget: "string"},
+                            {label: "Phone / Email", name: "contact", widget: "string"},
+                            {label: "Message / Query", name: "message", widget: "text"},
+                            {label: "Date Received", name: "date", widget: "string"}
                         ]
                     }
                 ]
