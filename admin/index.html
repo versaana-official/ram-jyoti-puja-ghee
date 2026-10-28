@@ -23,7 +23,7 @@
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
                 collections: [
-                    // 1. PRODUCTS (Updated to support multiple images)
+                    // 1. PRODUCTS (Multiple Images Support)
                     {
                         name: "products",
                         label: "1. Products",
@@ -37,10 +37,9 @@
                             {label: "Price (₹)", name: "price", widget: "number"},
                             {label: "Tag Badge", name: "tag", widget: "string", default: "Pure Desi Ghee"},
                             {
-                                label: "Product Images (Add 5+ Images)", 
+                                label: "Product Images (Add 5+)", 
                                 name: "images", 
                                 widget: "list",
-                                summary: "{{fields.image}}",
                                 field: {label: "Image", name: "image", widget: "image"}
                             },
                             {label: "Description", name: "desc", widget: "text"},
@@ -64,7 +63,7 @@
                         ]
                     },
 
-                    // 3. SITE CONTENT (Banners, USPs, Rituals, SEO, Config)
+                    // 3. SITE CONTENT (Banners, Multi-USPs, Rituals, SEO, Config)
                     {
                         name: "site_content",
                         label: "3. Site Content",
@@ -72,12 +71,24 @@
                         create: true,
                         slug: "{{slug}}",
                         fields: [
-                            {label: "Section Identifier", name: "id", widget: "string", hint: "e.g., hero-banner, gst-config, seo-meta"},
+                            {label: "Section Identifier", name: "id", widget: "string", hint: "e.g., home-page-content"},
                             {label: "Announcement Bar Text", name: "announcement", widget: "string", required: false},
                             {label: "Hero Title", name: "hero_title", widget: "string", required: false},
                             {label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false},
                             {label: "Hero Banner Image", name: "hero_image", widget: "image", required: false},
-                            {label: "Image USP / Icon", name: "usp_icon", widget: "image", required: false},
+                            
+                            // MULTIPLE IMAGE USPs (Upto 4/5 with text)
+                            {
+                                label: "Image USPs (Add 4-5 items)",
+                                name: "image_usps",
+                                widget: "list",
+                                fields: [
+                                    {label: "USP Title", name: "title", widget: "string"},
+                                    {label: "USP Description", name: "desc", widget: "text"},
+                                    {label: "USP Icon / Image", name: "icon", widget: "image"}
+                                ]
+                            },
+
                             {label: "Separator Banner Text / Image", name: "separator_banner", widget: "string", required: false},
                             
                             // Rituals
@@ -90,7 +101,7 @@
                             {label: "Story Banner Image", name: "story_banner", widget: "image", required: false},
                             {label: "YouTube Video URL / ID", name: "yt_video", widget: "string", required: false},
                             {label: "Connect Tabs Data", name: "connect_tabs", widget: "text", required: false},
-                            {label: "Social Media Icons (JSON/List)", name: "sm_icons", widget: "text", required: false},
+                            {label: "Social Media Icons", name: "sm_icons", widget: "text", required: false},
 
                             // GST & SEO
                             {label: "GST Percentage (%)", name: "gst_percent", widget: "number", default: 5},
