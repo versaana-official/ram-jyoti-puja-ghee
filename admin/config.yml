@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: versaana-official/ram-jyoti-puja-ghee # Update this with your GitHub repo
+  repo: versaana-official/ram-jyoti-puja-ghee
   branch: main
 
 media_folder: "images/uploads"
