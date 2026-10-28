@@ -8,7 +8,7 @@
     <!-- Dynamic Open Graph Tags for WhatsApp Preview -->
     <meta property="og:title" id="og-title" content="RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee">
     <meta property="og:description" id="og-desc" content="Pure Golden Flame for Your Daily Aarti. Zero LLP, Zero Mineral Oils, Soot-Free 45+ Min Burn Time.">
-    <meta property="og:image" id="og-img" content="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=630">
+    <meta property="og:image" id="og-img" content="">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -68,7 +68,7 @@
     <!-- Immersive Full-Screen Hero Banner -->
     <section id="hero-section" class="relative min-h-[80vh] sm:min-h-[90vh] flex items-center bg-[#2D1810] text-white overflow-hidden pt-12 sm:pt-0">
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg-img" src="https://i.imgur.com/dz7yTW9.jpeg?auto=format&fit=crop&w=1920&q=80" alt="Banner Background" class="w-full h-full object-cover">
+            <img id="hero-bg-img" src="https://i.imgur.com/dz7yTW9.jpeg" alt="Banner Background" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-[#2D1810]/95 via-[#2D1810]/70 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full py-20 sm:py-32">
@@ -281,7 +281,7 @@
     <!-- Full-Width Immersive Story Banner with YouTube Embed -->
     <section id="story" class="relative py-24 sm:py-32 bg-[#2D1810] text-white overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img id="story-bg-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1920&q=80" alt="Story Banner" class="w-full h-full object-cover opacity-35">
+            <img id="story-bg-img" src="" alt="Story Banner" class="w-full h-full object-cover opacity-35">
             <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
@@ -663,6 +663,8 @@
                 const imageUspGrid = document.getElementById('image-usp-grid');
                 if(imageUspGrid) imageUspGrid.innerHTML = '';
 
+                let imageUspsList = [];
+
                 json.table.rows.forEach((row) => {
                     const key = String(row.c[0]?.v || '').trim().toLowerCase();
                     if(!key || key.includes('key')) return;
@@ -682,34 +684,26 @@
                     } else if (key === 'seo_meta') {
                         if(title) { document.getElementById('meta-title').innerText = title; document.getElementById('og-title').innerText = title; }
                         if(subtitle) { document.getElementById('meta-desc').content = subtitle; document.getElementById('og-desc').content = subtitle; }
-                        if(imgUrl) document.getElementById('og-img').content = imgUrl;
+                        if(imgUrl) document.getElementById('og-img').content = imgUrl.replace(/[\[\]]/g, '').trim();
                     } else if (key === 'hero_banner') {
                         if(title) document.getElementById('hero-title').innerHTML = title;
                         if(subtitle) document.getElementById('hero-subtitle').innerText = subtitle;
                         if(desc) document.getElementById('hero-desc').innerHTML = desc;
                         if(imgUrl) {
-                            document.getElementById('hero-bg-img').src = imgUrl;
-                            document.getElementById('og-img').content = imgUrl; // Dynamic WhatsApp preview image
+                            let cleanHeroImg = imgUrl.replace(/[\[\]]/g, '').trim();
+                            document.getElementById('hero-bg-img').src = cleanHeroImg;
+                            document.getElementById('og-img').content = cleanHeroImg; // Dynamic WhatsApp preview image sync
                         }
                     } else if (key === 'story_banner') {
                         if(title) document.getElementById('story-title').innerText = title;
                         if(subtitle) document.getElementById('story-subtitle').innerText = subtitle;
                         if(desc) document.getElementById('story-desc').innerHTML = desc;
-                        if(imgUrl) document.getElementById('story-bg-img').src = imgUrl;
-                    } else if (key.startsWith('img_usp_')) {
-                        // Dynamic 3-item Image USP rendering without background boxes, featuring larger images
-                        if(imageUspGrid) {
-                            let cleanImg = imgUrl.replace(/[\[\]]/g, '').trim();
-                            imageUspGrid.innerHTML += `
-                                <div class="flex flex-col items-center text-center">
-                                    <div class="w-full h-64 sm:h-72 rounded-3xl overflow-hidden mb-6 shadow-md border border-amber-100 bg-[#F7F2EB]">
-                                        <img src="${cleanImg}" alt="${title}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
-                                    </div>
-                                    <span class="text-[11px] font-bold tracking-widest text-[#9A3412] uppercase bg-amber-100/80 px-3.5 py-1 rounded-full mb-3">${subtitle}</span>
-                                    <h3 class="font-bold text-xl text-[#2D1810] mb-2 font-serif">${title}</h3>
-                                    <p class="text-stone-600 text-xs sm:text-sm leading-relaxed max-w-sm">${desc}</p>
-                                </div>
-                            `;
+                        if(imgUrl) document.getElementById('story-bg-img').src = imgUrl.replace(/[\[\]]/g, '').trim();
+                    } else if (key.startsWith('img_usp_') || key.includes('img_usp')) {
+                        // Collect Image USPs and sort/push them cleanly
+                        let cleanImg = imgUrl.replace(/[\[\]]/g, '').trim();
+                        if(cleanImg) {
+                            imageUspsList.push({ title, subtitle, imgUrl: cleanImg, desc });
                         }
                     } else if (key === 'config') {
                         if(title) {
@@ -742,10 +736,26 @@
                             if(fb && socials[0] && socials[0].startsWith('http')) { fb.href = socials[0]; fb.classList.remove('hidden'); fb.classList.add('flex'); }
                             if(ig && socials[1] && socials[1].startsWith('http')) { ig.href = socials[1]; ig.classList.remove('hidden'); ig.classList.add('flex'); }
                             if(yt && socials[2] && socials[2].startsWith('http')) { yt.href = socials[2]; yt.classList.remove('hidden'); yt.classList.add('flex'); }
-                            if(x && socials[3] && socials[3].startsWith('http')) { x.href = socials[3]; x.classList.remove('hidden'); x.classList.add('flex'); }
+                            if(x && socials[3] && socials[3].startsWith('http')) { x.href = socials[3]; x.classList.add('flex'); }
                         }
                     }
                 });
+
+                // Render Image USPs dynamically and robustly
+                if(imageUspGrid && imageUspsList.length > 0) {
+                    imageUspsList.forEach(item => {
+                        imageUspGrid.innerHTML += `
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-full h-64 sm:h-72 rounded-3xl overflow-hidden mb-6 shadow-md border border-amber-100 bg-[#F7F2EB]">
+                                    <img src="${item.imgUrl}" alt="${item.title}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                                </div>
+                                <span class="text-[11px] font-bold tracking-widest text-[#9A3412] uppercase bg-amber-100/80 px-3.5 py-1 rounded-full mb-3">${item.subtitle}</span>
+                                <h3 class="font-bold text-xl text-[#2D1810] mb-2 font-serif">${item.title}</h3>
+                                <p class="text-stone-600 text-xs sm:text-sm leading-relaxed max-w-sm">${item.desc}</p>
+                            </div>
+                        `;
+                    });
+                }
             } catch (e) { console.log('SiteContent load error', e); }
 
             // 4. Load Testimonials Tab
