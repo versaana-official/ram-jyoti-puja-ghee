@@ -1,0 +1,88 @@
+backend:
+  name: github
+  repo: your-github-username/your-repo-name # Update this with your GitHub repo
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "products"
+    label: "Product Variants"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Variant ID", name: "id", widget: "string"}
+      - {label: "Pack Size", name: "size", widget: "string", hint: "e.g. 500ml Bottle"}
+      - {label: "Price (₹)", name: "price", widget: "number"}
+      - {label: "Tag Badge", name: "tag", widget: "string", default: "Starter Pack"}
+      - {label: "Product Images (Comma-separated URLs)", name: "images", widget: "string"}
+      - {label: "Description", name: "desc", widget: "text"}
+      - {label: "In Stock", name: "inStock", widget: "boolean", default: true}
+
+  - name: "settings"
+    label: "Site Content & Banners"
+    files:
+      - file: "content/settings.json"
+        label: "Main Settings"
+        name: "settings"
+        fields:
+          - label: "Hero Banner"
+            name: "hero_banner"
+            widget: "object"
+            fields:
+              - {label: "Headline Title", name: "title", widget: "string"}
+              - {label: "Subtitle Tag", name: "subtitle", widget: "string"}
+              - {label: "Description", name: "desc", widget: "text"}
+              - {label: "Background Image URL", name: "imgUrl", widget: "string"}
+
+          - label: "YouTube Brand Video"
+            name: "youtube_config"
+            widget: "object"
+            fields:
+              - {label: "YouTube Embed Link", name: "ytLink", widget: "string", hint: "e.g. https://www.youtube.com/embed/0-uUuUAEf0U"}
+              - {label: "WhatsApp Support Number", name: "whatsapp", widget: "string", hint: "e.g. 919903666634"}
+              - {label: "Support Email", name: "email", widget: "string", default: "care@ramjyoti.com"}
+
+          - label: "SEO & WhatsApp Preview Meta"
+            name: "seo_meta"
+            widget: "object"
+            fields:
+              - {label: "Meta Title", name: "title", widget: "string"}
+              - {label: "Meta Description", name: "desc", widget: "text"}
+              - {label: "Social Share Preview Image URL", name: "imgUrl", widget: "string"}
+
+  - name: "image_usps"
+    label: "Image USPs (3 Items)"
+    folder: "content/image_usps"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "USP Title", name: "title", widget: "string"}
+      - {label: "Category Subtitle", name: "subtitle", widget: "string"}
+      - {label: "USP Image URL", name: "imgUrl", widget: "string"}
+      - {label: "Description", name: "desc", widget: "text"}
+
+  - name: "promocodes"
+    label: "Promo Codes"
+    folder: "content/promocodes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Coupon Code", name: "code", widget: "string"}
+      - {label: "Discount Type", name: "type", widget: "select", options: ["percentage", "flat"]}
+      - {label: "Discount Value", name: "val", widget: "number"}
+      - {label: "Minimum Order Value (₹)", name: "minVal", widget: "number"}
+      - {label: "Description", name: "desc", widget: "string"}
+      - {label: "Is Active", name: "isActive", widget: "boolean", default: true}
+
+  - name: "testimonials"
+    label: "Customer Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Customer Review / Quote", name: "quote", widget: "text"}
+      - {label: "Author Name", name: "author", widget: "string"}
+      - {label: "Location", name: "location", widget: "string"}
