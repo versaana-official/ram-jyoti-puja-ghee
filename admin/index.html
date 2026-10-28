@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RamJyoti Content Manager</title>
-    <!-- Netlify Identity Widget for Authentication -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-    <!-- Enable Manual Initialization to embed config directly -->
     <script>
         window.CMS_MANUAL_INIT = true;
     </script>
@@ -19,7 +16,9 @@
                 backend: {
                     name: "github",
                     repo: "versaana-official/ram-jyoti-puja-ghee",
-                    branch: "main"
+                    branch: "main",
+                    base_url: "https://decap-cms-oauth-provider.vercel.app",
+                    auth_endpoint: "api/auth"
                 },
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
