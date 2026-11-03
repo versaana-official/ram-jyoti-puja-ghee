@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CMS-Backed SEO Meta Tags -->
     <title id="meta-title">RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee</title>
     <meta id="meta-desc" name="description" content="Pure Golden Flame for Your Daily Aarti. Zero LLP, Zero Mineral Oils, Soot-Free 45+ Min Burn Time.">
-    <!-- Dynamic Open Graph Tags for WhatsApp Preview -->
     <meta property="og:title" id="og-title" content="RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee">
     <meta property="og:description" id="og-desc" content="Pure Golden Flame for Your Daily Aarti. Zero LLP, Zero Mineral Oils, Soot-Free 45+ Min Burn Time.">
     <meta property="og:image" id="og-img" content="">
@@ -24,19 +24,20 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
         }
-        .animate-marquee { display: inline-block; animation: marquee 25s linear infinite; }
+        .animate-marquee { display: inline-flex; white-space: nowrap; animation: marquee 30s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="antialiased selection:bg-amber-200 selection:text-amber-900 pb-20 sm:pb-0">
 
-    <!-- Animated Announcement Ticker Bar -->
-    <div id="announcement-bar" class="bg-gradient-to-r from-[#7C2D12] via-[#9A3412] to-[#7C2D12] text-amber-50 text-xs py-3 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-md">
-        <div class="animate-marquee font-bold tracking-wider uppercase text-amber-200">
-            <span id="announcement-text">🪔 Loading announcements...</span>
+    <!-- Animated Multi-Sentence Announcement Ticker Bar -->
+    <div id="announcement-bar" class="bg-gradient-to-r from-[#7C2D12] via-[#9A3412] to-[#7C2D12] text-amber-50 text-xs py-3 px-4 overflow-hidden relative z-50 shadow-md">
+        <div class="animate-marquee font-bold tracking-wider uppercase text-amber-200 space-x-12">
+            <span id="announcement-text">🪔 FESTIVAL SPECIAL: Free Shipping on Orders Above ₹500 &bull; Use Code RAM10 for 10% OFF &bull; Zero LLP & Mineral Oils</span>
+            <span id="announcement-text-dup">🪔 FESTIVAL SPECIAL: Free Shipping on Orders Above ₹500 &bull; Use Code RAM10 for 10% OFF &bull; Zero LLP & Mineral Oils</span>
         </div>
     </div>
 
@@ -90,7 +91,7 @@
         </div>
     </section>
 
-    <!-- Master Single Product View with Multi-Angle Gallery, Legal Metrology Pricing & Ratings -->
+    <!-- Master Single Product View with Multi-Angle Gallery & Legal Metrology Pricing -->
     <section id="product-section" class="py-16 sm:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
@@ -252,11 +253,11 @@
         </div>
     </section>
 
-    <!-- Restored Separator Banner -->
+    <!-- Restored Separator Banner (Fixed Dimensions & Styling) -->
     <div id="separator-container">
-        <section class="py-12 bg-gradient-to-r from-amber-900 via-[#9A3412] to-amber-900 text-white text-center">
+        <section class="py-20 bg-gradient-to-r from-amber-900 via-[#9A3412] to-amber-900 text-white text-center bg-cover bg-center" style="background-image: linear-gradient(rgba(45,24,16,0.85), rgba(45,24,16,0.85));">
             <div class="max-w-4xl mx-auto px-4">
-                <h3 id="separator-text" class="text-xl sm:text-2xl font-serif font-bold text-amber-100 mb-2">Purity You Can Trust, Flame That Inspires Devotion</h3>
+                <h3 id="separator-text" class="text-2xl sm:text-3xl font-serif font-bold text-amber-100 mb-3">Purity You Can Trust, Flame That Inspires Devotion</h3>
                 <p id="separator-subtext" class="text-xs sm:text-sm text-amber-200/90">Formulated with pure devotion by Versaana Manufacturing in Rajnandgaon, Chhattisgarh.</p>
             </div>
         </section>
@@ -309,7 +310,7 @@
                 <a href="#product-section" class="inline-block bg-white hover:bg-amber-50 text-[#9A3412] font-bold px-8 py-3.5 rounded-full transition text-sm shadow-xl">Explore Collection</a>
             </div>
             <div class="bg-white/10 backdrop-blur-md p-3 sm:p-4 rounded-3xl border border-white/20 shadow-2xl">
-                <div class="aspect-video w-full rounded-2xl overflow-hidden bg-stone-900">
+                <div class="aspect-video w-full rounded-2xl overflow-hidden bg-stone-900 flex items-center justify-center">
                     <iframe id="yt-iframe" class="w-full h-full" src="" title="RamJyoti Brand Video" allowfullscreen></iframe>
                 </div>
             </div>
@@ -358,6 +359,50 @@
             </form>
         </div>
     </section>
+
+    <!-- Fully Restored CMS-Backed Footer with Social Media & Policy Links -->
+    <footer class="bg-[#2D1810] text-amber-100 py-16 border-t border-amber-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div>
+                <h3 class="font-serif text-xl font-bold text-white mb-3">RamJyoti Puja Ghee</h3>
+                <p class="text-xs text-amber-200/80 leading-relaxed mb-4">Pure golden flame for your daily Aarti. Manufactured with absolute purity and zero mineral oils by Versaana Manufacturing.</p>
+                <!-- CMS-Backed Social Media Links -->
+                <div id="social-links-container" class="flex space-x-3">
+                    <a href="#" id="soc-insta" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#9A3412] transition">📷</a>
+                    <a href="#" id="soc-yt" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#9A3412] transition">▶️</a>
+                    <a href="#" id="soc-wa" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#9A3412] transition">💬</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-xs text-amber-200/80">
+                    <li><a href="#product-section" class="hover:text-white transition">Shop Product</a></li>
+                    <li><a href="#usps" class="hover:text-white transition">Purity Standards</a></li>
+                    <li><a href="#ritual" class="hover:text-white transition">Ritual Guide</a></li>
+                    <li><a href="#story" class="hover:text-white transition">Our Story</a></li>
+                    <li><a href="#contact" class="hover:text-white transition">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4">Policies & Compliance</h4>
+                <ul class="space-y-2 text-xs text-amber-200/80">
+                    <li><a href="#" onclick="openPolicyModal('privacy')" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" onclick="openPolicyModal('terms')" class="hover:text-white transition">Terms & Conditions</a></li>
+                    <li><a href="#" onclick="openPolicyModal('return')" class="hover:text-white transition">Return & Refund Policy</a></li>
+                    <li><a href="#" onclick="openPolicyModal('shipping')" class="hover:text-white transition">Shipping Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4">Manufacturing Unit</h4>
+                <p class="text-xs text-amber-200/80 leading-relaxed mb-2"><strong>Versaana Manufacturing</strong><br>Powerhouse Road, Rajnandgaon,<br>Chhattisgarh - 491441</p>
+                <p class="text-xs text-amber-200/80">Email: care@ramjyoti.com</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 border-t border-amber-900/60 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-amber-300/60">
+            <p>&copy; 2026 Versaana Manufacturing. All rights reserved.</p>
+            <p class="mt-2 sm:mt-0">Compliant with Legal Metrology (Packaged Commodities) Rules.</p>
+        </div>
+    </footer>
 
     <!-- Slide-Over Checkout / Cart Drawer -->
     <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
@@ -473,26 +518,69 @@
         </div>
     </div>
 
-    <!-- Core Dynamic Data, Metrology & Submission Script -->
+    <!-- Policy Modal -->
+    <div id="policy-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[80vh] overflow-y-auto">
+            <button onclick="closePolicyModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 text-lg font-bold">✕</button>
+            <h3 id="policy-title" class="font-serif text-xl font-bold text-[#2D1810] mb-4">Policy</h3>
+            <div id="policy-content" class="text-xs text-stone-700 space-y-3 leading-relaxed"></div>
+        </div>
+    </div>
+
+    <!-- Core Dynamic Data & Metrology Script -->
     <script>
         let allProducts = [];
         let selectedProduct = null;
         let quantity = 1;
         let appliedCoupon = null;
         let allPromos = [];
+        let sitePolicies = {};
 
         async function initWebsite() {
             try {
-                // 1. Fetch Site Content
+                // 1. Fetch Site Content & SEO Meta Tags
                 const siteRes = await fetch('/api/get-data?collection=site_content');
                 const siteData = await siteRes.json();
                 if (siteData && siteData.length > 0) {
                     const c = siteData[0];
-                    if (c.announcement) document.getElementById('announcement-text').innerText = c.announcement;
+                    
+                    // SEO Meta Tags
+                    if (c.meta_title) {
+                        document.getElementById('meta-title').innerText = c.meta_title;
+                        document.getElementById('og-title').setAttribute('content', c.meta_title);
+                    }
+                    if (c.meta_desc) {
+                        document.getElementById('meta-desc').setAttribute('content', c.meta_desc);
+                        document.getElementById('og-desc').setAttribute('content', c.meta_desc);
+                    }
+                    if (c.og_image) {
+                        document.getElementById('og-img').setAttribute('content', c.og_image);
+                    }
+
+                    // Announcement Ticker
+                    if (c.announcement) {
+                        document.getElementById('announcement-text').innerHTML = `🪔 ${c.announcement}`;
+                        document.getElementById('announcement-text-dup').innerHTML = `🪔 ${c.announcement}`;
+                    }
+
+                    // Hero
                     if (c.hero_title) document.getElementById('hero-title').innerHTML = c.hero_title;
                     if (c.hero_subtitle) document.getElementById('hero-subtitle').innerText = c.hero_subtitle;
                     if (c.hero_desc) document.getElementById('hero-desc').innerHTML = c.hero_desc;
                     if (c.hero_image) document.getElementById('hero-bg-img').src = c.hero_image;
+
+                    // Social Media Links (CMS backed)
+                    if (c.social_instagram) document.getElementById('soc-insta').href = c.social_instagram;
+                    if (c.social_youtube) document.getElementById('soc-yt').href = c.social_youtube;
+                    if (c.social_whatsapp) document.getElementById('soc-wa').href = `https://wa.me/${c.social_whatsapp}`;
+
+                    // Policies storage for modal
+                    sitePolicies = {
+                        privacy: c.policy_privacy || "We respect your privacy. All data submitted is securely encrypted and used strictly for order fulfillment.",
+                        terms: c.policy_terms || "By purchasing RamJyoti Puja Ghee, you agree to use it strictly for external burning in religious/prayer rituals.",
+                        return: c.policy_return || "Returns are accepted within 7 days of delivery in unopened, original packaging.",
+                        shipping: c.policy_shipping || "Free shipping on orders above ₹500. Standard delivery takes 3 to 5 business days."
+                    };
 
                     // Image USPs
                     if (c.image_usps && c.image_usps.length > 0) {
@@ -508,11 +596,11 @@
                     // Separator Banner
                     if (c.separator_banner) {
                         const s = c.separator_banner;
-                        const bg = s.image ? `style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${s.image}'); background-size: cover;"` : '';
+                        const bg = s.image ? `style="background-image: linear-gradient(rgba(45,24,16,0.85), rgba(45,24,16,0.85)), url('${s.image}'); background-size: cover; background-position: center;"` : '';
                         document.getElementById('separator-container').innerHTML = `
-                            <section class="py-16 bg-gradient-to-r from-amber-900 via-[#9A3412] to-amber-900 text-white text-center" ${bg}>
+                            <section class="py-20 bg-gradient-to-r from-amber-900 via-[#9A3412] to-amber-900 text-white text-center" ${bg}>
                                 <div class="max-w-4xl mx-auto px-4">
-                                    <h3 class="text-2xl sm:text-3xl font-serif font-bold text-amber-100 mb-2">${s.text || ''}</h3>
+                                    <h3 class="text-2xl sm:text-3xl font-serif font-bold text-amber-100 mb-3">${s.text || ''}</h3>
                                     <p class="text-xs sm:text-sm text-amber-200/90">${s.subtext || ''}</p>
                                 </div>
                             </section>
@@ -593,12 +681,10 @@
 
             renderVariantSelector();
 
-            // Populate Main Display
             document.getElementById('product-title').innerText = selectedProduct.title || "RamJyoti Pure Puja Ghee";
             document.getElementById('product-desc').innerText = selectedProduct.desc || "";
             document.getElementById('product-price').innerText = `₹${selectedProduct.price}`;
             
-            // Legal Metrology Compliance Display
             const mrpEl = document.getElementById('product-mrp');
             const discEl = document.getElementById('product-discount');
             const unitEl = document.getElementById('product-unit-price');
@@ -626,7 +712,6 @@
                 document.getElementById('product-tag-badge').innerText = selectedProduct.tag;
             }
 
-            // Images & Thumbnails
             let imgs = [];
             if (selectedProduct.images && Array.isArray(selectedProduct.images)) {
                 imgs = selectedProduct.images.map(imgObj => imgObj.image || imgObj);
@@ -743,15 +828,9 @@
             document.getElementById('cart-total').innerText = `₹${total}`;
         }
 
-        function addToCart() {
-            toggleCartDrawer();
-        }
+        function addToCart() { toggleCartDrawer(); }
+        function buyNow() { toggleCartDrawer(); }
 
-        function buyNow() {
-            toggleCartDrawer();
-        }
-
-        // Abandoned Cart Auto-Capture
         async function captureAbandonedCart() {
             const phone = document.getElementById('checkout-phone').value.trim();
             const name = document.getElementById('checkout-name').value.trim();
@@ -776,7 +855,6 @@
             }
         }
 
-        // Checkout Submission & Razorpay Integration
         async function proceedToCheckout() {
             const name = document.getElementById('checkout-name').value.trim();
             const phone = document.getElementById('checkout-phone').value.trim();
@@ -863,8 +941,16 @@
             }
         }
 
-        openTrackerModal = () => document.getElementById('tracker-modal').classList.remove('hidden');
-        closeTrackerModal = () => document.getElementById('tracker-modal').classList.add('hidden');
+        function openTrackerModal() { document.getElementById('tracker-modal').classList.remove('hidden'); }
+        function closeTrackerModal() { document.getElementById('tracker-modal').classList.add('hidden'); }
+
+        function openPolicyModal(type) {
+            const titles = { privacy: 'Privacy Policy', terms: 'Terms & Conditions', return: 'Return & Refund Policy', shipping: 'Shipping Policy' };
+            document.getElementById('policy-title').innerText = titles[type] || 'Policy';
+            document.getElementById('policy-content').innerHTML = `<p>${sitePolicies[type] || 'Policy details updating soon.'}</p>`;
+            document.getElementById('policy-modal').classList.remove('hidden');
+        }
+        function closePolicyModal() { document.getElementById('policy-modal').classList.add('hidden'); }
 
         async function trackOrder() {
             const query = document.getElementById('tracker-input').value.trim();
