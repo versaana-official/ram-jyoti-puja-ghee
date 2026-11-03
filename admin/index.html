@@ -23,11 +23,12 @@
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
                 collections: [
-                    // 1. PRODUCTS (Updated with Metrology Compliance: MRP, Offer Price, Unit Price Calculator fields)
+                    // 1. PRODUCTS (With Legal Metrology & Multi-Image Support)
                     {
                         name: "products",
                         label: "1. Products",
                         folder: "content/products",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -49,11 +50,12 @@
                         ]
                     },
 
-                    // 2. PROMOCODES WITH LOGIC
+                    // 2. PROMOCODES
                     {
                         name: "promocodes",
                         label: "2. Promocodes",
                         folder: "content/promocodes",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -65,11 +67,12 @@
                         ]
                     },
 
-                    // 3. SITE CONTENT (Banners, Multi-USPs, Separator, Rituals, SEO, Config)
+                    // 3. SITE CONTENT (Banners, Multi-USPs, Separator, Rituals, SEO)
                     {
                         name: "site_content",
                         label: "3. Site Content",
                         folder: "content/site_content",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -127,6 +130,7 @@
                         name: "orders",
                         label: "4. Orders",
                         folder: "content/orders",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -145,6 +149,7 @@
                         name: "testimonials",
                         label: "5. Testimonials",
                         folder: "content/testimonials",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -160,6 +165,7 @@
                         name: "abandoned_carts",
                         label: "6. Abandoned Carts",
                         folder: "content/abandoned_carts",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
@@ -175,6 +181,7 @@
                         name: "inquiries",
                         label: "7. Inquiries",
                         folder: "content/inquiries",
+                        format: "json",
                         create: true,
                         slug: "{{slug}}",
                         fields: [
