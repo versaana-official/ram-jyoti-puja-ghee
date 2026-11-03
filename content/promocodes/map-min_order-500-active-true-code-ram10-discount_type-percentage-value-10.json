@@ -1,0 +1,7 @@
+{
+  "min_order": 500,
+  "active": true,
+  "code": "RAM10",
+  "discount_type": "percentage",
+  "value": 10
+}
