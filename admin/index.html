@@ -1,51 +1,182 @@
-{
-    name: "site_content",
-    label: "3. Site Content",
-    folder: "content/site_content",
-    format: "json",
-    create: true,
-    slug: "{{slug}}",
-    fields: [
-        {label: "Section Identifier", name: "id", widget: "string"},
-        {label: "SEO Page Title", name: "meta_title", widget: "string", required: false},
-        {label: "SEO Meta Description", name: "meta_desc", widget: "text", required: false},
-        {label: "WhatsApp / OG Image URL", name: "og_image", widget: "image", required: false},
-        {label: "Announcement Bar Text", name: "announcement", widget: "string", required: false},
-        {label: "Instagram Profile URL", name: "social_instagram", widget: "string", required: false},
-        {label: "YouTube Channel URL", name: "social_youtube", widget: "string", required: false},
-        {label: "WhatsApp Support Number (e.g. 919876543210)", name: "social_whatsapp", widget: "string", required: false},
-        {label: "Hero Title", name: "hero_title", widget: "string", required: false},
-        {label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false},
-        {label: "Hero Banner Image", name: "hero_image", widget: "image", required: false},
-        {
-            label: "Image USPs (Add 4-5 items)",
-            name: "image_usps",
-            widget: "list",
-            fields: [
-                {label: "USP Title", name: "title", widget: "string"},
-                {label: "USP Description", name: "desc", widget: "text"},
-                {label: "USP Icon / Image", name: "icon", widget: "image"}
-            ]
-        },
-        {
-            label: "Separator Banner",
-            name: "separator_banner",
-            widget: "object",
-            fields: [
-                {label: "Separator Image", name: "image", widget: "image", required: false},
-                {label: "Separator Text / Heading", name: "text", widget: "string", required: false},
-                {label: "Subtext / Tagline", name: "subtext", widget: "string", required: false}
-            ]
-        },
-        {label: "Ritual Header", name: "ritual_header", widget: "string", required: false},
-        {label: "Ritual Step 1", name: "ritual_1", widget: "text", required: false},
-        {label: "Ritual Step 2", name: "ritual_2", widget: "text", required: false},
-        {label: "Ritual Step 3", name: "ritual_3", widget: "text", required: false},
-        {label: "Story Banner Image", name: "story_banner", widget: "image", required: false},
-        {label: "YouTube Video URL / ID", name: "yt_video", widget: "string", required: false},
-        {label: "Privacy Policy Text", name: "policy_privacy", widget: "text", required: false},
-        {label: "Terms & Conditions Text", name: "policy_terms", widget: "text", required: false},
-        {label: "Return Policy Text", name: "policy_return", widget: "text", required: false},
-        {label: "Shipping Policy Text", name: "policy_shipping", widget: "text", required: false}
-    ]
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RamJyoti Content Manager</title>
+</head>
+<body>
+    <script>window.CMS_MANUAL_INIT = true;</script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+        CMS.init({
+            config: {
+                backend: {
+                    name: "github",
+                    repo: "versaana-official/ram-jyoti-puja-ghee",
+                    branch: "main",
+                    base_url: "https://ram-jyoti-puja-ghee.vercel.app",
+                    auth_endpoint: "api/auth"
+                },
+                media_folder: "images/uploads",
+                public_folder: "/images/uploads",
+                collections: [
+                    {
+                        name: "products",
+                        label: "1. Products",
+                        folder: "content/products",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Product ID / Slug", name: "id", widget: "string"},
+                            {label: "Product Name", name: "title", widget: "string"},
+                            {label: "Pack Size Numeric Value (e.g. 1000)", name: "size_value", widget: "number"},
+                            {label: "Pack Size Unit", name: "size_unit", widget: "select", options: ["ml", "g", "L", "kg"], default: "ml"},
+                            {label: "Maximum Retail Price - MRP (₹)", name: "mrp", widget: "number"},
+                            {label: "Offer / Selling Price (₹)", name: "price", widget: "number"},
+                            {label: "Tag Badge", name: "tag", widget: "string", default: "Pure Desi Ghee"},
+                            {label: "Product Images (Add 5+)", name: "images", widget: "list", field: {label: "Image", name: "image", widget: "image"}},
+                            {label: "Description", name: "desc", widget: "text"},
+                            {label: "In Stock", name: "inStock", widget: "boolean", default: true}
+                        ]
+                    },
+                    {
+                        name: "promocodes",
+                        label: "2. Promocodes",
+                        folder: "content/promocodes",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Coupon Code", name: "code", widget: "string"},
+                            {label: "Discount Type", name: "discount_type", widget: "select", options: ["percentage", "flat"]},
+                            {label: "Discount Value", name: "value", widget: "number"},
+                            {label: "Minimum Order Value (₹)", name: "min_order", widget: "number", default: 0},
+                            {label: "Active Status", name: "active", widget: "boolean", default: true}
+                        ]
+                    },
+                    {
+                        name: "site_content",
+                        label: "3. Site Content",
+                        folder: "content/site_content",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Section Identifier", name: "id", widget: "string"},
+                            {label: "SEO Page Title", name: "meta_title", widget: "string", required: false},
+                            {label: "SEO Meta Description", name: "meta_desc", widget: "text", required: false},
+                            {label: "WhatsApp / OG Image URL", name: "og_image", widget: "image", required: false},
+                            {label: "Announcement Bar Text", name: "announcement", widget: "string", required: false},
+                            {label: "Instagram Profile URL", name: "social_instagram", widget: "string", required: false},
+                            {label: "YouTube Channel URL", name: "social_youtube", widget: "string", required: false},
+                            {label: "WhatsApp Support Number (e.g. 919876543210)", name: "social_whatsapp", widget: "string", required: false},
+                            {label: "Hero Title", name: "hero_title", widget: "string", required: false},
+                            {label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false},
+                            {label: "Hero Banner Image", name: "hero_image", widget: "image", required: false},
+                            {
+                                label: "Image USPs (Add 4-5 items)",
+                                name: "image_usps",
+                                widget: "list",
+                                fields: [
+                                    {label: "USP Title", name: "title", widget: "string"},
+                                    {label: "USP Description", name: "desc", widget: "text"},
+                                    {label: "USP Icon / Image", name: "icon", widget: "image"}
+                                ]
+                            },
+                            {
+                                label: "Separator Banner",
+                                name: "separator_banner",
+                                widget: "object",
+                                fields: [
+                                    {label: "Separator Image", name: "image", widget: "image", required: false},
+                                    {label: "Separator Text / Heading", name: "text", widget: "string", required: false},
+                                    {label: "Subtext / Tagline", name: "subtext", widget: "string", required: false}
+                                ]
+                            },
+                            {label: "Ritual Header", name: "ritual_header", widget: "string", required: false},
+                            {label: "Ritual Step 1", name: "ritual_1", widget: "text", required: false},
+                            {label: "Ritual Step 2", name: "ritual_2", widget: "text", required: false},
+                            {label: "Ritual Step 3", name: "ritual_3", widget: "text", required: false},
+                            {label: "Story Banner Image", name: "story_banner", widget: "image", required: false},
+                            {label: "YouTube Video URL / ID", name: "yt_video", widget: "string", required: false},
+                            {label: "Privacy Policy Text", name: "policy_privacy", widget: "text", required: false},
+                            {label: "Terms & Conditions Text", name: "policy_terms", widget: "text", required: false},
+                            {label: "Return Policy Text", name: "policy_return", widget: "text", required: false},
+                            {label: "Shipping Policy Text", name: "policy_shipping", widget: "text", required: false}
+                        ]
+                    },
+                    {
+                        name: "orders",
+                        label: "4. Orders",
+                        folder: "content/orders",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Order ID", name: "order_id", widget: "string"},
+                            {label: "Customer Name", name: "customer_name", widget: "string"},
+                            {label: "Phone Number", name: "phone", widget: "string"},
+                            {label: "Email", name: "email", widget: "string"},
+                            {label: "Shipping Address", name: "shipping_address", widget: "text"},
+                            {label: "City", name: "city", widget: "string"},
+                            {label: "State", name: "state", widget: "string"},
+                            {label: "Pincode", name: "pincode", widget: "string"},
+                            {label: "GSTIN (Optional for Business Invoice)", name: "gstin", widget: "string", required: false},
+                            {label: "Order Summary / Items", name: "summary", widget: "text"},
+                            {label: "Total Amount (₹)", name: "total", widget: "number"},
+                            {label: "Order Status", name: "status", widget: "select", options: ["Order Placed", "Dispatched", "Out for Delivery", "Delivered", "Cancelled"]},
+                            {label: "Tracking Details / Waybill", name: "tracking_info", widget: "string", required: false}
+                        ]
+                    },
+                    {
+                        name: "testimonials",
+                        label: "5. Testimonials",
+                        folder: "content/testimonials",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Customer Name", name: "name", widget: "string"},
+                            {label: "Rating (1 to 5)", name: "rating", widget: "number", default: 5},
+                            {label: "Review Comment", name: "comment", widget: "text"},
+                            {label: "City / Location", name: "location", widget: "string"}
+                        ]
+                    },
+                    {
+                        name: "abandoned_carts",
+                        label: "6. Abandoned Carts",
+                        folder: "content/abandoned_carts",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Cart ID / Session", name: "cart_id", widget: "string"},
+                            {label: "Customer Phone", name: "phone", widget: "string"},
+                            {label: "Customer Name", name: "name", widget: "string"},
+                            {label: "Items in Cart", name: "items", widget: "text"},
+                            {label: "Cart Timestamp", name: "timestamp", widget: "string"}
+                        ]
+                    },
+                    {
+                        name: "inquiries",
+                        label: "7. Inquiries",
+                        folder: "content/inquiries",
+                        format: "json",
+                        create: true,
+                        slug: "{{slug}}",
+                        fields: [
+                            {label: "Sender Name", name: "name", widget: "string"},
+                            {label: "Phone", name: "phone", widget: "string"},
+                            {label: "Email", name: "email", widget: "string"},
+                            {label: "Message / Query", name: "message", widget: "text"},
+                            {label: "Date Received", name: "date", widget: "string"}
+                        ]
+                    }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
