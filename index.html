@@ -815,63 +815,64 @@
         }
 
         async function proceedToCheckout() {
-            const name = document.getElementById('checkout-name').value.trim();
-            const phone = document.getElementById('checkout-phone').value.trim();
-            const email = document.getElementById('checkout-email').value.trim();
-            const address = document.getElementById('checkout-address').value.trim();
-            const city = document.getElementById('checkout-city').value.trim();
-            const state = document.getElementById('checkout-state').value.trim();
-            const pincode = document.getElementById('checkout-pincode').value.trim();
-            const gstin = document.getElementById('checkout-gstin').value.trim();
+    const name = document.getElementById('checkout-name').value.trim();
+    const phone = document.getElementById('checkout-phone').value.trim();
+    const email = document.getElementById('checkout-email').value.trim();
+    const address = document.getElementById('checkout-address').value.trim();
+    const city = document.getElementById('checkout-city').value.trim();
+    const state = document.getElementById('checkout-state').value.trim();
+    const pincode = document.getElementById('checkout-pincode').value.trim();
+    const gstin = document.getElementById('checkout-gstin').value.trim();
 
-            if (!name || !phone || !email || !address || !city || !state || !pincode) {
-                alert('Please fill in all mandatory customer contact and shipping address fields.');
-                return;
-            }
+    if (!name || !phone || !email || !address || !city || !state || !pincode) {
+        alert('Please fill in all mandatory customer contact and shipping address fields.');
+        return;
+    }
 
-            const subtotal = selectedProduct.price * quantity;
-            let discountAmt = appliedCoupon ? (appliedCoupon.discount_type === 'percentage' ? Math.round((subtotal * appliedCoupon.value) / 100) : appliedCoupon.value) : 0;
-            const shipping = subtotal >= 500 ? 0 : 49;
-            const total = Math.max(0, subtotal - discountAmt) + shipping;
+    const subtotal = selectedProduct.price * quantity;
+    let discountAmt = appliedCoupon ? (appliedCoupon.discount_type === 'percentage' ? Math.round((subtotal * appliedCoupon.value) / 100) : appliedCoupon.value) : 0;
+    const shipping = subtotal >= 500 ? 0 : 49;
+    const total = Math.max(0, subtotal - discountAmt) + shipping;
 
-            const customerDetails = {
-                name: name,
-                phone: phone,
-                email: email,
-                address: `${address}, ${city}, ${state} - ${pincode}`,
-                city: city,
-                state: state,
-                pincode: pincode,
-                gstin: gstin
-            };
+    const customerDetails = { name, phone, email, address: `${address}, ${city}, ${state} - ${pincode}`, city, state, pincode, gstin };
 
-            const options = {
-                key: "rzp_live_YOUR_KEY_HERE", 
-                amount: total * 100,
-                currency: "INR",
-                name: "RamJyoti Puja Ghee",
-                description: `${selectedProduct.title} x ${quantity}`,
-                handler: async function (response) {
-                    const paymentId = response.razorpay_payment_id || `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
-                    await logOrderToCMS(paymentId, total, customerDetails);
-                    alert('Payment successful! Order ID: ' + paymentId);
-                    toggleCartDrawer();
-                },
-                prefill: { name: name, email: email, contact: phone },
-                theme: { color: "#9A3412" }
-            };
-            
-            try {
-                const rzp = new Razorpay(options);
-                rzp.open();
-            } catch (e) {
-                const simulatedId = `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
-                await logOrderToCMS(simulatedId, total, customerDetails);
-                alert('Simulated Order Placed Successfully! Order ID: ' + simulatedId);
-                toggleCartDrawer();
-            }
-        }
+    // Load Razorpay dynamically on-demand to prevent page blocking
+    if (typeof Razorpay === 'undefined') {
+        await new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = resolve;
+            script.onerror = () => resolve(); // fallback if blocked
+            document.body.appendChild(script);
+        });
+    }
 
+    const options = {
+        key: "rzp_live_YOUR_KEY_HERE", 
+        amount: total * 100,
+        currency: "INR",
+        name: "RamJyoti Puja Ghee",
+        description: `${selectedProduct.title} x ${quantity}`,
+        handler: async function (response) {
+            const paymentId = response.razorpay_payment_id || `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+            await logOrderToCMS(paymentId, total, customerDetails);
+            alert('Payment successful! Order ID: ' + paymentId);
+            toggleCartDrawer();
+        },
+        prefill: { name, email, contact: phone },
+        theme: { color: "#9A3412" }
+    };
+    
+    try {
+        const rzp = new Razorpay(options);
+        rzp.open();
+    } catch (e) {
+        const simulatedId = `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+        await logOrderToCMS(simulatedId, total, customerDetails);
+        alert('Simulated Order Placed Successfully! Order ID: ' + simulatedId);
+        toggleCartDrawer();
+    }
+}
         async function logOrderToCMS(paymentId, orderTotal, cust) {
             const orderData = {
                 order_id: paymentId,
