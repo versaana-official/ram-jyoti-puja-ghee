@@ -1,0 +1,7 @@
+{
+  "min_order": 1000,
+  "active": true,
+  "code": "TEMPLE15",
+  "discount_type": "percentage",
+  "value": 15
+}
