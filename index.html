@@ -67,7 +67,7 @@
     <!-- Hero Banner -->
     <section id="hero-section" class="relative min-h-[80vh] sm:min-h-[90vh] flex items-center bg-[#2D1810] text-white overflow-hidden pt-12 sm:pt-0">
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg-img" src="" alt="Banner Background" class="w-full h-full object-cover">
+            <img id="hero-bg-img" src="" alt="Banner Background" class="w-full h-full object-cover opacity-45">
             <div class="absolute inset-0 bg-gradient-to-r from-[#2D1810]/95 via-[#2D1810]/70 to-transparent"></div>
         </div>
         <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full py-20 sm:py-32">
@@ -542,12 +542,10 @@
                     if (c.social_youtube) document.getElementById('soc-yt').href = c.social_youtube;
                     if (c.social_whatsapp) document.getElementById('soc-wa').href = `https://wa.me/${c.social_whatsapp}`;
 
-                    sitePolicies = {
-                        privacy: c.policy_privacy || sitePolicies.privacy,
-                        terms: c.policy_terms || sitePolicies.terms,
-                        return: c.policy_return || sitePolicies.return,
-                        shipping: c.policy_shipping || sitePolicies.shipping
-                    };
+                    if (c.policy_privacy) sitePolicies.privacy = c.policy_privacy;
+                    if (c.policy_terms) sitePolicies.terms = c.policy_terms;
+                    if (c.policy_return) sitePolicies.return = c.policy_return;
+                    if (c.policy_shipping) sitePolicies.shipping = c.policy_shipping;
 
                     if (c.image_usps && c.image_usps.length > 0) {
                         document.getElementById('image-usp-grid').innerHTML = c.image_usps.map(u => `
@@ -587,17 +585,25 @@
                         document.getElementById('yt-iframe').src = embedUrl;
                     }
                 }
+            } catch (err) {
+                console.error("Site content fetch warning (using fallbacks):", err);
+            }
 
-                const promoRes = await fetch('/api/get-data?collection=promocodes');
-                allPromos = await promoRes.json();
-                renderPromos();
-
+            try {
                 const prodRes = await fetch('/api/get-data?collection=products');
                 allProducts = await prodRes.json();
                 if (allProducts && allProducts.length > 0) {
                     selectProduct(allProducts[0].id || allProducts[0].slug);
                     renderVariantSelector();
                 }
+            } catch (e) {
+                console.error("Products fetch error:", e);
+            }
+
+            try {
+                const promoRes = await fetch('/api/get-data?collection=promocodes');
+                allPromos = await promoRes.json();
+                renderPromos();
 
                 const testRes = await fetch('/api/get-data?collection=testimonials');
                 const testimonials = await testRes.json();
@@ -615,8 +621,8 @@
                         </div>
                     `).join('');
                 }
-            } catch (err) {
-                console.error("Initialization error:", err);
+            } catch (e) {
+                console.error("Secondary fetch error:", e);
             }
         }
 
@@ -815,64 +821,64 @@
         }
 
         async function proceedToCheckout() {
-    const name = document.getElementById('checkout-name').value.trim();
-    const phone = document.getElementById('checkout-phone').value.trim();
-    const email = document.getElementById('checkout-email').value.trim();
-    const address = document.getElementById('checkout-address').value.trim();
-    const city = document.getElementById('checkout-city').value.trim();
-    const state = document.getElementById('checkout-state').value.trim();
-    const pincode = document.getElementById('checkout-pincode').value.trim();
-    const gstin = document.getElementById('checkout-gstin').value.trim();
+            const name = document.getElementById('checkout-name').value.trim();
+            const phone = document.getElementById('checkout-phone').value.trim();
+            const email = document.getElementById('checkout-email').value.trim();
+            const address = document.getElementById('checkout-address').value.trim();
+            const city = document.getElementById('checkout-city').value.trim();
+            const state = document.getElementById('checkout-state').value.trim();
+            const pincode = document.getElementById('checkout-pincode').value.trim();
+            const gstin = document.getElementById('checkout-gstin').value.trim();
 
-    if (!name || !phone || !email || !address || !city || !state || !pincode) {
-        alert('Please fill in all mandatory customer contact and shipping address fields.');
-        return;
-    }
+            if (!name || !phone || !email || !address || !city || !state || !pincode) {
+                alert('Please fill in all mandatory customer contact and shipping address fields.');
+                return;
+            }
 
-    const subtotal = selectedProduct.price * quantity;
-    let discountAmt = appliedCoupon ? (appliedCoupon.discount_type === 'percentage' ? Math.round((subtotal * appliedCoupon.value) / 100) : appliedCoupon.value) : 0;
-    const shipping = subtotal >= 500 ? 0 : 49;
-    const total = Math.max(0, subtotal - discountAmt) + shipping;
+            const subtotal = selectedProduct.price * quantity;
+            let discountAmt = appliedCoupon ? (appliedCoupon.discount_type === 'percentage' ? Math.round((subtotal * appliedCoupon.value) / 100) : appliedCoupon.value) : 0;
+            const shipping = subtotal >= 500 ? 0 : 49;
+            const total = Math.max(0, subtotal - discountAmt) + shipping;
 
-    const customerDetails = { name, phone, email, address: `${address}, ${city}, ${state} - ${pincode}`, city, state, pincode, gstin };
+            const customerDetails = { name, phone, email, address: `${address}, ${city}, ${state} - ${pincode}`, city, state, pincode, gstin };
 
-    // Load Razorpay dynamically on-demand to prevent page blocking
-    if (typeof Razorpay === 'undefined') {
-        await new Promise((resolve) => {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            script.onload = resolve;
-            script.onerror = () => resolve(); // fallback if blocked
-            document.body.appendChild(script);
-        });
-    }
+            if (typeof Razorpay === 'undefined') {
+                await new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                    script.onload = resolve;
+                    script.onerror = () => resolve();
+                    document.body.appendChild(script);
+                });
+            }
 
-    const options = {
-        key: "rzp_live_YOUR_KEY_HERE", 
-        amount: total * 100,
-        currency: "INR",
-        name: "RamJyoti Puja Ghee",
-        description: `${selectedProduct.title} x ${quantity}`,
-        handler: async function (response) {
-            const paymentId = response.razorpay_payment_id || `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
-            await logOrderToCMS(paymentId, total, customerDetails);
-            alert('Payment successful! Order ID: ' + paymentId);
-            toggleCartDrawer();
-        },
-        prefill: { name, email, contact: phone },
-        theme: { color: "#9A3412" }
-    };
-    
-    try {
-        const rzp = new Razorpay(options);
-        rzp.open();
-    } catch (e) {
-        const simulatedId = `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
-        await logOrderToCMS(simulatedId, total, customerDetails);
-        alert('Simulated Order Placed Successfully! Order ID: ' + simulatedId);
-        toggleCartDrawer();
-    }
-}
+            const options = {
+                key: "rzp_live_YOUR_KEY_HERE", 
+                amount: total * 100,
+                currency: "INR",
+                name: "RamJyoti Puja Ghee",
+                description: `${selectedProduct.title} x ${quantity}`,
+                handler: async function (response) {
+                    const paymentId = response.razorpay_payment_id || `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+                    await logOrderToCMS(paymentId, total, customerDetails);
+                    alert('Payment successful! Order ID: ' + paymentId);
+                    toggleCartDrawer();
+                },
+                prefiles: { name, email, contact: phone },
+                theme: { color: "#9A3412" }
+            };
+            
+            try {
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } catch (e) {
+                const simulatedId = `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+                await logOrderToCMS(simulatedId, total, customerDetails);
+                alert('Simulated Order Placed Successfully! Order ID: ' + simulatedId);
+                toggleCartDrawer();
+            }
+        }
+
         async function logOrderToCMS(paymentId, orderTotal, cust) {
             const orderData = {
                 order_id: paymentId,
@@ -928,8 +934,7 @@
                     resBox.innerHTML = `No order found matching "${query}".`;
                 }
             } catch (e) {
-                resBox.classList.remove('hidden');
-                resBox.innerHTML = `Order status: Dispatched via Express Courier.`;
+                resBox.classList.add('hidden');
             }
         }
 
