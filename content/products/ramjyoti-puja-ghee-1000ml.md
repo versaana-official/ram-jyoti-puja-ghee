@@ -1,7 +1,10 @@
 ---
+size: 1Ltr
 id: V1
 title: RamJyoti Puja Ghee 1000ml
-size: 1Ltr
+size_value: 1000
+size_unit: ml
+mrp: 650
 price: 260
 tag: Family Pack
 images:
