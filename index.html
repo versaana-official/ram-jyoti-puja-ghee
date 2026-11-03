@@ -402,26 +402,46 @@
                         <p id="promo-feedback" class="text-xs font-medium text-emerald-700 hidden"></p>
                     </div>
 
-                    <!-- Customer Contact & Shipping -->
-                    <div class="space-y-4 pt-2">
-                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1">1. Customer Contact</h4>
-                        <div>
-                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Full Name *</label>
-                            <input type="text" id="checkout-name" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Anand Shukla">
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
+                    <!-- Customer Contact, Granular Address & GSTIN -->
+                    <div class="space-y-3 pt-2">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1">1. Customer Contact & GSTIN</h4>
+                        <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Phone *</label>
-                                <input type="tel" id="checkout-phone" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="9876543210">
+                                <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">Full Name *</label>
+                                <input type="text" id="checkout-name" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Anand Shukla">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Email *</label>
-                                <input type="email" id="checkout-email" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="care@ramjyoti.com">
+                                <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">Phone *</label>
+                                <input type="tel" id="checkout-phone" required onblur="captureAbandonedCart()" class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="9876543210">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold uppercase text-stone-700 mb-1">Shipping Address *</label>
-                            <textarea id="checkout-address" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="House No, Street, City, Pincode"></textarea>
+                            <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">Email *</label>
+                            <input type="email" id="checkout-email" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="care@ramjyoti.com">
+                        </div>
+
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#9A3412] border-b pb-1 pt-2">2. Shipping Address & Tax</h4>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">Street Address *</label>
+                            <input type="text" id="checkout-address" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="House No, Street Name">
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">City *</label>
+                                <input type="text" id="checkout-city" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Rajnandgaon">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">State *</label>
+                                <input type="text" id="checkout-state" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="Chhattisgarh">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">Pincode *</label>
+                                <input type="text" id="checkout-pincode" required class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5]" placeholder="491441">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-stone-700 mb-1">GSTIN (Optional - For Business Invoice)</label>
+                            <input type="text" id="checkout-gstin" class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-[#FFFBF5] uppercase" placeholder="22AAAAA0000A1Z5">
                         </div>
                     </div>
 
@@ -453,7 +473,7 @@
         </div>
     </div>
 
-    <!-- Core Dynamic Data & Metrology Script -->
+    <!-- Core Dynamic Data, Metrology & Submission Script -->
     <script>
         let allProducts = [];
         let selectedProduct = null;
@@ -731,14 +751,44 @@
             toggleCartDrawer();
         }
 
+        // Abandoned Cart Auto-Capture
+        async function captureAbandonedCart() {
+            const phone = document.getElementById('checkout-phone').value.trim();
+            const name = document.getElementById('checkout-name').value.trim();
+            if (!phone || phone.length < 10 || !selectedProduct) return;
+
+            const cartData = {
+                cart_id: `cart-${phone}-${Date.now()}`,
+                phone: phone,
+                name: name || 'Anonymous',
+                items: `${selectedProduct.title} (${quantity} units) - ₹${selectedProduct.price * quantity}`,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                await fetch('/api/submit-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ collection: 'abandoned_carts', data: cartData })
+                });
+            } catch (e) {
+                console.error("Cart capture error:", e);
+            }
+        }
+
+        // Checkout Submission & Razorpay Integration
         async function proceedToCheckout() {
             const name = document.getElementById('checkout-name').value.trim();
             const phone = document.getElementById('checkout-phone').value.trim();
             const email = document.getElementById('checkout-email').value.trim();
             const address = document.getElementById('checkout-address').value.trim();
+            const city = document.getElementById('checkout-city').value.trim();
+            const state = document.getElementById('checkout-state').value.trim();
+            const pincode = document.getElementById('checkout-pincode').value.trim();
+            const gstin = document.getElementById('checkout-gstin').value.trim();
 
-            if (!name || !phone || !email || !address) {
-                alert('Please fill in all contact and shipping details.');
+            if (!name || !phone || !email || !address || !city || !state || !pincode) {
+                alert('Please fill in all mandatory customer contact and shipping address fields.');
                 return;
             }
 
@@ -747,15 +797,27 @@
             const shipping = subtotal >= 500 ? 0 : 49;
             const total = Math.max(0, subtotal - discountAmt) + shipping;
 
-            // Razorpay Integration
+            const customerDetails = {
+                name: name,
+                phone: phone,
+                email: email,
+                address: `${address}, ${city}, ${state} - ${pincode}`,
+                city: city,
+                state: state,
+                pincode: pincode,
+                gstin: gstin
+            };
+
             const options = {
-                key: "rzp_live_YOUR_KEY_HERE", // Replace with live Razorpay key if needed or test key
+                key: "rzp_live_YOUR_KEY_HERE", 
                 amount: total * 100,
                 currency: "INR",
                 name: "RamJyoti Puja Ghee",
                 description: `${selectedProduct.title} x ${quantity}`,
                 handler: async function (response) {
-                    alert('Payment successful! Order ID: ' + response.razorpay_payment_id);
+                    const paymentId = response.razorpay_payment_id || `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+                    await logOrderToCMS(paymentId, total, customerDetails);
+                    alert('Payment successful! Order ID: ' + paymentId);
                     toggleCartDrawer();
                 },
                 prefill: { name: name, email: email, contact: phone },
@@ -766,13 +828,43 @@
                 const rzp = new Razorpay(options);
                 rzp.open();
             } catch (e) {
-                alert('Simulated Checkout Successful! Order placed for ' + name);
+                const simulatedId = `RJ-${Math.floor(100000 + Math.random() * 900000)}`;
+                await logOrderToCMS(simulatedId, total, customerDetails);
+                alert('Simulated Order Placed Successfully! Order ID: ' + simulatedId);
                 toggleCartDrawer();
             }
         }
 
-        function openTrackerModal() { document.getElementById('tracker-modal').classList.remove('hidden'); }
-        function closeTrackerModal() { document.getElementById('tracker-modal').classList.add('hidden'); }
+        async function logOrderToCMS(paymentId, orderTotal, cust) {
+            const orderData = {
+                order_id: paymentId,
+                customer_name: cust.name,
+                phone: cust.phone,
+                email: cust.email,
+                shipping_address: cust.address,
+                city: cust.city,
+                state: cust.state,
+                pincode: cust.pincode,
+                gstin: cust.gstin || "",
+                summary: `${selectedProduct.title} x ${quantity} (Coupon: ${appliedCoupon ? appliedCoupon.code : 'None'})`,
+                total: orderTotal,
+                status: "Order Placed",
+                tracking_info: "Awaiting Dispatch via Courier"
+            };
+
+            try {
+                await fetch('/api/submit-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ collection: 'orders', data: orderData })
+                });
+            } catch (e) {
+                console.error("Order logging error:", e);
+            }
+        }
+
+        openTrackerModal = () => document.getElementById('tracker-modal').classList.remove('hidden');
+        closeTrackerModal = () => document.getElementById('tracker-modal').classList.add('hidden');
 
         async function trackOrder() {
             const query = document.getElementById('tracker-input').value.trim();
@@ -804,8 +896,34 @@
 
         async function submitInquiry(e) {
             e.preventDefault();
-            alert('Thank you! Your inquiry has been sent to Versaana Manufacturing.');
-            document.getElementById('contact-form').reset();
+            const name = document.getElementById('inquiry-name').value.trim();
+            const phone = document.getElementById('inquiry-phone').value.trim();
+            const email = document.getElementById('inquiry-email').value.trim();
+            const message = document.getElementById('inquiry-message').value.trim();
+
+            const inquiryData = {
+                name: name,
+                phone: phone,
+                email: email,
+                message: message,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            try {
+                const res = await fetch('/api/submit-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ collection: 'inquiries', data: inquiryData })
+                });
+                if (res.ok) {
+                    alert('Thank you! Your inquiry has been sent successfully.');
+                    document.getElementById('contact-form').reset();
+                } else {
+                    alert('Error submitting inquiry.');
+                }
+            } catch (err) {
+                alert('Submission failed. Please check connection.');
+            }
         }
 
         window.onload = initWebsite;
