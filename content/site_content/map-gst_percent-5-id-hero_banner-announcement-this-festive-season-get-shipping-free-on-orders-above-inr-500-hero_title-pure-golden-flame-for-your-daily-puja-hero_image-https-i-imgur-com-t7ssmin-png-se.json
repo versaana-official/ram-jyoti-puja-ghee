@@ -1,11 +1,12 @@
 {
   "gst_percent": 5,
   "id": "hero_banner",
-  "announcement": "This Festive Season get Shipping Free on Orders above INR 500\\-",
-  "hero_title": "Pure Golden Flame for Your Daily Puja",
+  "announcement": "Diwali Sale: Free Shipping on Orders Above ₹500",
+  "hero_title": "Pure Golden Flame for Your Daily Puja | RamJyoti Puja Ghee | 100% Chemical-Free Puja Ghee | ",
   "hero_image": "https://i.imgur.com/dz7yTW9.jpeg",
   "separator_banner": {
     "image": "https://i.imgur.com/dz7yTW9.jpeg"
   },
-  "yt_video": "https://www.youtube.com/embed/0-uUuUAEf0U"
+  "yt_video": "https://www.youtube.com/embed/0-uUuUAEf0U",
+  "hero_subtitle": "Formulated with zero Light Liquid Paraffin (LLP), zero mineral oils, and zero waxes. Enjoy a peaceful 45+ minute bright flame that leaves your temple walls spotless."
 }
