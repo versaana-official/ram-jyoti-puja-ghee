@@ -12,11 +12,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Collection and data are required' });
   }
 
-  const allowedCollections = ['inquiries', 'abandoned_carts', 'orders', 'testimonials'];
-  if (!allowedCollections.includes(collection)) {
-    return res.status(403).json({ error: 'Unauthorized collection target' });
-  }
-
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     return res.status(500).json({ error: 'GITHUB_TOKEN environment variable is missing on Vercel' });
@@ -32,7 +27,6 @@ export default async function handler(req, res) {
   const encodedContent = Buffer.from(fileContent).toString('base64');
 
   try {
-    // Check if file already exists (to get sha for updates if needed)
     let sha = null;
     const checkRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`, {
       headers: {
@@ -46,7 +40,6 @@ export default async function handler(req, res) {
       sha = fileData.sha;
     }
 
-    // Commit file to GitHub
     const payload = {
       message: `CMS Auto-Submission: New ${collection} entry [${uniqueId}]`,
       content: encodedContent,
@@ -67,14 +60,13 @@ export default async function handler(req, res) {
 
     if (!commitRes.ok) {
       const errText = await commitRes.text();
-      throw new Error(`GitHub API error: ${errText}`);
+      return res.status(500).json({ error: `GitHub API error: ${errText}` });
     }
 
     const commitData = await commitRes.json();
     return res.status(200).json({ success: true, commit: commitData.commit.sha });
 
   } catch (error) {
-    console.error("Submission write error:", error);
     return res.status(500).json({ error: error.message });
   }
 }
