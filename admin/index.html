@@ -23,7 +23,7 @@
                 media_folder: "images/uploads",
                 public_folder: "/images/uploads",
                 collections: [
-                    // 1. PRODUCTS (Multiple Images Support)
+                    // 1. PRODUCTS (Updated with Metrology Compliance: MRP, Offer Price, Unit Price Calculator fields)
                     {
                         name: "products",
                         label: "1. Products",
@@ -33,8 +33,10 @@
                         fields: [
                             {label: "Product ID / Slug", name: "id", widget: "string"},
                             {label: "Product Name", name: "title", widget: "string"},
-                            {label: "Pack Size", name: "size", widget: "string"},
-                            {label: "Price (₹)", name: "price", widget: "number"},
+                            {label: "Pack Size Numeric Value (e.g. 1000)", name: "size_value", widget: "number", hint: "Used for calculating ₹/ml or ₹/g automatically"},
+                            {label: "Pack Size Unit", name: "size_unit", widget: "select", options: ["ml", "g", "L", "kg"], default: "ml"},
+                            {label: "Maximum Retail Price - MRP (₹)", name: "mrp", widget: "number", hint: "Legal MRP required by Weights & Measures"},
+                            {label: "Offer / Selling Price (₹)", name: "price", widget: "number", hint: "Actual selling price on website"},
                             {label: "Tag Badge", name: "tag", widget: "string", default: "Pure Desi Ghee"},
                             {
                                 label: "Product Images (Add 5+)", 
@@ -63,7 +65,7 @@
                         ]
                     },
 
-                    // 3. SITE CONTENT (Banners, Multi-USPs, Separator Image/Text, Rituals, SEO, Config)
+                    // 3. SITE CONTENT (Banners, Multi-USPs, Separator, Rituals, SEO, Config)
                     {
                         name: "site_content",
                         label: "3. Site Content",
@@ -77,7 +79,7 @@
                             {label: "Hero Subtitle", name: "hero_subtitle", widget: "text", required: false},
                             {label: "Hero Banner Image", name: "hero_image", widget: "image", required: false},
                             
-                            // MULTIPLE IMAGE USPs (Upto 4/5 with text)
+                            // MULTIPLE IMAGE USPs
                             {
                                 label: "Image USPs (Add 4-5 items)",
                                 name: "image_usps",
@@ -89,7 +91,7 @@
                                 ]
                             },
 
-                            // SEPARATOR BANNER (Now supports both Image and Text/Heading)
+                            // SEPARATOR BANNER
                             {
                                 label: "Separator Banner",
                                 name: "separator_banner",
@@ -120,7 +122,7 @@
                         ]
                     },
 
-                    // 4. ORDERS WITH TRACK ORDER LOGIC
+                    // 4. ORDERS
                     {
                         name: "orders",
                         label: "4. Orders",
@@ -138,7 +140,7 @@
                         ]
                     },
 
-                    // 5. TESTIMONIALS WITH RATINGS
+                    // 5. TESTIMONIALS
                     {
                         name: "testimonials",
                         label: "5. Testimonials",
