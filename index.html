@@ -965,13 +965,14 @@
             const email = document.getElementById('inquiry-email').value.trim();
             const message = document.getElementById('inquiry-message').value.trim();
 
-            const inquiryData = {
-                name: name,
-                phone: phone,
-                email: email,
-                message: message,
-                date: new Date().toISOString().split('T')[0]
-            };
+         const inquiryData = {
+    id: `inq-${Date.now()}`,
+    name: name,
+    phone: phone,
+    email: email,
+    message: message,
+    date: new Date().toISOString().split('T')[0]
+};
 
             try {
                 const res = await fetch('/api/submit-data', {
