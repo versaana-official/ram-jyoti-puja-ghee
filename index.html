@@ -965,14 +965,32 @@
             const email = document.getElementById('inquiry-email').value.trim();
             const message = document.getElementById('inquiry-message').value.trim();
 
-         const inquiryData = {
-    id: `inq-${Date.now()}`,
-    name: name,
-    phone: phone,
-    email: email,
-    message: message,
-    date: new Date().toISOString().split('T')[0]
-};
+            const inquiryData = {
+                id: `inq-${Date.now()}`,
+                name: name,
+                phone: phone,
+                email: email,
+                message: message,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            try {
+                const res = await fetch('/api/submit-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ collection: 'inquiries', data: inquiryData })
+                });
+                const result = await res.json();
+                if (res.ok && result.success) {
+                    alert('Thank you! Your inquiry has been sent successfully.');
+                    document.getElementById('contact-form').reset();
+                } else {
+                    alert('Error submitting inquiry: ' + (result.error || 'Unknown server error'));
+                }
+            } catch (err) {
+                alert('Submission failed: ' + err.message);
+            }
+        }
 
             try {
                 const res = await fetch('/api/submit-data', {
