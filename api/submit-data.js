@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import crypto from 'crypto';
 
 export default async function handler(req, res) {
@@ -13,43 +12,46 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-    const { collection, data } = req.body;
-    const ALLOWED_COLLECTIONS = ["orders", "inquiries", "abandoned_carts", "products", "promocodes", "site_content", "testimonials"];
-
-    if (!collection || !ALLOWED_COLLECTIONS.includes(collection) || !data) {
-        return res.status(400).json({ error: "Invalid collection or missing data payload" });
-    }
-
-    const BRANCH_MAP = {
-        products: "main", promocodes: "main", site_content: "main", testimonials: "main",
-        orders: "data-log", inquiries: "data-log", abandoned_carts: "data-log"
-    };
-
-    const branch = BRANCH_MAP[collection] || "data-log";
-    const owner = process.env.GITHUB_OWNER || 'versaana-official';
-    const repo = process.env.GITHUB_REPO || 'ram-jyoti-puja-ghee';
-    const token = process.env.GITHUB_TOKEN;
-
-    const uniqueId = data.order_id || data.cart_id || data.id || `inq-${Date.now()}`;
-    const filePath = `content/${collection}/${uniqueId}.json`;
-
-    const headers = {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'RamJyoti-Vercel-API',
-        'Content-Type': 'application/json'
-    };
-
     try {
+        const { collection, data } = req.body;
+        const ALLOWED_COLLECTIONS = ["orders", "inquiries", "abandoned_carts", "products", "promocodes", "site_content", "testimonials"];
+
+        if (!collection || !ALLOWED_COLLECTIONS.includes(collection) || !data) {
+            return res.status(400).json({ error: "Invalid collection or missing data payload" });
+        }
+
+        const BRANCH_MAP = {
+            products: "main", promocodes: "main", site_content: "main", testimonials: "main",
+            orders: "data-log", inquiries: "data-log", abandoned_carts: "data-log"
+        };
+
+        const branch = BRANCH_MAP[collection] || "data-log";
+        const owner = process.env.GITHUB_OWNER || 'versaana-official';
+        const repo = process.env.GITHUB_REPO || 'ram-jyoti-puja-ghee';
+        const token = process.env.GITHUB_TOKEN;
+
+        if (!token) {
+            return res.status(500).json({ error: "Server misconfiguration: GITHUB_TOKEN environment variable is missing in Vercel." });
+        }
+
+        const uniqueId = data.order_id || data.cart_id || data.id || `inq-${Date.now()}`;
+        const filePath = `content/${collection}/${uniqueId}.json`;
+
+        const headers = {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'User-Agent': 'RamJyoti-Vercel-API',
+            'Content-Type': 'application/json'
+        };
+
         // Step 1: Ensure branch exists if writing to data-log
         if (branch === 'data-log') {
             const branchCheck = await fetch(`https://api.github.com/repos/${owner}/${repo}/branches/${branch}`, { headers });
             if (branchCheck.status === 404) {
-                // Get main branch SHA to branch off from
                 const mainRefRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/ref/heads/main`, { headers });
                 if (mainRefRes.ok) {
                     const mainRefData = await mainRefRes.json();
-                    await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
+                    const createBranchRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
                         method: 'POST',
                         headers,
                         body: JSON.stringify({
@@ -57,6 +59,12 @@ export default async function handler(req, res) {
                             sha: mainRefData.object.sha
                         })
                     });
+                    if (!createBranchRes.ok && createBranchRes.status !== 422) {
+                        const errText = await createBranchRes.text();
+                        throw new Error(`Failed to create branch ${branch}: ${errText}`);
+                    }
+                } else {
+                    throw new Error("Failed to fetch 'main' branch reference to create 'data-log'");
                 }
             }
         }
@@ -83,9 +91,12 @@ export default async function handler(req, res) {
 
         if (!putRes.ok) {
             const errBody = await putRes.text();
-            throw new Error(`GitHub commit failed: ${errBody}`);
+            throw new Error(`GitHub commit failed (${putRes.status}): ${errBody}`);
         }
 
         return res.status(200).json({ success: true, id: uniqueId });
     } catch (err) {
-        console.error("Submit data error:", err
+        console.error("Submit data error:", err);
+        return res.status(500).json({ error: err.message || "Failed to commit data to GitHub" });
+    }
+}
