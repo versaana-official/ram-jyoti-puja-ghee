@@ -1,23 +1,21 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-    const allowedOrigins = [process.env.SITE_URL || 'https://ram-jyoti-puja-ghee.vercel.app', 'http://localhost:3000'];
+    const allowedOrigin = process.env.SITE_URL || 'https://ram-jyoti-puja-ghee.vercel.app';
     const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
+    if (origin === allowedOrigin || origin?.includes('localhost')) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
+    if (req.method === 'OPTIONS') return res.status(200).end();
 
     const { collection } = req.query;
     const ALLOWED_COLLECTIONS = ["orders", "inquiries", "abandoned_carts", "products", "promocodes", "site_content", "testimonials"];
 
     if (!collection || !ALLOWED_COLLECTIONS.includes(collection)) {
-        return res.status(400).json({ error: "Invalid or missing collection" });
+        return res.status(400).json({ error: "Invalid collection" });
     }
 
     const owner = process.env.GITHUB_OWNER || 'versaana-official';
@@ -49,15 +47,9 @@ export default async function handler(req, res) {
         const items = [];
         for (const file of files) {
             if (file.type === 'file' && file.name.endsWith('.json')) {
-                const fileController = new AbortController();
-                const fileTimeout = setTimeout(() => fileController.abort(), 8000);
-                
                 const fileRes = await fetch(file.download_url, {
-                    headers: { 'User-Agent': 'RamJyoti-Vercel-API' },
-                    signal: fileController.signal
+                    headers: { 'User-Agent': 'RamJyoti-Vercel-API' }
                 });
-                clearTimeout(fileTimeout);
-
                 if (fileRes.ok) {
                     items.push(await fileRes.json());
                 }
@@ -67,6 +59,6 @@ export default async function handler(req, res) {
         return res.status(200).json(items);
     } catch (err) {
         console.error("Get data error:", err);
-        return res.status(500).json({ error: "Failed to retrieve collection data from GitHub" });
+        return res.status(500).json({ error: "Failed to retrieve collection data" });
     }
 }
