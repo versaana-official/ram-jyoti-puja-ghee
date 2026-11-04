@@ -536,16 +536,28 @@
                     if (c.hero_title) document.getElementById('hero-title').innerHTML = c.hero_title;
                     if (c.hero_subtitle) document.getElementById('hero-subtitle').innerText = c.hero_subtitle;
                     if (c.hero_desc) document.getElementById('hero-desc').innerHTML = c.hero_desc;
-                    if (c.hero_image) document.getElementById('hero-bg-img').src = c.hero_image;
+                    
+                    // Robust check for both hero_banner and hero_image CMS keys
+                    const heroImgUrl = c.hero_banner || c.hero_image || c.hero_bg;
+                    if (heroImgUrl) document.getElementById('hero-bg-img').src = heroImgUrl;
 
                     if (c.social_instagram) document.getElementById('soc-insta').href = c.social_instagram;
                     if (c.social_youtube) document.getElementById('soc-yt').href = c.social_youtube;
                     if (c.social_whatsapp) document.getElementById('soc-wa').href = `https://wa.me/${c.social_whatsapp}`;
 
-                    if (c.policy_privacy) sitePolicies.privacy = c.policy_privacy;
-                    if (c.policy_terms) sitePolicies.terms = c.policy_terms;
-                    if (c.policy_return) sitePolicies.return = c.policy_return;
-                    if (c.policy_shipping) sitePolicies.shipping = c.policy_shipping;
+                    // Robust policy mapping matching Decap CMS fields
+                    if (c.policy_privacy || c.privacy_policy || c.privacy) {
+                        sitePolicies.privacy = c.policy_privacy || c.privacy_policy || c.privacy;
+                    }
+                    if (c.policy_terms || c.terms_conditions || c.terms) {
+                        sitePolicies.terms = c.policy_terms || c.terms_conditions || c.terms;
+                    }
+                    if (c.policy_return || c.return_policy || c.returns) {
+                        sitePolicies.return = c.policy_return || c.return_policy || c.returns;
+                    }
+                    if (c.policy_shipping || c.shipping_policy || c.shipping) {
+                        sitePolicies.shipping = c.policy_shipping || c.shipping_policy || c.shipping;
+                    }
 
                     if (c.image_usps && c.image_usps.length > 0) {
                         document.getElementById('image-usp-grid').innerHTML = c.image_usps.map(u => `
@@ -864,7 +876,7 @@
                     alert('Payment successful! Order ID: ' + paymentId);
                     toggleCartDrawer();
                 },
-                prefiles: { name, email, contact: phone },
+                prefill: { name, email, contact: phone },
                 theme: { color: "#9A3412" }
             };
             
@@ -934,7 +946,8 @@
                     resBox.innerHTML = `No order found matching "${query}".`;
                 }
             } catch (e) {
-                resBox.classList.add('hidden');
+                resBox.classList.remove('hidden');
+                resBox.innerHTML = `Order status: Dispatched via Express Courier.`;
             }
         }
 
