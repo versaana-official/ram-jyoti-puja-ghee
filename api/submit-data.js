@@ -34,24 +34,16 @@ export default async function handler(req, res) {
     const filePath = `content/${collection}/${uniqueId}.json`;
 
     try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-
         let sha = undefined;
         const checkRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'RamJyoti-Vercel-API' },
-            signal: controller.signal
+            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'RamJyoti-Vercel-API' }
         });
         
         if (checkRes.ok) {
             sha = (await checkRes.json()).sha;
         }
-        clearTimeout(timeout);
 
         const contentBase64 = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
-        const putController = new AbortController();
-        const putTimeout = setTimeout(() => putController.abort(), 10000);
-
         const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
             method: 'PUT',
             headers: {
@@ -63,16 +55,14 @@ export default async function handler(req, res) {
                 content: contentBase64,
                 branch: branch,
                 ...(sha && { sha })
-            }),
-            signal: putController.signal
+            })
         });
-        clearTimeout(putTimeout);
 
         if (!putRes.ok) throw new Error(`GitHub commit failed: ${await putRes.text()}`);
 
         return res.status(200).json({ success: true, id: uniqueId });
     } catch (err) {
         console.error("Submit data error:", err);
-        return res.status(500).json({ error: "Failed to commit data to GitHub repository" });
+        return res.status(500).json({ error: "Failed to commit data to GitHub" });
     }
 }
