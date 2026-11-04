@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     const repo = process.env.GITHUB_REPO || 'ram-jyoti-puja-ghee';
     const token = process.env.GITHUB_TOKEN;
 
-    const uniqueId = data.order_id || data.cart_id || crypto.randomUUID();
+    const uniqueId = data.order_id || data.cart_id || data.id || crypto.randomUUID();
     const filePath = `content/${collection}/${uniqueId}.json`;
 
     try {
