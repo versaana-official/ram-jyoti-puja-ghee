@@ -28,18 +28,33 @@ export default async function handler(req, res) {
     };
 
     try {
-        // Special handling for Decap CMS single-file collections like site_content
         if (collection === 'site_content') {
-            const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/content/site_content.json?ref=${branch}`, { headers });
-            if (fileRes.status === 404) return res.status(200).json([]);
-            if (!fileRes.ok) throw new Error(`GitHub API error: ${fileRes.statusText}`);
-            
-            const fileData = await fileRes.json();
-            const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
-            return res.status(200).json([content]); // Wrapped in array so initWebsite() c = siteData[0] works seamlessly
+            // Try single file first (Decap File Collection)
+            let fileRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/content/site_content.json?ref=${branch}`, { headers });
+            if (fileRes.ok) {
+                const fileData = await fileRes.json();
+                const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+                return res.status(200).json([content]);
+            }
+            // Fallback: Try folder collection if single file doesn't exist
+            const folderRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/content/site_content?ref=${branch}`, { headers });
+            if (folderRes.ok) {
+                const files = await folderRes.json();
+                if (Array.isArray(files)) {
+                    const items = [];
+                    for (const file of files) {
+                        if (file.type === 'file' && file.name.endsWith('.json')) {
+                            const r = await fetch(file.download_url, { headers: { 'User-Agent': 'RamJyoti-Vercel-API' } });
+                            if (r.ok) items.push(await r.json());
+                        }
+                    }
+                    return res.status(200).json(items);
+                }
+            }
+            return res.status(200).json([]);
         }
 
-        // Standard folder collections (products, promocodes, etc.)
+        // Standard folder collections
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/content/${collection}?ref=${branch}`;
         const response = await fetch(url, { headers });
 
