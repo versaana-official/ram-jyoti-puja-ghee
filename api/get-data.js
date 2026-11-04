@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export default async function handler(req, res) {
     const allowedOrigin = process.env.SITE_URL || 'https://ram-jyoti-puja-ghee.vercel.app';
     const origin = req.headers.origin;
@@ -23,20 +21,27 @@ export default async function handler(req, res) {
     const token = process.env.GITHUB_TOKEN;
     const branch = ['orders', 'inquiries', 'abandoned_carts'].includes(collection) ? 'data-log' : 'main';
 
-    try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
+    const headers = {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'RamJyoti-Vercel-API'
+    };
 
+    try {
+        // Special handling for Decap CMS single-file collections like site_content
+        if (collection === 'site_content') {
+            const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/content/site_content.json?ref=${branch}`, { headers });
+            if (fileRes.status === 404) return res.status(200).json([]);
+            if (!fileRes.ok) throw new Error(`GitHub API error: ${fileRes.statusText}`);
+            
+            const fileData = await fileRes.json();
+            const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'));
+            return res.status(200).json([content]); // Wrapped in array so initWebsite() c = siteData[0] works seamlessly
+        }
+
+        // Standard folder collections (products, promocodes, etc.)
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/content/${collection}?ref=${branch}`;
-        const response = await fetch(url, {
-            headers: {
-                'Authorization': `token ${token}`,
-                'Accept': 'application/vnd.github.v3+json',
-                'User-Agent': 'RamJyoti-Vercel-API'
-            },
-            signal: controller.signal
-        });
-        clearTimeout(timeout);
+        const response = await fetch(url, { headers });
 
         if (response.status === 404) return res.status(200).json([]);
         if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`);
@@ -47,9 +52,7 @@ export default async function handler(req, res) {
         const items = [];
         for (const file of files) {
             if (file.type === 'file' && file.name.endsWith('.json')) {
-                const fileRes = await fetch(file.download_url, {
-                    headers: { 'User-Agent': 'RamJyoti-Vercel-API' }
-                });
+                const fileRes = await fetch(file.download_url, { headers: { 'User-Agent': 'RamJyoti-Vercel-API' } });
                 if (fileRes.ok) {
                     items.push(await fileRes.json());
                 }
