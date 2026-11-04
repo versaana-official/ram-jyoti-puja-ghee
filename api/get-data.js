@@ -1,32 +1,72 @@
-import fs from 'fs';
-import path from 'path';
+import fetch from 'node-fetch';
 
-export default function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  const { collection } = req.query;
+export default async function handler(req, res) {
+    const allowedOrigins = [process.env.SITE_URL || 'https://ram-jyoti-puja-ghee.vercel.app', 'http://localhost:3000'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (!collection) {
-    return res.status(400).json({ error: 'Collection parameter is required' });
-  }
-
-  const dirPath = path.join(process.cwd(), 'content', collection);
-
-  try {
-    if (!fs.existsSync(dirPath)) {
-      return res.status(200).json([]);
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
     }
 
-    const files = fs.readdirSync(dirPath);
-    const data = files
-      .filter(file => file.endsWith('.json'))
-      .map(file => {
-        const filePath = path.join(dirPath, file);
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(fileContent);
-      });
+    const { collection } = req.query;
+    const ALLOWED_COLLECTIONS = ["orders", "inquiries", "abandoned_carts", "products", "promocodes", "site_content", "testimonials"];
 
-    return res.status(200).json(data);
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
+    if (!collection || !ALLOWED_COLLECTIONS.includes(collection)) {
+        return res.status(400).json({ error: "Invalid or missing collection" });
+    }
+
+    const owner = process.env.GITHUB_OWNER || 'versaana-official';
+    const repo = process.env.GITHUB_REPO || 'ram-jyoti-puja-ghee';
+    const token = process.env.GITHUB_TOKEN;
+    const branch = ['orders', 'inquiries', 'abandoned_carts'].includes(collection) ? 'data-log' : 'main';
+
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+
+        const url = `https://api.github.com/repos/${owner}/${repo}/contents/content/${collection}?ref=${branch}`;
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'RamJyoti-Vercel-API'
+            },
+            signal: controller.signal
+        });
+        clearTimeout(timeout);
+
+        if (response.status === 404) return res.status(200).json([]);
+        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`);
+
+        const files = await response.json();
+        if (!Array.isArray(files)) return res.status(200).json([]);
+
+        const items = [];
+        for (const file of files) {
+            if (file.type === 'file' && file.name.endsWith('.json')) {
+                const fileController = new AbortController();
+                const fileTimeout = setTimeout(() => fileController.abort(), 8000);
+                
+                const fileRes = await fetch(file.download_url, {
+                    headers: { 'User-Agent': 'RamJyoti-Vercel-API' },
+                    signal: fileController.signal
+                });
+                clearTimeout(fileTimeout);
+
+                if (fileRes.ok) {
+                    items.push(await fileRes.json());
+                }
+            }
+        }
+
+        return res.status(200).json(items);
+    } catch (err) {
+        console.error("Get data error:", err);
+        return res.status(500).json({ error: "Failed to retrieve collection data from GitHub" });
+    }
 }
