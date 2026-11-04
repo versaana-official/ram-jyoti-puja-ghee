@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-
 export default async function handler(req, res) {
     const allowedOrigin = process.env.SITE_URL || 'https://ram-jyoti-puja-ghee.vercel.app';
     const origin = req.headers.origin;
@@ -31,7 +29,7 @@ export default async function handler(req, res) {
         const token = process.env.GITHUB_TOKEN;
 
         if (!token) {
-            return res.status(500).json({ error: "Server misconfiguration: GITHUB_TOKEN environment variable is missing in Vercel." });
+            return res.status(500).json({ error: "Missing GITHUB_TOKEN environment variable in Vercel." });
         }
 
         const uniqueId = data.order_id || data.cart_id || data.id || `inq-${Date.now()}`;
@@ -44,39 +42,26 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
         };
 
-        // Step 1: Ensure branch exists if writing to data-log
+        // Ensure data-log branch exists
         if (branch === 'data-log') {
             const branchCheck = await fetch(`https://api.github.com/repos/${owner}/${repo}/branches/${branch}`, { headers });
             if (branchCheck.status === 404) {
                 const mainRefRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/ref/heads/main`, { headers });
                 if (mainRefRes.ok) {
                     const mainRefData = await mainRefRes.json();
-                    const createBranchRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
+                    await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
                         method: 'POST',
                         headers,
-                        body: JSON.stringify({
-                            ref: `refs/heads/${branch}`,
-                            sha: mainRefData.object.sha
-                        })
+                        body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: mainRefData.object.sha })
                     });
-                    if (!createBranchRes.ok && createBranchRes.status !== 422) {
-                        const errText = await createBranchRes.text();
-                        throw new Error(`Failed to create branch ${branch}: ${errText}`);
-                    }
-                } else {
-                    throw new Error("Failed to fetch 'main' branch reference to create 'data-log'");
                 }
             }
         }
 
-        // Step 2: Check if file already exists (get SHA for updates)
         let sha = undefined;
         const checkRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`, { headers });
-        if (checkRes.ok) {
-            sha = (await checkRes.json()).sha;
-        }
+        if (checkRes.ok) sha = (await checkRes.json()).sha;
 
-        // Step 3: Commit file to GitHub
         const contentBase64 = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
         const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
             method: 'PUT',
@@ -89,14 +74,11 @@ export default async function handler(req, res) {
             })
         });
 
-        if (!putRes.ok) {
-            const errBody = await putRes.text();
-            throw new Error(`GitHub commit failed (${putRes.status}): ${errBody}`);
-        }
+        if (!putRes.ok) throw new Error(await putRes.text());
 
         return res.status(200).json({ success: true, id: uniqueId });
     } catch (err) {
-        console.error("Submit data error:", err);
-        return res.status(500).json({ error: err.message || "Failed to commit data to GitHub" });
+        console.error("Submit error:", err);
+        return res.status(500).json({ error: err.message });
     }
 }
