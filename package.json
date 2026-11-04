@@ -3,5 +3,7 @@
   "version": "1.0.0",
   "description": "RamJyoti Puja Ghee E-commerce & CMS",
   "type": "module",
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
 }
