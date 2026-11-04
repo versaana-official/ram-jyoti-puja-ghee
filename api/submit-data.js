@@ -30,26 +30,49 @@ export default async function handler(req, res) {
     const repo = process.env.GITHUB_REPO || 'ram-jyoti-puja-ghee';
     const token = process.env.GITHUB_TOKEN;
 
-    const uniqueId = data.order_id || data.cart_id || data.id || crypto.randomUUID();
+    const uniqueId = data.order_id || data.cart_id || data.id || `inq-${Date.now()}`;
     const filePath = `content/${collection}/${uniqueId}.json`;
 
+    const headers = {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'RamJyoti-Vercel-API',
+        'Content-Type': 'application/json'
+    };
+
     try {
+        // Step 1: Ensure branch exists if writing to data-log
+        if (branch === 'data-log') {
+            const branchCheck = await fetch(`https://api.github.com/repos/${owner}/${repo}/branches/${branch}`, { headers });
+            if (branchCheck.status === 404) {
+                // Get main branch SHA to branch off from
+                const mainRefRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/ref/heads/main`, { headers });
+                if (mainRefRes.ok) {
+                    const mainRefData = await mainRefRes.json();
+                    await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
+                        method: 'POST',
+                        headers,
+                        body: JSON.stringify({
+                            ref: `refs/heads/${branch}`,
+                            sha: mainRefData.object.sha
+                        })
+                    });
+                }
+            }
+        }
+
+        // Step 2: Check if file already exists (get SHA for updates)
         let sha = undefined;
-        const checkRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`, {
-            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'RamJyoti-Vercel-API' }
-        });
-        
+        const checkRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`, { headers });
         if (checkRes.ok) {
             sha = (await checkRes.json()).sha;
         }
 
+        // Step 3: Commit file to GitHub
         const contentBase64 = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
         const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
             method: 'PUT',
-            headers: {
-                'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json', 'User-Agent': 'RamJyoti-Vercel-API'
-            },
+            headers,
             body: JSON.stringify({
                 message: `Data log update: ${collection}/${uniqueId}`,
                 content: contentBase64,
@@ -58,11 +81,11 @@ export default async function handler(req, res) {
             })
         });
 
-        if (!putRes.ok) throw new Error(`GitHub commit failed: ${await putRes.text()}`);
+        if (!putRes.ok) {
+            const errBody = await putRes.text();
+            throw new Error(`GitHub commit failed: ${errBody}`);
+        }
 
         return res.status(200).json({ success: true, id: uniqueId });
     } catch (err) {
-        console.error("Submit data error:", err);
-        return res.status(500).json({ error: "Failed to commit data to GitHub" });
-    }
-}
+        console.error("Submit data error:", err
